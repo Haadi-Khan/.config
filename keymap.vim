@@ -6,5 +6,7 @@ inoremap <C-BS> <C-\><C-o>db
 " Use H/L to switch tabs in vim
 nmap H gT
 nmap L gt
-" Ctrl / clears search highlights
-map <C-/> :noh
+" Ctrl ' clears search highlights
+map <C-'> :noh<CR>
+" Ctrl / to comment code
+map <C-_> <plug>NERDCommenterToggle
