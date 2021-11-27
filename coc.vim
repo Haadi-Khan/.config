@@ -1,7 +1,7 @@
 " coc config
 " Have to set values for coc snippets
 let g:coc_global_extensions = [
-    \ 'coc_snippets', 
+    "\ 'coc_snippets', stupid thing doesn't wanna work
     \ 'coc-pairs',
     \ 'coc-prettier'
   \ ]

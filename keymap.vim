@@ -10,3 +10,5 @@ nmap L gt
 map <C-'> :noh<CR>
 " Ctrl / to comment code
 map <C-_> <plug>NERDCommenterToggle
+" Run Python Code
+autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>

@@ -38,4 +38,3 @@ let g:netrw_banner = 0
 let g:netrw_winsize = 25
 
 let g:ctrlp_use_caching = 0
-
