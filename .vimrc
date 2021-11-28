@@ -8,6 +8,9 @@ set noerrorbells
 set tabstop=4
 set shiftwidth=4
 set smartindent
+set exrc
+set hidden
+set relativenumber
 set nu
 set nowrap
 set smartcase
@@ -17,16 +20,15 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set foldmethod=syntax
-let mapleader = " "
-
-set colorcolumn=120
-highlight ColorColumn ctermbg=0 guibg=lightgrey
-
-
+set scrolloff=8
 colorscheme onedark
 set background=dark
-let g:onedark_termcolors = 256
-
+let mapleader = " "
+set colorcolumn=120
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+set signcolumn=yes
+" Sets working directory to current file's directory
+autocmd BufEnter * lcd %:p:h
 if executable('rg')
 	let g:rg_derive_root='true'
 endif
@@ -38,3 +40,4 @@ let g:netrw_banner = 0
 let g:netrw_winsize = 25
 
 let g:ctrlp_use_caching = 0
+
