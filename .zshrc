@@ -14,7 +14,7 @@ alias cdoc="cd /run/media/haadi/Storage/Documents"
 alias cdwn="cd /run/media/haadi/Storage/Downloads"
 alias vi="nvim"
 alias vim="nvim"
-alias vimrc="nvim ~/.vim/config/.vimrc"
+alias vimrc="nvim ~/.vim/config/init.vim"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
 mkcd () {
   mkdir "$1"
