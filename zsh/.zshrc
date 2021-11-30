@@ -14,8 +14,10 @@ alias cdoc="cd /run/media/haadi/Storage/Documents"
 alias cdwn="cd /run/media/haadi/Storage/Downloads"
 alias vi="nvim"
 alias vim="nvim"
-alias vimrc="nvim ~/.vim/config/init.vim"
+alias vimrc="nvim ~/.dotfiles/nvim/init.vim"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
+hash -d docs=/run/media/haadi/Storage/Documents
+hash -d dwn=/run/media/haadi/Storage/Downloads
 cdvi() {                                                                                         
     cd "$1" && nvim .                                                                                    
 }      
