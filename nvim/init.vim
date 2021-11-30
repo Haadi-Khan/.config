@@ -1,6 +1,6 @@
-source ~/.vim/config/plugs.vim
-source ~/.vim/config/keymap.vim
-source ~/.vim/config/coc.vim
+source ~/.dotfiles/nvim/plugs.vim
+source ~/.dotfiles/nvim/keymap.vim
+source ~/.dotfiles/nvim/coc.vim
 
 syntax on
 
