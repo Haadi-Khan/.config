@@ -16,8 +16,10 @@ alias vi="nvim"
 alias vim="nvim"
 alias vimrc="nvim ~/.vim/config/init.vim"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
+cdvi() {                                                                                         
+    cd "$1" && nvim .                                                                                    
+}      
 mkcd () {
-  mkdir "$1"
-  cd "$1"
+  mkdir "$1" && cd "$1"
 }
 
