@@ -1,4 +1,8 @@
 " coc config
+"
+" To configure COC for python, make sure to do :CocInstall coc-python
+" Without this extension, python autocomplete will NOT work
+" 
 " Have to set values for coc snippets
 let g:coc_global_extensions = [
     "\ 'coc_snippets', stupid thing doesn't wanna work
