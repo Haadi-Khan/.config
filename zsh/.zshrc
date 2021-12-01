@@ -18,7 +18,7 @@ alias vimrc="nvim ~/.dotfiles/nvim/init.vim"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
 hash -d docs=/run/media/haadi/Storage/Documents
 hash -d dwn=/run/media/haadi/Storage/Downloads
-cdvi() {                                                                                         
+vicd() {                                                                                         
     cd "$1" && nvim .                                                                                    
 }      
 mkcd () {

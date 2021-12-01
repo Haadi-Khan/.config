@@ -4,6 +4,9 @@ source ~/.dotfiles/nvim/coc.vim
 
 syntax on
 
+colorscheme onedark
+set background=dark
+
 set noerrorbells
 set tabstop=4
 set shiftwidth=4
@@ -22,12 +25,12 @@ set undofile
 set incsearch
 set foldmethod=syntax
 set scrolloff=8
-colorscheme onedark
-set background=dark
-let mapleader = " "
 set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 set signcolumn=yes
+
+let mapleader = " "
+
 " Sets working directory to current file's directory
 autocmd BufEnter * lcd %:p:h
 if executable('rg')
@@ -41,4 +44,3 @@ let g:netrw_banner = 0
 let g:netrw_winsize = 25
 
 let g:ctrlp_use_caching = 0
-
