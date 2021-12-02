@@ -1,12 +1,14 @@
 source ~/.dotfiles/nvim/plugs.vim
 source ~/.dotfiles/nvim/keymap.vim
 source ~/.dotfiles/nvim/coc.vim
+source ~/.dotfiles/nvim/term.vim
 
 syntax on
 
 colorscheme onedark
 set background=dark
 
+set mouse=a
 set noerrorbells
 set tabstop=4
 set shiftwidth=4
@@ -28,6 +30,8 @@ set scrolloff=8
 set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 set signcolumn=yes
+set clipboard=unnamedplus
+
 
 let mapleader = " "
 
