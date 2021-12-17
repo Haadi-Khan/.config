@@ -1,50 +1,47 @@
-source ~/.dotfiles/nvim/plugs.vim
-source ~/.dotfiles/nvim/keymap.vim
-source ~/.dotfiles/nvim/coc.vim
-source ~/.dotfiles/nvim/term.vim
+for f in split(glob('~/.dotfiles/nvim/plugins/*.vim'), '\n')
+    exe 'source' f
+endfor
 
 syntax on
 
+" Best Color Scheme
 colorscheme onedark
 set background=dark
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-set mouse=a
+" Basic stuff to not go insane
 set noerrorbells
+set mouse=a
 set tabstop=4
 set shiftwidth=4
 set smartindent
+
+"Sets working directory in NERDTree to current
 set exrc
 set hidden
+
+" Easy af for vertical navigation
 set relativenumber
-set nu
+set number
+set signcolumn=yes
 set nowrap
+set scrolloff=8
+
+" Searching stuff: 1st no highlight search, 2nd capital sensitive searching
 set nohlsearch
 set smartcase
+set incsearch
+
+" All swapfiles and crap left in separate file
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
-set incsearch
-set foldmethod=syntax
-set scrolloff=8
-set colorcolumn=120
-highlight ColorColumn ctermbg=0 guibg=lightgrey
-set signcolumn=yes
+
+" Should probably use syntax, but this is easier until I write the funcs
+set foldmethod=indent
+
 set clipboard=unnamedplus
 
-
 let mapleader = " "
-
-" Sets working directory to current file's directory
-autocmd BufEnter * lcd %:p:h
-if executable('rg')
-	let g:rg_derive_root='true'
-endif
-
-" Ignores all files ignored by .gitignore
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-let g:netrw_browse_split=2
-let g:netrw_banner = 0
-let g:netrw_winsize = 25
-
-let g:ctrlp_use_caching = 0

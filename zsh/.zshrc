@@ -16,12 +16,14 @@ alias vi="nvim"
 alias vim="nvim"
 alias vimrc="nvim ~/.dotfiles/nvim/init.vim"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
+alias cdh="cd ~"
+alias tmux="tmux -f ~/.dotfiles/tmux/tmux.conf"
 hash -d docs=/run/media/haadi/Storage/Documents
 hash -d dwn=/run/media/haadi/Storage/Downloads
+bindkey -v # Vim Mode for Terminal
 vicd() {                                                                                         
     cd "$1" && nvim .                                                                                    
 }      
 mkcd () {
   mkdir "$1" && cd "$1"
 }
-

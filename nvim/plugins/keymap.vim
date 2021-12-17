@@ -1,3 +1,5 @@
+" Quick return to normal mode
+inoremap jk <Esc>
 " Use H/L to switch tabs in vim
 nmap H gT
 nmap L gt
@@ -23,23 +25,3 @@ inoremap <leader>tr :call TermToggle(12)<CR>
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>
 tnoremap :q! <C-\><C-n>:q!<CR>
-
-" CoC Keybinds
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
-" GoTo code navigation.
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nnoremap <leader>f  <Plug>(coc-format-selected)
-" Map rename to F2
-nmap <F2> <Plug>(coc-rename)
-vmap <F2> <Plug>(coc-rename)
-
