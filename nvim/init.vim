@@ -22,8 +22,8 @@ set exrc
 set hidden
 
 " Easy af for vertical navigation
-set relativenumber
 set number
+set relativenumber
 set signcolumn=yes
 set nowrap
 set scrolloff=8

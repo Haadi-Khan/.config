@@ -17,5 +17,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'git@github.com:Yggdroot/indentLine.git'                 				" Indent Guides
 	Plug 'git@github.com:tc50cal/vim-terminal' 									" Integrated Terminal
 	Plug 'git@github.com:scrooloose/nerdcommenter' 								" Comment Out Code
-	Plug 'git@github.com:jceb/vim-orgmode.git'
+	Plug 'nvim-treesitter/nvim-treesitter'
+	Plug 'nvim-orgmode/orgmode'
 call plug#end()
