@@ -1,1 +1,21 @@
-zsh/.zcompdump
+AppleMusic/
+Badlion Client/
+GIMP/
+appimagelauncher.cfg
+coc/
+configstore/
+dconf/
+discord/
+emacs/
+libreoffice/
+libvirt/
+menus/
+mimeapps.list
+neofetch/
+nvim/plugged/
+nvim/undodir/
+ookla/
+pavucontrol.ini
+pulse/
+systemd/
+xfce4/

@@ -1,4 +1,4 @@
-for f in split(glob('~/.dotfiles/nvim/plugins/*.vim'), '\n')
+for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
     exe 'source' f
 endfor
 
@@ -36,7 +36,7 @@ set incsearch
 " All swapfiles and crap left in separate file
 set noswapfile
 set nobackup
-set undodir=~/.vim/undodir
+set undodir=~/.config/nvim/undodir
 set undofile
 
 " Should probably use syntax, but this is easier until I write the funcs

@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 	Plug 'git@github.com:joshdick/onedark.vim' 							 		" Colors
 	Plug 'git@github.com:vim-airline/vim-airline' 								" Status Bar
 	Plug 'git@github.com:tpope/vim-fugitive'                               		" Git Plugin
