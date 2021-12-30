@@ -1,5 +1,6 @@
 AppleMusic/
 Badlion Client/
+BadlionClient/
 GIMP/
 appimagelauncher.cfg
 coc/
@@ -7,6 +8,7 @@ configstore/
 dconf/
 discord/
 emacs/
+emacs.d/
 libreoffice/
 libvirt/
 menus/
@@ -17,5 +19,8 @@ nvim/undodir/
 ookla/
 pavucontrol.ini
 pulse/
+Slack/
 systemd/
+Unknown Organization/
 xfce4/
+zoomus.conf

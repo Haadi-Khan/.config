@@ -14,7 +14,7 @@ autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%,
 autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR> 
 
 " Set file explorer view toggle to Ctrl N
-map <C-N> :NERDTreeToggle<CR> 
+map <C-n> :NERDTreeToggle<CR> 
 " Ctrl / to comment code
 map <C-_> <plug>NERDCommenterToggle
 

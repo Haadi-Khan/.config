@@ -1,6 +1,7 @@
 " Config for Text and Markdown Files
 autocmd BufRead,BufNewFile *.md call SetTextFileOptions()
 autocmd BufRead,BufNewFile *.txt call SetTextFileOptions()
+autocmd BufRead,BufNewFile *.org call SetTextFileOptions()
 
 function SetTextFileOptions()
 	setlocal wrap

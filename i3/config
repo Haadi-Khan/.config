@@ -151,17 +151,15 @@ bindsym $mod+Shift+x move container to workspace number $ws9
 bindsym $mod+Shift+c move container to workspace number $ws10
 
 # open applications on specific workspaces
-assign [class="firefox"] $ws1
-assign [class="Thunar"] $ws2
 assign [class="Emacs"] $ws3
 assign [class="discord"] $ws4
 assign [class="Apple Music"] $ws4
 assign [class="Thunderbird"] $ws5
+assign [class="Slack"] $ws5
 assign [class="Gimp"] $ws7
 
 exec discord
 exec apple-music-electron
-exec thunar
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+1 restart
 bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

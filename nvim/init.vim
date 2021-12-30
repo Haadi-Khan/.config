@@ -5,10 +5,10 @@ endfor
 syntax on
 
 " Best Color Scheme
+set termguicolors
 colorscheme onedark
 set background=dark
 set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Basic stuff to not go insane
 set noerrorbells
@@ -26,7 +26,7 @@ set number
 set relativenumber
 set signcolumn=yes
 set nowrap
-set scrolloff=8
+set scrolloff=12
 
 " Searching stuff: 1st no highlight search, 2nd capital sensitive searching
 set nohlsearch
