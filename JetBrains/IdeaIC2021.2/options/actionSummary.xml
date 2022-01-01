@@ -1,0 +1,139 @@
+<application>
+  <component name="ActionsLocalSummary">
+    <e n="$Delete">
+      <i c="3" l="1640920949146" />
+    </e>
+    <e n="$SelectAll">
+      <i c="1" l="1640919238965" />
+    </e>
+    <e n="AutoIndentLines">
+      <i c="10" l="1640920930711" />
+    </e>
+    <e n="CollapseRegion">
+      <i c="13" l="1640920192140" />
+    </e>
+    <e n="CopyPaths">
+      <i c="1" l="1640920739115" />
+    </e>
+    <e n="EditorBackSpace">
+      <i c="418" l="1640920804986" />
+    </e>
+    <e n="EditorChooseLookupItem">
+      <i c="2" l="1640919504089" />
+    </e>
+    <e n="EditorChooseLookupItemReplace">
+      <i c="46" l="1640920669668" />
+    </e>
+    <e n="EditorDelete">
+      <i c="4" l="1640919540043" />
+    </e>
+    <e n="EditorDeleteToWordStart">
+      <i c="19" l="1640920540820" />
+    </e>
+    <e n="EditorDown">
+      <i c="55" l="1640920164903" />
+    </e>
+    <e n="EditorEnter">
+      <i c="81" l="1640920656137" />
+    </e>
+    <e n="EditorEscape">
+      <i c="4" l="1640912080489" />
+    </e>
+    <e n="EditorLeft">
+      <i c="9" l="1640911987892" />
+    </e>
+    <e n="EditorRight">
+      <i c="18" l="1640910817332" />
+    </e>
+    <e n="EditorStartNewLine">
+      <i c="1" l="1640915765752" />
+    </e>
+    <e n="EditorTab">
+      <i c="16" l="1640920668178" />
+    </e>
+    <e n="EditorUp">
+      <i c="21" l="1640919909430" />
+    </e>
+    <e n="ExpandRegion">
+      <i c="7" l="1640919666264" />
+    </e>
+    <e n="FileChooser.NewFolder">
+      <i c="1" l="1640907711645" />
+    </e>
+    <e n="NewClass">
+      <i c="3" l="1640911223334" />
+    </e>
+    <e n="NextTemplateVariable">
+      <i c="2" l="1640919735330" />
+    </e>
+    <e n="PasteMultiple">
+      <i c="5" l="1640912306143" />
+    </e>
+    <e n="QuickJavaDoc">
+      <i c="1" l="1640912482179" />
+    </e>
+    <e n="RenameElement">
+      <i c="2" l="1640912071361" />
+    </e>
+    <e n="Run">
+      <i c="35" l="1640920685419" />
+    </e>
+    <e n="RunClass">
+      <i c="1" l="1640911582937" />
+    </e>
+    <e n="SaveAll">
+      <i c="33" l="1640921019833" />
+    </e>
+    <e n="SearchEverywhere">
+      <i c="1" l="1640915189573" />
+    </e>
+    <e n="ShowBookmarks">
+      <i c="2" l="1640920037679" />
+    </e>
+    <e n="ShowIntentionActions">
+      <i c="1" l="1640912142274" />
+    </e>
+    <e n="ShowSettings">
+      <i c="3" l="1640920754626" />
+    </e>
+    <e n="Stop">
+      <i c="1" l="1640914999430" />
+    </e>
+    <e n="Switcher">
+      <i c="13" l="1640915394381" />
+    </e>
+    <e n="WelcomeScreen.CreateNewProject">
+      <i c="2" l="1640907668599" />
+    </e>
+    <e n="com.intellij.codeInsight.documentation.DocumentationComponent$ActivateLinkAction">
+      <i c="1" l="1640912482646" />
+    </e>
+    <e n="com.intellij.execution.lineMarker.LineMarkerActionWrapper">
+      <i c="3" l="1640914569384" />
+    </e>
+    <e n="com.intellij.openapi.actionSystem.EmptyAction$MyDelegatingAction">
+      <i c="1149" l="1640920746169" />
+    </e>
+    <e n="com.intellij.openapi.editor.impl.EditorMarkupModelImpl$StatusAction">
+      <i c="3" l="1640915930094" />
+    </e>
+    <e n="com.intellij.openapi.fileEditor.impl.tabActions.CloseTab">
+      <i c="1" l="1640920695775" />
+    </e>
+    <e n="com.intellij.openapi.keymap.impl.ui.KeymapPanel$RemoveShortcutAction">
+      <i c="1" l="1640920799148" />
+    </e>
+    <e n="com.intellij.openapi.project.DumbAwareAction$SimpleDumbAwareAction">
+      <i c="5" l="1640917253551" />
+    </e>
+    <e n="com.intellij.openapi.ui.DialogWrapper$4">
+      <i c="1" l="1640917348054" />
+    </e>
+    <e n="com.intellij.openapi.ui.impl.DialogWrapperPeerImpl$AnCancelAction">
+      <i c="1" l="1640919267516" />
+    </e>
+    <e n="com.maddyhome.idea.vim.ui.ex.ExShortcutKeyAction">
+      <i c="79" l="1640921019816" />
+    </e>
+  </component>
+</application>

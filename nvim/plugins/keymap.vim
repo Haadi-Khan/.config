@@ -13,8 +13,8 @@ vnoremap <leader>p "_dP
 autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR> 
 
-" Set file explorer view toggle to Ctrl N
-map <C-n> :NERDTreeToggle<CR> 
+" Set file explorer view toggle to Ctrl H
+map <C-H> :NERDTreeToggle<CR> 
 " Ctrl / to comment code
 map <C-_> <plug>NERDCommenterToggle
 

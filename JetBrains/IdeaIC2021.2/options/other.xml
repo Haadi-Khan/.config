@@ -1,0 +1,60 @@
+<application>
+  <component name="NotRoamableUiSettings">
+    <option name="fontFace" value="SF UI Display" />
+    <option name="fontScale" value="1.0" />
+    <option name="fontSize" value="14" />
+  </component>
+  <component name="ProjectPluginTrackerManager">
+    <trackers>
+      <map>
+        <entry key="231hweImtL3oOonaxV3WETjRGYt">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="Default (Template) Project">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+      </map>
+    </trackers>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="InstalledPluginsSearchHistory" value="keyb&#10;relative&#10;relati&#10;relat&#10;re" />
+    <property name="KEYMAP" value="Vim&#10;Copy&#10;Ctrl+C" />
+    <property name="MarketplacePluginsSearchHistory" value="relative numbers&#10;relative nu&#10;relative n&#10;relative&#10;re" />
+    <property name="NextRunPlatformUpdateBuild" value="IC-212.5712.43/2021.2.4" />
+    <property name="NextRunPlatformUpdateVersion" value="2021.2.4" />
+    <property name="NonModalCommitCustomization.IsApplied" value="true" />
+    <property name="PluginConfigurable.selectionTab" value="1" />
+    <property name="SettingsSearchHistory" value="keyb&#10;line number&#10;relative&#10;font" />
+    <property name="appcds.runOnSecondStart" value="IC-212.5457.46-7450d84e5b4b9f518c65d4744de7408bf641b2d705c40b82bb3726c05ee4f4e0" />
+    <property name="ask.about.ctrl.y.shortcut.v2" value="true" />
+    <property name="build.toolwindow.Build Output.selection.state" value="com.intellij.build.BuildTreeConsoleView" />
+    <property name="com.intellij.openapi.roots.ui.configuration.TabbedModuleEditor.selectedEditor" value="Sources" />
+    <property name="defaultJdkConfigured" value="true" />
+    <property name="eclipse.projects.detected" value="" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/Storage/Documents/Programs/Del-Del-Giudice&#10;/home/haadi/Storage/Documents/Programs" />
+    <property name="file.gist.reindex.count" value="10" />
+    <property name="fileTypeChangedCounter" value="3" />
+    <property name="fileTypeDetectors" value="com.android.tools.idea.fileTypes.profiler.MemoryCaptureFileType$Detector:com.android.tools.idea.sqlite.fileType.SqliteFileTypeDetector:com.intellij.ide.scratch.ScratchFileServiceImpl$Detector:org.jetbrains.plugins.textmate.TextMateFileType$TextMateFileDetector" />
+    <property name="ide.memory.adjusted" value="true" />
+    <property name="ide.updates.previous.build.number" value="IC-212.5457.46" />
+    <property name="ide.updates.whats.new.shown.for" value="212" />
+    <property name="ideavim.statistics.timestamp" value="1640911217891" />
+    <property name="installed.kotlin.plugin.version" value="212-1.5.10-release-931-IJ5457.46" />
+    <property name="jdk.selected.JAVA_MODULE" value="11" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Storage/Documents/Programs/Del-Del-Giudice" />
+    <property name="packagesearch.endpoint.url.fulltext" value="https://package-search.services.jetbrains.com/api/search/idea/fulltext" />
+    <property name="packagesearch.endpoint.url.suggest" value="https://package-search.services.jetbrains.com/api/search/idea/suggest" />
+    <property name="packagesearch.status.updated.ts" value="1640907739835" />
+    <property name="project.wizard.group" value="JAVA_MODULE" />
+    <property name="registry.to.advanced.settings.migration.build" value="IC-212.5457.46" />
+    <property name="selected.color.option.type" value="KOTLIN_LINE_COMMENT" />
+    <property name="tasks.pass.word.conversion.enforced" value="true" />
+  </component>
+  <component name="ToolbarSettingsService">
+    <option name="NEW_TOOLBAR_SETTINGS" value="OLD_NAVBAR" />
+  </component>
+</application>

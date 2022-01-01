@@ -232,8 +232,8 @@
 	type = internal/date
 	interval = 1
 
-	date = %b %d
-	date-alt = " %Y %b %d"
+	date = %a %d
+	date-alt = "%a %b %d %Y"
 
 	time = %I:%M %p
 	time-alt = %I:%M:%S %p
