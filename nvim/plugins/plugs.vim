@@ -15,6 +15,8 @@ call plug#begin('~/.config/nvim/plugged')
 	" Code Autocomplete and highlighting
 	Plug 'neovim/nvim-lspconfig' 								 				" Setup nvim LSP				
 	Plug 'hrsh7th/nvim-compe' 								 					" Autocompletion engine			
+	Plug 'git@github.com:L3MON4D3/LuaSnip' 										" Snippets Engine
+	Plug 'git@github.com:jiangmiao/auto-pairs' 									" Auto Pairs ([], (), {})
 	Plug 'git@github.com:sheerun/vim-polyglot'                             		" Syntax Highlight for most languages
 	Plug 'git@github.com:bfrg/vim-cpp-modern.git'                 				" C++ Syntax Highlight 
 	Plug 'git@github.com:numirias/semshi', { 'do': ':UpdateRemotePlugins' } 	" Python Syntax Highlight

@@ -26,4 +26,6 @@ Slack/
 systemd/
 Unknown Organization/
 xfce4/
+user-dirs.dirs
+user-dirs.locale
 zoomus.conf
