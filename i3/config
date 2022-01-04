@@ -160,6 +160,7 @@ assign [class="Gimp"] $ws7
 
 exec discord
 exec apple-music-electron
+exec emacs --daemon
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+1 restart
 bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

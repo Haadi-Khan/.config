@@ -11,10 +11,7 @@ function SetTextFileOptions()
 endfunction
 
 function SetOrgFileOptions()
-	setlocal wrap
-	setlocal linebreak
 	setlocal spell
 	setlocal colorcolumn=500
-    setlocal expandtab
 endfunction
 

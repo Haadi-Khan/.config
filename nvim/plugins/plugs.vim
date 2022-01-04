@@ -1,71 +1,43 @@
 call plug#begin('~/.config/nvim/plugged')
 	" Themes and Airline
-	Plug 'git@github.com:joshdick/onedark.vim' 							 		" Colors
-	Plug 'git@github.com:vim-airline/vim-airline' 								" Status Bar
+	Plug 'joshdick/onedark.vim' 							 					" Colors
+	Plug 'vim-airline/vim-airline' 				 								" Status Bar
 	Plug 'git@github.com:Yggdroot/indentLine.git'                 				" Indent Guides
-	Plug 'git@github.com:tc50cal/vim-terminal' 									" Integrated Terminal
-	Plug 'git@github.com:scrooloose/nerdcommenter' 								" Comment Out Code
-	Plug 'git@github.com:tiagofumo/vim-nerdtree-syntax-highlight' 				" File Tree Coloring
-	Plug 'git@github.com:ryanoasis/vim-devicons' 				  				" File Icons in Tree
+	Plug 'tc50cal/vim-terminal' 												" Integrated Terminal
+	Plug 'scrooloose/nerdcommenter' 											" Comment Out Code
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 								" File Tree Coloring
+	Plug 'ryanoasis/vim-devicons' 				  								" File Icons in Tree
 
 	" Git Stuff
-	Plug 'git@github.com:tpope/vim-fugitive'                               		" Git Plugin
-	Plug 'git@github.com:airblade/vim-gitgutter' 								" Edited Lines
+	Plug 'tpope/vim-fugitive'                            				   		" Git Plugin
+	Plug 'airblade/vim-gitgutter' 												" Edited Lines
 
 	" Code Autocomplete and highlighting
 	Plug 'neovim/nvim-lspconfig' 								 				" Setup nvim LSP				
 	Plug 'hrsh7th/nvim-compe' 								 					" Autocompletion engine			
-	Plug 'git@github.com:L3MON4D3/LuaSnip' 										" Snippets Engine
-	Plug 'git@github.com:jiangmiao/auto-pairs' 									" Auto Pairs ([], (), {})
-	Plug 'git@github.com:sheerun/vim-polyglot'                             		" Syntax Highlight for most languages
+	Plug 'hrsh7th/vim-vsnip' 													" Snippets
+	Plug 'hrsh7th/vim-vsnip-integ' 												" Needed for Snippets
+	Plug 'jiangmiao/auto-pairs' 												" Auto Pairs ([], (), {})
+	Plug 'mfussenegger/nvim-jdtls' 												" Java Completion
 	Plug 'git@github.com:bfrg/vim-cpp-modern.git'                 				" C++ Syntax Highlight 
-	Plug 'git@github.com:numirias/semshi', { 'do': ':UpdateRemotePlugins' } 	" Python Syntax Highlight
+	Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } 					" Python Syntax Highlight
+	Plug 'uiiaoo/java-syntax.vim' 												" Java Syntax Highlight
 	
-
 	" File navigation and searching
+	Plug 'mbbill/undotree'   				                               		" Undo History
 	Plug 'git@github.com:BurntSushi/ripgrep.git'                  				" Fast Grep
-	Plug 'git@github.com:mbbill/undotree'                                  		" Undo History
 	Plug 'git@github.com:preservim/nerdtree.git'                  				" File Tree
 	Plug 'git@github.com:kien/ctrlp.vim.git'                      				" File Search
 
 	" Org Mode Setup
-	Plug 'git@github.com:nvim-treesitter/nvim-treesitter' 						" Needed for Org Mode
-	Plug 'git@github.com:nvim-orgmode/orgmode' 									" Org Mode
-	Plug 'git@github.com:akinsho/org-bullets.nvim' 								" Org Mode Bullets
-	Plug 'git@github.com:dhruvasagar/vim-table-mode' 							" Org Mode Table
+	Plug 'nvim-treesitter/nvim-treesitter' 										" Needed for Org Mode
+	Plug 'nvim-orgmode/orgmode' 												" Org Mode
+	Plug 'akinsho/org-bullets.nvim' 											" Org Mode Bullets
+	Plug 'dhruvasagar/vim-table-mode' 											" Org Mode Table
 call plug#end()
 
-" Treesitter crap for org mode
 lua << EOF
-	local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-	parser_config.org = {
-	  install_info = {
-		url = 'https://github.com/milisims/tree-sitter-org',
-		revision = 'f110024d539e676f25b72b7c80b0fd43c34264ef',
-		files = {'src/parser.c', 'src/scanner.cc'},
-	  },
-	  filetype = 'org',
-	}
-
-	require'nvim-treesitter.configs'.setup {
-	  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
-	  highlight = {
-		enable = true,
-		disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
-		additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
-	  },
-	  ensure_installed = {'org'}, -- Or run :TSUpdate org
-	}
-
-	require('orgmode').setup({
-	  org_agenda_files = {'/run/media/haadi/Storage/Documents/org/agenda/*'},
-	  org_default_notes_file = '/run/media/haadi/Storage/Documents/org/*',
-	  org_indent_mode = indent
-	})
-EOF
-
-" Auto completion with native LSP
-lua << EOF
+-- Auto completion with native LSP
 	vim.o.completeopt = "menuone,noselect"
 
 	require'compe'.setup {
@@ -138,8 +110,7 @@ lua << EOF
 	vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 	vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
-
-	-- Languages: Python, Org
+-- Languages: Python, Java, Org
 	require'lspconfig'.pyright.setup{}
 	-- require'lspconfig'.jdtls.setup{} Will set this up later
 	require'compe'.setup({
@@ -147,4 +118,31 @@ lua << EOF
         orgmode = true
       }
     })
+
+-- Org Mode Setup
+	local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+	parser_config.org = {
+	  install_info = {
+		url = 'https://github.com/milisims/tree-sitter-org',
+		revision = 'f110024d539e676f25b72b7c80b0fd43c34264ef',
+		files = {'src/parser.c', 'src/scanner.cc'},
+	  },
+	  filetype = 'org',
+	}
+
+	require'nvim-treesitter.configs'.setup {
+	  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
+	  highlight = {
+		enable = true,
+		disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+		additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
+	  },
+	  ensure_installed = {'org'}, -- Or run :TSUpdate org
+	}
+
+	require('orgmode').setup({
+	  org_agenda_files = {'/run/media/haadi/Storage/Documents/org/*'},
+	  org_default_notes_file = '/run/media/haadi/Storage/Documents/org/todos.org',
+	  org_indent_mode = indent
+	})
 EOF
