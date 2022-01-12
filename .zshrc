@@ -9,7 +9,7 @@ EDITOR=vim
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zshhistory
+HISTFILE=~/zshhistory
 setopt appendhistory
 
 # Basic auto/tab complete:
@@ -36,7 +36,10 @@ alias cdh="cd ~"
 alias btop="btop --utf-force"
 alias tmux="tmux -f ~/.dotfiles/tmux/tmux.conf"
 alias blc="cd ~/Applications && ./BadlionClient_2b786aee9df7ac8ea9752d318ea76329"
-alias td="cd ~docs/org/ && nvim todolist.org"
+alias td="cd ~docs/org/ && git pull && vi todos.org"
+alias gp="git add --all && git commit -m \"Commit\" && git push"
+alias tty-clock="tty-clock -s -x -C 6 -t"
+alias fusion="./.local/share/applications/wine/Programs/Autodesk/fusion360-launcher.sh"
 hash -d docs=/run/media/haadi/Storage/Documents
 hash -d dwn=/run/media/haadi/Storage/Downloads
 vicd() {
@@ -45,4 +48,3 @@ vicd() {
 mkcd () {
   mkdir "$1" && cd "$1"
 }
-
