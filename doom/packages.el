@@ -8,6 +8,11 @@
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
+(package! guess-language)
+(package! fill-column-indicator)
+(package! lsp-java)
+(package! centaur-tabs)
+(package! treemacs-evil)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

@@ -1,21 +1,29 @@
 AppleMusic/
 Badlion Client/
 BadlionClient/
+balena-etcher/
 brinkervii/
+celluloid/
+Code/
 GIMP/
 appimagelauncher.cfg
 coc/
 configstore/
 dconf/
 discord/
+dunst/
 emacs/
 emacs.d/
+FRC Utilities/
+gthumb/
+guvcview2/
 JetBrains/
 libreoffice/
 libvirt/
 lutris/
 menus/
 mimeapps.list
+nitrogen/
 neofetch/
 nvim/plugged/
 nvim/undodir/
@@ -26,7 +34,7 @@ Slack/
 systemd/
 Unknown Organization/
 xfce4/
-QtProject.conf
+xed/
 user-dirs.dirs
 user-dirs.locale
 zoomus.conf

@@ -57,7 +57,7 @@ syntax match OrgHeadlineStar3 /^\*\{3}\ze\s/me=e-1 conceal cchar=✸ containedin
 syntax match OrgHeadlineStar4 /^\*{4}\ze\s/me=e-1 conceal cchar=✿ containedin=OrgHeadlineLevel4 contained
 
 " Sets working directory to current file's directory
-autocmd BufEnter * lcd %:p:h
-if executable('rg')
-	let g:rg_derive_root='true'
-endif
+"autocmd BufEnter * lcd %:p:h
+"if executable('rg')
+	"let g:rg_derive_root='true'
+"endif

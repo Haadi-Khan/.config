@@ -1,0 +1,80 @@
+{
+	"general": {
+		"close_behavior": 0,
+		"startup_behavior": 0,
+		"discord_rpc": "2",
+		"discordClearActivityOnPause": 1,
+		"volume": 0.66
+	},
+	"home": {
+		"followedArtists": [],
+		"favoriteItems": []
+	},
+	"libraryPrefs": {
+		"songs": {
+			"sort": "name",
+			"sortOrder": "asc",
+			"size": "compact"
+		}
+	},
+	"audio": {
+		"quality": "990",
+		"seamless_audio": true,
+		"normalization": false,
+		"spatial": false,
+		"spatial_properties": {
+			"presets": [],
+			"gain": 0.8,
+			"listener_position": [
+				0,
+				0,
+				0
+			],
+			"audio_position": [
+				0,
+				0,
+				0
+			],
+			"room_dimensions": {
+				"width": 32,
+				"height": 12,
+				"depth": 32
+			},
+			"room_materials": {
+				"left": "metal",
+				"right": "metal",
+				"front": "brick-bare",
+				"back": "brick-bare",
+				"down": "acoustic-ceiling-tiles",
+				"up": "acoustic-ceiling-tiles"
+			}
+		}
+	},
+	"visual": {
+		"theme": "",
+		"scrollbars": 0,
+		"refresh_rate": 0,
+		"animated_artwork": "limited",
+		"animated_artwork_qualityLevel": 1,
+		"bg_artwork_rotation": false,
+		"hw_acceleration": "default",
+		"videoRes": 720
+	},
+	"lyrics": {
+		"enable_mxm": true,
+		"mxm_karaoke": false,
+		"mxm_language": "en",
+		"enable_yt": false
+	},
+	"lastfm": {
+		"enabled": false,
+		"scrobble_after": 50,
+		"auth_token": "",
+		"enabledRemoveFeaturingArtists": true,
+		"NowPlaying": "true"
+	},
+	"advanced": {
+		"AudioContext": false,
+		"experiments": []
+	}
+}
