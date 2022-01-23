@@ -29,14 +29,18 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(custom-set-variables
+ '(org-directory "/run/media/haadi/Storage/Documents/org")
+ '(org-agenda-files (list org-directory)))
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 (setq projectile-project-search-path '("/run/media/haadi/Storage/Documents/Programs/"))
 
-
+;; Menu bar
+(after! core-ui (menu-bar-mode 1))
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
