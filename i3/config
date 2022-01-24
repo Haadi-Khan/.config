@@ -6,7 +6,7 @@
 #██║██████╔╝    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝ 
 #╚═╝╚═════╝      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
 #
-# i3 Config 2021-01-13
+# i3 Config 2022-01-23
 #   
 
 #   Mod
@@ -17,7 +17,7 @@
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
 #   | Caps |Tabbed|  W1  |  W2  |  W3  |  W4  |      | Left | Down |  Up  |Right |   ;  |  '   |
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
-#   | Shift| Split|  W9  |  W10 |VerSpl|HorSpl|      |      |O Emac|O LibW|O Thun|   /  |  Fn  |
+#   | Shift| Split|  W9  |  W10 |VerSpl|HorSpl|      |      |O Emac|O Chro|O Thun|   /  |  Fn  |
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
 #   | Ctrl | Mod  | Alt  | Rofi |      | Home |      |  =   |      | LArr | DArr | UArr | RArr |
 #   |------+------+------+------+SwiFlo+------|      |------+ Term +------+------+------+------|
@@ -51,7 +51,7 @@ set $mod Mod4
 	exec --no-startup-id nm-applet
 	exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 	exec discord
-	exec apple-music-electron
+	exec cider
 	exec /usr/bin/emacs --daemon &
 
 # Colors
@@ -72,7 +72,7 @@ set $mod Mod4
 	gaps outer 10
 	smart_borders on
 	smart_borders no_gaps
-	border_radius 3
+	border_radius 10
 
 # Use pactl to adjust volume in PulseAudio.
 	set $refresh_i3status killall -SIGUSR1 i3status
@@ -122,7 +122,7 @@ bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -s
 
 
 # Workspaces
-	set $ws1 1 Firefox
+	set $ws1 1 Chrome
 	set $ws2 2 Flex
 	set $ws3 3 Code
 	set $ws4 4 Discord+Music
@@ -158,7 +158,6 @@ bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -s
 	bindsym $mod+Shift+c move container to workspace number $ws10
 
 # open applications on specific workspaces
-assign [class="Emacs"] $ws3
 assign [class="discord"] $ws4
 assign [class="Apple Music"] $ws4
 assign [class="Thunderbird"] $ws5
@@ -166,7 +165,7 @@ assign [class="Slack"] $ws5
 assign [class="Gimp"] $ws7
 
 bindsym $mod+n exec emacsclient -c -a 'emacs'
-bindsym $mod+m exec librewolf
+bindsym $mod+m exec chromium
 bindsym $mod+comma exec thunar
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+1 restart
