@@ -117,7 +117,7 @@ bindsym $mod+shift+p fullscreen toggle global
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 1 Firefox
+set $ws1 1 Chrome
 set $ws2 2 Flex
 set $ws3 3 Code
 set $ws4 4 Discord+Music
@@ -153,7 +153,6 @@ bindsym $mod+Shift+x move container to workspace number $ws9
 bindsym $mod+Shift+c move container to workspace number $ws10
 
 # open applications on specific workspaces
-assign [class="Emacs"] $ws3
 assign [class="code"] $ws3
 assign [class="discord"] $ws4
 assign [class="Cider"] $ws4
@@ -166,7 +165,7 @@ exec cider
 exec /usr/bin/emacs --daemon &
 #bindsym $mod+Shift+c reload
 bindsym $mod+n exec emacsclient -c -a 'emacs'
-bindsym $mod+m exec librewolf
+bindsym $mod+m exec chromium
 bindsym $mod+comma exec thunar
 bindsym $mod+Shift+1 restart
 bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

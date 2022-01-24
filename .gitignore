@@ -1,29 +1,32 @@
+BetterDiscord Installer/
+Code/
+FRC Utilities/
+balena-etcher/
+dunst/
+gthumb/
+guvcview2/
+nitrogen/
+xed/
 AppleMusic/
 Badlion Client/
 BadlionClient/
-balena-etcher/
 brinkervii/
-celluloid/
-Code/
+Cider/
+chromium/
 GIMP/
 appimagelauncher.cfg
 coc/
 configstore/
 dconf/
 discord/
-dunst/
 emacs/
 emacs.d/
-FRC Utilities/
-gthumb/
-guvcview2/
 JetBrains/
 libreoffice/
 libvirt/
 lutris/
 menus/
 mimeapps.list
-nitrogen/
 neofetch/
 nvim/plugged/
 nvim/undodir/
@@ -34,7 +37,6 @@ Slack/
 systemd/
 Unknown Organization/
 xfce4/
-xed/
 user-dirs.dirs
 user-dirs.locale
 zoomus.conf
