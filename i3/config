@@ -48,6 +48,8 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec /usr/bin/emacs --daemon &
+exec autotiling -w 1 2 4 9
 
 # Colors
 set $bg-color 	         #2f343f
@@ -63,8 +65,8 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 
 # Gaps
 for_window [class="^.*"] border pixel 2
-gaps inner 20
-gaps outer 10
+gaps inner 8
+gaps outer 8
 smart_borders on
 smart_borders no_gaps
 border_radius 10
@@ -84,7 +86,7 @@ bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -s
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+apostrophe exec rofi -show run -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
+bindsym $mod+apostrophe exec rofi -show drun -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
 bindsym $mod+q kill
 # change focus
 bindsym $mod+h focus left
@@ -162,7 +164,6 @@ assign [class="Gimp"] $ws7
 
 exec discord
 exec cider
-exec /usr/bin/emacs --daemon &
 #bindsym $mod+Shift+c reload
 bindsym $mod+n exec emacsclient -c -a 'emacs'
 bindsym $mod+m exec chromium

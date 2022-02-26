@@ -1,3 +1,30 @@
 {
-  "java.format.settings.url": "/home/haadi/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
+	"java.format.settings.url": "/home/haadi/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
+	"explorer.width": 30,
+	"explorer.icon.source": "vim-devicons",
+	"explorer.icon.enableNerdfont": true,
+	"explorer.previewAction.onHover": false,
+	"explorer.keyMappings": {
+		"t": "open:tab",
+		"i": "open:split",
+		"s": "open:vsplit",
+		"C": "copyFile",
+		"md": "delete",
+		"mm": "rename",
+		"mc": "copyFile",
+		"ma": "addFile",
+		"mA": "addDirectory",
+
+		"?": "help",
+		"q": "quit",
+		"<esc>": "esc",
+		"X": "systemExecute",
+		"gd": "listDrive",
+
+		"f": "search",
+		"F": "searchRecursive",
+
+		"I": "toggleHidden",
+		"R": "refresh",
+	}
 }

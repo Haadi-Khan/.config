@@ -21,6 +21,8 @@ function! TermToggle(height)
     endif
 endfunction
 
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Ctrl P Config
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
@@ -30,7 +32,6 @@ let g:netrw_winsize = 25
 
 let g:ctrlp_use_caching = 0
 
-" Indent Guide Config
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_first_char = '▏'
 let g:indentLine_char = '▏'
