@@ -10,6 +10,17 @@
         "twitchglobal": true,
         "twitchsubscriber": false,
         "frankerfacez": true,
-        "bttv": true
+        "bttv": true,
+        "download": false,
+        "emoteMenu": false,
+        "hideEmojiMenu": false,
+        "modifiers": false,
+        "animateOnHover": false
+    },
+    "categories": {
+        "twitchglobal": false,
+        "twitchsubscriber": false,
+        "frankerfacez": false,
+        "bttv": false
     }
 }

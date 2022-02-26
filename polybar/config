@@ -42,7 +42,7 @@
 	; vim:ft=dosini
 
 [bar/haadibar]
-	;monitor = DP-0
+	;monitor = ${env:MONITOR:}
 	width = 100%
 	height = 24
 	;offset-x = 1%
@@ -65,59 +65,13 @@
 	module-margin-left = 1
 	module-margin-right = 2
 
-	font-0 = fixed:pixelsize=10;1
+	font-0 = SF UI Display:pixelsize=11;1
 	font-1 = unifont:fontformat=truetype:size=8:antialias=true;0
 	font-2 = siji:pixelsize=10;1
 
 	modules-left = i3
 	modules-center = mpd
-	modules-right = pulseaudio xkeyboard memory cpu wlan eth weather date powermenu
-
-	tray-position = right
-	tray-padding = 2
-	;tray-background = #0063ff
-
-	;wm-restack = i3
-
-	;override-redirect = true
-
-	;scroll-up = i3wm-wsnext
-	;scroll-down = i3wm-wsprev
-
-	cursor-click = pointer
-	cursor-scroll = ns-resize
-
-[bar/twobar]
-	;monitor = DP-3
-	width = 100%
-	height = 24
-	;offset-x = 1%
-	;offset-y = 1%
-	radius = 6.0
-	fixed-center = false
-
-	background = ${colors.background}
-	foreground = ${colors.foreground}
-
-	line-size = 3
-	line-color = #f00
-
-	border-size = 4
-	border-color = #00000000
-
-	padding-left = 0
-	padding-right = 2
-
-	module-margin-left = 1
-	module-margin-right = 2
-
-	font-0 = fixed:pixelsize=10;1
-	font-1 = unifont:fontformat=truetype:size=8:antialias=true;0
-	font-2 = siji:pixelsize=10;1
-
-	modules-left = i3
-	modules-center = mpd
-	modules-right = pulseaudio xkeyboard memory cpu wlan eth weather date powermenu
+	modules-right = pulseaudio xkeyboard memory cpu wlan eth weather battery date powermenu
 
 	tray-position = right
 	tray-padding = 2
@@ -266,6 +220,39 @@
 	;format-disconnected-underline = ${self.format-connected-underline}
 	;label-disconnected = %ifname% disconnected
 	;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/battery]
+	type = internal/battery
+	battery = BAT1
+	adapter = ACAD
+	full-at = 98
+
+	format-charging = <animation-charging> <label-charging>
+	format-charging-underline = #e5c07b
+
+	format-discharging = <animation-discharging> <label-discharging>
+	format-discharging-underline = #e5c07b
+
+	format-full-prefix = " "
+	format-full-prefix-foreground = ${colors.foreground-alt}
+	format-full-underline = #e5c07b
+
+	ramp-capacity-0 = 
+	ramp-capacity-1 = 
+	ramp-capacity-2 = 
+	ramp-capacity-foreground = ${colors.foreground-alt}
+
+	animation-charging-0 = 
+	animation-charging-1 = 
+	animation-charging-2 = 
+	animation-charging-foreground = ${colors.foreground-alt}
+	animation-charging-framerate = 750
+
+	animation-discharging-0 = 
+	animation-discharging-1 = 
+	animation-discharging-2 = 
+	animation-discharging-foreground = ${colors.foreground-alt}
+	animation-discharging-framerate = 750
 
 [module/weather]
 	type = custom/script

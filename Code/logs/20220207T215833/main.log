@@ -1,9 +1,0 @@
-[2022-02-07 21:58:33.467] [main] [info] update#setState idle
-[2022-02-07 21:58:33.502] [main] [info] ExtensionHostStarterWorker created
-[2022-02-07 21:58:34.448] [main] [info] Starting extension host with pid 11422 (fork() took 5 ms).
-[2022-02-07 21:58:42.609] [main] [info] Extension host with pid 11422 exited with code: 0, signal: null.
-[2022-02-07 21:58:43.306] [main] [info] Starting extension host with pid 11521 (fork() took 4 ms).
-[2022-02-07 21:59:03.477] [main] [info] update#setState checking for updates
-[2022-02-07 21:59:03.483] [main] [info] update#setState available for download
-[2022-02-07 22:12:51.187] [main] [info] Waiting for extension host with pid 11521 to exit.
-[2022-02-07 22:12:51.469] [main] [info] Extension host with pid 11521 exited with code: 0, signal: null.

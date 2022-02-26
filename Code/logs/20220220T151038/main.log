@@ -1,7 +1,0 @@
-[2022-02-20 15:10:38.380] [main] [info] update#setState idle
-[2022-02-20 15:10:38.407] [main] [info] ExtensionHostStarterWorker created
-[2022-02-20 15:10:39.109] [main] [info] Starting extension host with pid 32290 (fork() took 8 ms).
-[2022-02-20 15:11:08.386] [main] [info] update#setState checking for updates
-[2022-02-20 15:11:08.392] [main] [info] update#setState available for download
-[2022-02-20 15:12:23.147] [main] [info] Waiting for extension host with pid 32290 to exit.
-[2022-02-20 15:12:23.155] [main] [info] Extension host with pid 32290 exited with code: 0, signal: null.

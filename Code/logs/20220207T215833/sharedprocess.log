@@ -1,7 +1,0 @@
-[2022-02-07 21:58:37.052] [sharedprocess] [info] Installing extension: vscodevim.vim
-[2022-02-07 21:58:37.996] [sharedprocess] [info] Downloaded extension: vscodevim.vim /home/haadi/.config/Code/CachedExtensionVSIXs/vscodevim.vim-1.22.0
-[2022-02-07 21:58:38.112] [sharedprocess] [info] Extracted extension to /home/haadi/.vscode/extensions/.b8aedf64-6de7-42e7-8d63-df2c500322c4: vscodevim.vim
-[2022-02-07 21:58:38.116] [sharedprocess] [info] Renamed to /home/haadi/.vscode/extensions/vscodevim.vim-1.22.0
-[2022-02-07 21:58:38.118] [sharedprocess] [info] Extracting completed. vscodevim.vim
-[2022-02-07 21:58:38.122] [sharedprocess] [info] Extension installed successfully: vscodevim.vim
-[2022-02-07 21:58:43.444] [sharedprocess] [info] Starting worker process with pid 11536 (type: watcherServiceParcelSharedProcess, window: 1).
