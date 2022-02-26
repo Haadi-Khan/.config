@@ -30,11 +30,6 @@ let g:netrw_winsize = 25
 
 let g:ctrlp_use_caching = 0
 
-" Indent Guide Config
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_first_char = '▏'
-let g:indentLine_char = '▏'
-
 " Airline Config
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -57,7 +52,7 @@ syntax match OrgHeadlineStar3 /^\*\{3}\ze\s/me=e-1 conceal cchar=✸ containedin
 syntax match OrgHeadlineStar4 /^\*{4}\ze\s/me=e-1 conceal cchar=✿ containedin=OrgHeadlineLevel4 contained
 
 " Sets working directory to current file's directory
-autocmd BufEnter * lcd %:p:h
-if executable('rg')
-	let g:rg_derive_root='true'
-endif
+"autocmd BufEnter * lcd %:p:h
+"if executable('rg')
+	"let g:rg_derive_root='true'
+"endif

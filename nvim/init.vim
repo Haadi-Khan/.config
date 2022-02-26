@@ -1,5 +1,5 @@
 for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
-    exe 'source' f
+	exe 'source' f
 endfor
 
 syntax on

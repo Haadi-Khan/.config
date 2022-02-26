@@ -1,0 +1,8 @@
+[2022-02-01 00:22:54.226] [renderer1] [error] [Extension Host] (node:32646) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `code --trace-deprecation ...` to show where the warning was created)
+[2022-02-01 00:26:04.748] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"message":"request -> neovim.api.nvim_ui_attach","level":"debug"}
+[2022-02-01 00:26:04.748] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"message":"response -> neovim.api.nvim_ui_attach: null","level":"debug"}
+[2022-02-01 00:26:04.748] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"message":"request -> neovim.api.nvim_get_api_info","level":"debug"}
+[2022-02-01 00:26:04.749] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"message":"response -> neovim.api.nvim_get_api_info: 1,[object Object]","level":"debug"}
+[2022-02-01 00:26:04.749] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"message":"request -> neovim.api.nvim_get_current_buf","level":"debug"}
+[2022-02-01 00:26:04.934] [renderer1] [error] [Extension Host] [winston] Attempt to write logs with no transports %j {"level":"info","message":"handleNotification: "}

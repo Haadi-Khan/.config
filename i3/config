@@ -86,7 +86,7 @@ floating_modifier $mod
 # Window Management Keybinds
 	# Use Mouse+$mod to drag floating windows to their wanted position
 	bindsym $mod+Return exec i3-sensible-terminal
-	bindsym $mod+apostrophe exec rofi -show run -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
+	bindsym $mod+apostrophe exec rofi -show drun -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
 	bindsym $mod+q kill
 	# change focus
 	bindsym $mod+h focus left
@@ -159,7 +159,7 @@ bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -s
 
 # open applications on specific workspaces
 assign [class="discord"] $ws4
-assign [class="Apple Music"] $ws4
+assign [class="Cider"] $ws4
 assign [class="Thunderbird"] $ws5
 assign [class="Slack"] $ws5
 assign [class="Gimp"] $ws7

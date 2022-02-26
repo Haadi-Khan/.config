@@ -1,0 +1,11 @@
+[2022-02-07 21:58:35.284] [renderer1] [error] [Extension Host] (node:11422) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `code --trace-deprecation ...` to show where the warning was created)
+[2022-02-07 21:58:43.649] [renderer1] [error] [Extension Host] (node:11521) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `code --trace-deprecation ...` to show where the warning was created)
+[2022-02-07 21:58:44.269] [renderer1] [error] e is not iterable: TypeError: e is not iterable
+    at s (/opt/visual-studio-code/resources/app/extensions/github/dist/extension.js:2:94950)
+    at /opt/visual-studio-code/resources/app/extensions/github/dist/extension.js:2:97385
+    at u.fire (/opt/visual-studio-code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:66:1712)
+    at i.deltaExtensions (/opt/visual-studio-code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:93:76399)
+    at v.$deltaExtensions (/opt/visual-studio-code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:100:21268)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
