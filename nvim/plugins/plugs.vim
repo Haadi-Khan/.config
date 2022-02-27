@@ -2,27 +2,16 @@ call plug#begin('~/.config/nvim/plugged')
 	" Themes and Airline
 	Plug 'joshdick/onedark.vim' 							 					" Colors
 	Plug 'vim-airline/vim-airline' 				 								" Status Bar
-<<<<<<< HEAD
-=======
 	Plug 'git@github.com:Yggdroot/indentLine.git'                 				" Indent Guides
->>>>>>> laptop
 	Plug 'tc50cal/vim-terminal' 												" Integrated Terminal
 	Plug 'scrooloose/nerdcommenter' 											" Comment Out Code
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 								" File Tree Coloring
 	Plug 'ryanoasis/vim-devicons' 				  								" File Icons in Tree
 	Plug 'kyazdani42/nvim-web-devicons'		  									" File Icons in Tabs
 	Plug 'romgrk/barbar.nvim' 													" Tab Line
-<<<<<<< HEAD
-	Plug 'lukas-reineke/indent-blankline.nvim'
-
-	" Git Stuff
-	Plug 'nvim-lua/plenary.nvim'
-	Plug 'TimUntersberger/neogit' 												" Magit
-=======
 
 	" Git Stuff
 	Plug 'tpope/vim-fugitive'                            				   		" Git Plugin
->>>>>>> laptop
 	Plug 'airblade/vim-gitgutter' 												" Edited Lines
 
 	" Code Autocomplete and highlighting
@@ -39,10 +28,6 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'git@github.com:preservim/nerdtree.git'                  				" File Tree
 	Plug 'git@github.com:kien/ctrlp.vim.git'                      				" File Search
 	Plug 'dbeecham/ctrlp-commandpalette.vim' 									" Command Palette
-<<<<<<< HEAD
-call plug#end()
-
-=======
 
 	" Org Mode Setup
 	Plug 'nvim-treesitter/nvim-treesitter' 										" Needed for Org Mode
@@ -79,4 +64,3 @@ lua << EOF
 	  org_indent_mode = indent
 	})
 EOF
->>>>>>> laptop

@@ -17,11 +17,7 @@
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
 #   | Caps |Tabbed|  W1  |  W2  |  W3  |  W4  |      | Left | Down |  Up  |Right |   ;  |  '   |
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
-<<<<<<< HEAD
 #   | Shift| Split|  W9  |  W10 |VerSpl|HorSpl|      |      |O Emac|O Chro|O Thun|   /  |  Fn  |
-=======
-#   | Shift| Split|  W9  |  W10 |VerSpl|HorSpl|      |   N  |   M  |   ,  |   .  |   /  |  Fn  |
->>>>>>> laptop
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
 #   | Ctrl | Mod  | Alt  | Rofi |      | Home |      |  =   |      | LArr | DArr | UArr | RArr |
 #   |------+------+------+------+SwiFlo+------|      |------+ Term +------+------+------+------|
@@ -47,7 +43,6 @@
 # Sets mod key to Super
 set $mod Mod4
 
-<<<<<<< HEAD
 # Startup Processes
 	font pango:SF UI Display 12
 	exec --no-startup-id dex --autostart --environment i3
@@ -57,13 +52,6 @@ set $mod Mod4
 	exec discord
 	exec cider
 	exec /usr/bin/emacs --daemon &
-=======
-font pango:SF UI Display 12
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id nm-applet
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
->>>>>>> laptop
 
 # Colors
 set $bg-color 	         #2f343f
@@ -78,7 +66,6 @@ client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
 
 # Gaps
-<<<<<<< HEAD
 	for_window [class="^.*"] border pixel 2
 	gaps inner 12
 	gaps outer 10
@@ -95,58 +82,6 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 	bindsym XF86AudioPause exec playerctl play-pause
 
 floating_modifier $mod
-# Window Management Keybinds
-	# Use Mouse+$mod to drag floating windows to their wanted position
-	bindsym $mod+Return exec i3-sensible-terminal
-	bindsym $mod+apostrophe exec rofi -show drun -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
-	bindsym $mod+q kill
-	# change focus
-	bindsym $mod+h focus left
-	bindsym $mod+j focus down
-	bindsym $mod+k focus up
-	bindsym $mod+l focus right
-	# move focused window
-	bindsym $mod+Shift+h move left
-	bindsym $mod+Shift+j move down
-	bindsym $mod+Shift+k move up
-	bindsym $mod+Shift+l move right
-	# Split Horizontal Vertical
-	bindsym $mod+b split h
-	bindsym $mod+v split v
-	# change container layout (stacked, tabbed, toggle split)
-	#bindsym $mod+a layout stacking
-	bindsym $mod+a layout tabbed
-	bindsym $mod+z layout toggle split
-	# toggle tiling / floating
-	bindsym $mod+Shift+space floating toggle
-	# change focus between tiling / floating windows
-	bindsym $mod+space focus mode_toggle
-	# focus the parent container
-	bindsym $mod+u focus parent
-	# focus the child container
-	bindsym $mod+i focus child
-	# Fullscreen a Window (First is to monitor, second is all monitors)
-	bindsym $mod+p fullscreen toggle 
-	bindsym $mod+shift+p fullscreen toggle global
-=======
-for_window [class="^.*"] border pixel 2
-gaps inner 20
-gaps outer 10
-smart_borders on
-smart_borders no_gaps
-border_radius 10
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i2status
-bindsym XF86AudioPause exec playerctl play-pause
-bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
->>>>>>> laptop
-
 # Screenshot utility
 bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -183,7 +118,6 @@ bindsym $mod+i focus child
 bindsym $mod+p fullscreen toggle 
 bindsym $mod+shift+p fullscreen toggle global
 
-<<<<<<< HEAD
 
 # Workspaces
 	set $ws1 1 Chrome
@@ -196,20 +130,6 @@ bindsym $mod+shift+p fullscreen toggle global
 	set $ws8 8
 	set $ws9 9 Games
 	set $ws10 10
-=======
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
-set $ws1 1 Firefox
-set $ws2 2 Flex
-set $ws3 3 Code
-set $ws4 4 Discord+Music
-set $ws5 5 Email
-set $ws6 6
-set $ws7 7 Gimp
-set $ws8 8
-set $ws9 9 Games
-set $ws10 10
->>>>>>> laptop
 
 # switch to workspace
 bindsym $mod+s workspace number $ws1
@@ -236,11 +156,8 @@ bindsym $mod+Shift+x move container to workspace number $ws9
 bindsym $mod+Shift+c move container to workspace number $ws10
 
 # open applications on specific workspaces
-<<<<<<< HEAD
-=======
 assign [class="Emacs"] $ws3
 assign [class="code"] $ws3
->>>>>>> laptop
 assign [class="discord"] $ws4
 assign [class="Cider"] $ws4
 assign [class="Thunderbird"] $ws5
