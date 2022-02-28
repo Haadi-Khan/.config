@@ -83,3 +83,6 @@ Use --utf-force argument to force start if you're sure your terminal can handle 
 2022/02/01 (00:22:27) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
 =======
 >>>>>>> laptop
+
+2022/02/26 (20:56:42) | ===> btop++ v.1.2.3
+2022/02/26 (20:56:42) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.

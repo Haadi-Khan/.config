@@ -51,8 +51,10 @@ syntax match OrgHeadlineStar2 /^\*\{2}\ze\s/me=e-1 conceal cchar=○ containedin
 syntax match OrgHeadlineStar3 /^\*\{3}\ze\s/me=e-1 conceal cchar=✸ containedin=OrgHeadlineLevel3 contained
 syntax match OrgHeadlineStar4 /^\*{4}\ze\s/me=e-1 conceal cchar=✿ containedin=OrgHeadlineLevel4 contained
 
-" Sets working directory to current file's directory
-"autocmd BufEnter * lcd %:p:h
-"if executable('rg')
-	"let g:rg_derive_root='true'
-"endif
+let g:indent_guides_exclude_filetypes = ['coc-explorer']
+let g:indentLine_fileTypeExclude = ['coc-explorer']
+"Sets working directory to current file's directory
+autocmd BufEnter * lcd %:p:h
+if executable('rg')
+	let g:rg_derive_root='true'
+endif

@@ -45,4 +45,4 @@ set foldmethod=indent
 
 set clipboard=unnamedplus
 
-let mapleader = " "
+let mapleader = ";"

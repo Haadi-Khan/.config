@@ -6,8 +6,6 @@ inoremap <C-BS> <C-\><C-o>db
 " Pastes while keeping old paste 
 vnoremap <leader>p "_dP
 
-" Set file explorer view toggle to Ctrl H
-map <C-H> :NERDTreeToggle<CR> 
 " Ctrl / to comment code
 map <C-_> <plug>NERDCommenterToggle
 
