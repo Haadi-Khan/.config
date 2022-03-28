@@ -5,7 +5,7 @@
 Order Matters, do NOT mess with it
 
 ** Setup Package.el To Work With MELPA
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el :tangle  ~/.emacs.d/config.el
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -16,7 +16,7 @@ Order Matters, do NOT mess with it
 ** Use-Package
 Install use-package and enable ':ensure t' globally.  The ':ensure' keyword causes the package(s) within use-package statements to be installed automatically if not already present on your system.  To avoid having to add ':ensure t' to every use-package statement in this config, I set 'use-package-always-ensure'.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
@@ -24,7 +24,7 @@ Install use-package and enable ':ensure t' globally.  The ':ensure' keyword caus
 
 ** Evil Mode
 Enable Vim
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -38,11 +38,16 @@ Enable Vim
   (setq evil-collection-mode-list '(dashboard dired ibuffer))
   (evil-collection-init))
 (use-package evil-tutor)
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
+(use-package key-chord)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
 #+end_src
 
 ** General Keybindings
 Package which makes setting keybinds way easier
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package general
   :config
   (general-evil-setup t))
@@ -52,7 +57,7 @@ Package which makes setting keybinds way easier
 Vim is fast. Emacs is slow. Make Emacs not slow.
 ** Garbage collection
 Makes startup faster by reducing the frequency of garbage collection
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 ;; Using garbage magic hack.
  (use-package gcmh
    :config
@@ -74,7 +79,7 @@ Makes startup faster by reducing the frequency of garbage collection
 (setq gc-cons-threshold (* 2 1000 1000))
 #+end_src
 ** Native Compile
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 ;; Silence compiler warnings as they can be pretty disruptive
 (if (boundp 'comp-deferred-compilation)
     (setq comp-deferred-compilation nil)
@@ -89,7 +94,7 @@ Makes startup faster by reducing the frequency of garbage collection
 Basic Settings for Emacs
 
 ** Theme
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package doom-themes)
 (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
       doom-themes-enable-italic t) ; if nil, italics is universally disabled
@@ -97,14 +102,15 @@ Basic Settings for Emacs
 #+end_src
 
 ** Disable Toolbars and Scrollbars
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 #+end_src
 
 ** Line Configuration
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (global-display-line-numbers-mode 1)
+(electric-pair-mode 1)
 (setq display-line-numbers-type 'relative)
 (setq scroll-margin 8)
 
@@ -114,28 +120,33 @@ Basic Settings for Emacs
 #+end_src
 
 ** Indent Guides
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (setq highlight-indent-guides-method 'character)
 #+end_src
 
 ** Tabs
 
-#+begin_src emacs-lisp
-(centaur-tabs-mode 1)
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package centaur-tabs
+:config
+  (centaur-tabs-mode 1)
+:bind
+  (("C-x C-x" . centaur-tabs--kill-this-buffer-dont-ask))
+)
 #+end_src
 ** Doom Modeline
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package doom-modeline)
 (doom-modeline-mode 1)
 #+end_src
 
 ** Icons
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package all-the-icons)
 #+end_src
 ** Fonts
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (set-face-attribute 'default nil
   :font "Roboto Mono"
   :height 140
@@ -160,7 +171,7 @@ Basic Settings for Emacs
 ** Zooming
 You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 ;; zoom in/out like we do everywhere else.
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -169,18 +180,18 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 #+end_src
 
 ** Emojis
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 #+end_src
 ** Delete Selection
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (delete-selection-mode t)
 #+end_src
 
 * Buffer + Bookmarks
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :prefix "SPC"
        "b b"   '(ibuffer :which-key "Ibuffer")
        "b c"   '(clone-indirect-buffer-other-window :which-key "Clone indirect buffer other window")
@@ -196,12 +207,12 @@ Dashboard when starting Emacs, looks cool
 
 ** Configuring Dashboard
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Emacs: Richard Stallman's Second Favorite Fetish")
+  (setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.emacs.d/emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
@@ -219,7 +230,7 @@ Dashboard when starting Emacs, looks cool
 ** Dashboard in Emacsclient
 This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 #+end_src
 
@@ -234,7 +245,7 @@ I choose to use the format 'SPC e' plus 'key' for these (I also use 'SPC e' for 
 | eval-last-sexp  | /Evaluate elisp expression before point/         | SPC e l    |
 | eval-region     | /Evaluate elisp in region/                       | SPC e r    |
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
        "e d"   '(eval-defun :which-key "Eval defun")
@@ -266,7 +277,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 | peep-dired-next-file | /Move to next file in peep-dired-mode/     | j          |
 | peep-dired-prev-file | /Move to previous file in peep-dired-mode/ | k          |
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package all-the-icons-dired)
 (use-package dired-open)
 (use-package peep-dired)
@@ -298,7 +309,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 * File Configs
 ** File-related Keybindings
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "."     '(find-file :which-key "Find file")
        "f f"   '(find-file :which-key "Find file")
@@ -316,7 +327,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 ** Installing Some Useful File-related Modules
 Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package recentf
   :config
   (recentf-mode))
@@ -325,7 +336,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 #+end_src
 
 ** Useful File Functions
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (defun dt/show-and-copy-buffer-path ()
   "Show and copy the full path to the current file in the minibuffer."
   (interactive)
@@ -345,10 +356,33 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
       (error "Buffer not visiting a file"))))
 #+end_src
 
+** File Specific Configs
+*** Text Modes
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+;; Spell Checking
+(use-package flyspell-popup)
+(require 'flyspell)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(setq ispell-program-name "hunspell")
+(add-hook 'text-mode-hook 'visual-line-mode)
+;;(defvar mu-languages-ring nil "Languages ring for Ispell")
+;;
+;;(let ((languages '("en_US" "es_ES")))
+  ;;(validate-setq mu-languages-ring (make-ring (length languages)))
+  ;;(dolist (elem languages) (ring-insert mu-languages-ring elem)))
+;;
+;;(defun mu-cycle-ispell-languages ()
+  ;;(interactive)
+  ;;(let ((language (ring-ref mu-languages-ring -1)))
+    ;;(ring-insert mu-languages-ring language)
+    ;;(ispell-change-dictionary language)))
+
+
+#+end_src
 * Keybinds
 General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  It certainly is easier on the hands than constantly using CTRL for a prefix.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "SPC"   '(counsel-M-x :which-key "M-x")
        "c c"   '(compile :which-key "Compile")
@@ -359,12 +393,14 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
        "m *"   '(org-ctrl-c-star :which-key "Org-ctrl-c-star")
        "m +"   '(org-ctrl-c-minus :which-key "Org-ctrl-c-minus")
        "m ."   '(counsel-org-goto :which-key "Counsel org goto")
+       "m d"   '(org-deadline :which-key "Org set deadline")'
        "m e"   '(org-export-dispatch :which-key "Org export dispatch")
        "m f"   '(org-footnote-new :which-key "Org footnote new")
        "m h"   '(org-toggle-heading :which-key "Org toggle heading")
        "m i"   '(org-toggle-item :which-key "Org toggle item")
        "m n"   '(org-store-link :which-key "Org store link")
        "m o"   '(org-set-property :which-key "Org set property")
+       "m s"   '(org-schedule :which-key "Org set schedule")'
        "m t"   '(org-todo :which-key "Org todo")
        "m x"   '(org-toggle-checkbox :which-key "Org toggle checkbox")
        "m B"   '(org-babel-tangle :which-key "Org babel tangle")
@@ -378,7 +414,7 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
 ** Installing Ivy And Basic Setup
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package counsel
   :after ivy
   :config (counsel-mode))
@@ -413,12 +449,12 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
 ** M-x Improvements
 The following line removes the annoying '^' in things like counsel-M-x and other ivy/counsel prompts.  The default '^' string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I'm searching for a command without knowing what it begins with though.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq ivy-initial-inputs-alist nil)
 #+end_src
 
 Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package smex)
 (smex-initialize)
 #+end_src
@@ -439,7 +475,7 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 
 =NOTE:= If the setting for 'ivy-posframe-display' is set to 'nil' (false), anything that is set to 'ivy-display-function-fallback' will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to 't' (true), then the fallback position will be centered in the window.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
   (use-package ivy-posframe
     :init
     (setq ivy-posframe-display-functions-alist
@@ -466,7 +502,7 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 Adding packages for programming langauges, so we can have nice things like syntax highlighting.
 
 ** Java
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (condition-case nil
     (require 'use-package)
   (file-error
@@ -498,21 +534,21 @@ Adding packages for programming langauges, so we can have nice things like synta
 #+end_src
 
 ** Python
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 #+end_src
 
 ** C++
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 #+end_src
 
 ** Misc.
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package markdown-mode)
 #+end_src
 
 * Magit
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
 (setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
 ;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
@@ -545,44 +581,25 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
 | neotree-toggle | /Toggle neotree/            | SPC t n    |
 | neotree- dir   | /Open directory in neotree/ | SPC d n    |
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp :tangle ~/.emacs.d/config.el
 ;; Function for setting a fixed width for neotree.
 ;; Defaults to 25 but I make it a bit longer (35) in the 'use-package neotree'.
-(defcustom neo-window-width 25
-  "*Specifies the width of the NeoTree window."
-  :type 'integer
-  :group 'neotree)
-
-(use-package neotree
-  :config
-  (setq neo-smart-open t
-        neo-window-width 30
-        neo-theme (if (display-graphic-p) 'icons 'arrow)
-        ;;neo-window-fixed-size nil
-        inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action) 
-        ;; truncate long file names in neotree
-        (add-hook 'neo-after-create-hook
-           #'(lambda (_)
-               (with-current-buffer (get-buffer neo-buffer-name)
-                 (setq truncate-lines t)
-                 (setq word-wrap nil)
-                 (make-local-variable 'auto-hscroll-mode)
-                 (setq auto-hscroll-mode nil)))))
-
-;; show hidden files
-(setq-default neo-show-hidden-files t)
-
-(nvmap :prefix "SPC"
-       "t n"   '(neotree-toggle :which-key "Toggle neotree file viewer")
-       "d n"   '(neotree-dir :which-key "Open directory in neotree"))
+(use-package treemacs)
+(use-package treemacs-evil)
 #+END_SRC
   
 * Org Mode
-Org Mode is =THE= killer feature within Emacs.  But it does need some tweaking.
+Org Mode is killer feature within Emacs
 
 ** Setup
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 (add-hook 'org-mode-hook 'org-indent-mode)
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/todos.org")
@@ -606,15 +623,25 @@ Org Mode is =THE= killer feature within Emacs.  But it does need some tweaking.
 #+end_src
 
 ** Enabling Org Bullets
-#+begin_src emacs-lisp
-(use-package org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package org-superstar ; "prettier" bullets
+  :hook (org-mode . org-superstar-mode)
+  :config
+  ;; Make leading stars truly invisible, by rendering them as spaces!
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745))))
 #+end_src
 
 ** Org Link Abbreviations
 This allows for the use of abbreviations that will get expanded out into a lengthy URL.
    
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 ;; An example of how this works.
 ;; [[arch-wiki:Name_of_Page][Description]]
 (setq org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
@@ -627,7 +654,7 @@ This allows for the use of abbreviations that will get expanded out into a lengt
 ** Org Todo Keywords
 This lets us create the various TODO tags that we can use in Org.
    
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
     '((sequence
              "TODO(t)"
@@ -649,6 +676,11 @@ This lets us create the various TODO tags that we can use in Org.
     )
 #+end_src
 
+** Disable Blank Line from M-RET
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(setq org-blank-before-new-entry (quote ((heading . nil)
+                                         (plain-list-item . nil))))
+#+end_src
 ** Source Code Block Tag Expansion
 Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
 
@@ -665,7 +697,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 | <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
 | <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package org-tempo
   :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
 #+end_src
@@ -673,7 +705,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 ** Source Code Block Syntax Highlighting
 We want the same syntax highlighting in source blocks as in the native language files.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq org-src-fontify-natively t
     org-src-tab-acts-natively t
     org-confirm-babel-evaluate nil
@@ -683,22 +715,110 @@ We want the same syntax highlighting in source blocks as in the native language 
 ** Automatically Create Table of Contents
 Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful useful for README files on GitHub).  Use :TOC: to create the table.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
   (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
-** Make M-RET Not Add Blank Lines
-#+begin_src emacs-lisp
-(setq org-blank-before-new-entry (quote ((heading . nil)
-                                         (plain-list-item . nil))))
+** LaTeX within Org Mode
+LaTeX is fire, make it so I can take better math/physics notes
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
 #+end_src
 
+* RSS Reader
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package elfeed
+  :config
+  (setq elfeed-search-feed-face ":foreground #fff :weight bold"
+        elfeed-feeds (quote
+                       (("https://www.reddit.com/r/linux.rss" reddit linux)
+                        ("http://www.aljazeera.com/xml/rss/all.xml" Al Jazeera World)
+                        ("http://www.npr.org/rss/rss.php?id=1004" NPR World)
+                        ("npr.org/rss/rss.php?id=1001" NPR US)
+                        ("http://www.politico.com/rss/politicopicks.xml" Politico US)
+                        ("https://hackaday.com/blog/feed/" Hackaday)
+                        ("https://www.computerworld.com/index.rss" Computerworld)
+                        ("https://itsfoss.com/feed/" ItsFOSS)
+                        ("https://www.reddit.com/r/archlinux.rss" )
+                        ("https://www.reddit.com/r/frc.rss" )
+                        ("https://www.reddit.com/r/linuxmasterrace.rss" )
+                        ("https://www.reddit.com/r/programmerhumor.rss" )
+                        ("https://www.reddit.com/r/mechanicalkeyboards.rss" )
+                        ("https://www.reddit.com/r/pcmasterrace.rss" )
+                        ("https://www.reddit.com/r/physicsmemes.rss" )
+                        ("https://www.reddit.com/r/unixporn.rss" )
+                        ("https://www.reddit.com/r/science.rss" )))))
+
+(use-package elfeed-goodies
+  :init
+  (elfeed-goodies/setup)
+  :config
+  (setq elfeed-goodies/entry-pane-size 0.5))
+
+(add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+(evil-define-key 'normal elfeed-show-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(evil-define-key 'normal elfeed-search-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package projectile
+  :config
+  (projectile-global-mode 1))
+#+end_src
+* Web Browser
+Because of the RSS reader, a basic web browser would be appreciated. EAF browser allows CSS to be rendered, something which eww can't do
+** EAF
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package eaf
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
+  :custom
+  ; See https://github.com/emacs-eaf/emacs-application-framework/wiki/Customization
+  (eaf-browser-continue-where-left-off t)
+  (eaf-browser-enable-adblocker t)
+  (browse-url-browser-function 'eaf-open-browser)
+  :config
+  (defalias 'browse-web #'eaf-open-browser)
+  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+  (eaf-bind-key nil "M-q" eaf-browser-keybinding)) ;; unbind, see more in the Wiki
+(require 'eaf-browser)
+(require 'eaf-evil)
+#+end_src
+** Vimium
+This enables vim keys for navigation
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(define-key key-translation-map (kbd "SPC")
+    (lambda (prompt)
+      (if (derived-mode-p 'eaf-mode)
+          (pcase eaf--buffer-app-name
+            ("browser" (if  (string= (eaf-call-sync "call_function" eaf--buffer-id "is_focus") "True")
+                           (kbd "SPC")
+                         (kbd eaf-evil-leader-key)))
+            ("pdf-viewer" (kbd eaf-evil-leader-key))
+            ("image-viewer" (kbd eaf-evil-leader-key))
+            (_  (kbd "SPC")))
+        (kbd "SPC"))))
+#+end_src
+** Configs
+Some basic browser configs
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(setq eaf-browser-translate-language "es")
+(setq eaf-browser-enable-adblocker t)
+#+end_src
 * Perspective
 The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package perspective
   :bind
   ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
@@ -707,7 +827,7 @@ The Perspective package provides multiple named workspaces (or "perspectives") i
 #+end_src
 
 * Projectile
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package projectile
   :config
   (projectile-global-mode 1))
@@ -730,7 +850,7 @@ Emacs registers are compartments where you can save text, rectangles and positio
 | increment-register               | /Increment register/               | SPC r +    |
 | point-to-register                | /Point to register/                | SPC r SPC  |
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :prefix "SPC"
        "r c"   '(copy-to-register :which-key "Copy to register")
        "r f"   '(frameset-to-register :which-key "Frameset to register")
@@ -748,7 +868,7 @@ Emacs registers are compartments where you can save text, rectangles and positio
 * Scrolling Speeds
 Emacs' default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
 (setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
@@ -761,7 +881,7 @@ In my configs, all of my shells (bash, fish, zsh and the ESHELL) require my shel
 ** Eshell
 Eshell is an Emacs 'shell' that is written in Elisp.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (nvmap :prefix "SPC"
        "e h"   '(counsel-esh-history :which-key "Eshell history")
        "e s"   '(eshell :which-key "Eshell"))
@@ -771,7 +891,7 @@ Eshell is an Emacs 'shell' that is written in Elisp.
 + 'eshell-rc-script' -- your profile for eshell; like a bashrc for eshell.
 + 'eshell-aliases-file' -- sets an aliases file for the eshell.
   
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package eshell-syntax-highlighting
   :after esh-mode
   :config
@@ -790,7 +910,7 @@ Eshell is an Emacs 'shell' that is written in Elisp.
 ** Vterm
 Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package vterm)
 (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000)
@@ -798,7 +918,7 @@ Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets t
 
 * Window Control
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (winner-mode 1)
 (nvmap :prefix "SPC"
        ;; Window splits
@@ -822,7 +942,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 
 =NOTE:= Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package which-key
   :init
   (setq which-key-side-window-location 'bottom
@@ -843,36 +963,24 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 * Writeroom Mode
 A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
 
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (use-package writeroom-mode)
-#+end_src
-* Spell Check + Grammar
-#+begin_src emacs-lisp
-;; (require 'guess-language)
-;; (use-package guess-language         ; Automatically detect language for Flyspell
-  ;; :ensure t
-  ;; :defer t
-  ;; ;; :init (add-hook 'text-mode-hook #'guess-language-mode)
-  ;; :config
-  ;; (setq guess-language-langcodes '((en . ("en_US" "English"))
-                                   ;; (es . ("es_ES" "Spanish")))
-        ;; guess-language-languages '(en es)
-        ;; guess-language-min-paragraph-length 45)
-  ;; :diminish guess-language-mode)
-(use-package flyspell-popup)
-(require 'flyspell)
-(add-hook 'text-mode-hook 'flyspell-mode)
-(setq ispell-program-name "hunspell")
 #+end_src
 * Misc. Config
 Configuration stuff which doesn't really fit anywhere else
 
 ** No Junk Files
-#+begin_src emacs-lisp
+#+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq
     make-backup-files nil
     auto-save-default nil
     create-lockfiles nil)
 #+end_src
 
-** 
+** Google Translate
+Handy for Spanish
+#+begin_src lisp :tangle ~/.emacs.d/config.el
+(use-package google-translate)
+(require 'google-translate)
+(require 'google-translate-default-ui)
+#+end_src
