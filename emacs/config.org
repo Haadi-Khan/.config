@@ -657,23 +657,41 @@ This lets us create the various TODO tags that we can use in Org.
 #+begin_src lisp :tangle ~/.emacs.d/config.el
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
     '((sequence
-             "TODO(t)"
-             "APUSH(a)"
-             "STAT(s)"
-             "PHYSICS(P)"
-             "CALC(C)"
-             "LANG(l)"
-             "SPAN(f)"
-             "MULTI(m)"
-             "CS(S)"
-             "ROBO(r)"
-             "SCIOLY(g)"
-             "|"
-             "DONE(d)"
-             "CANCELLED(c)"
-             "|"
-             "PROG(p)"))
-    )
+            "TODO(t)"
+            "TEST(T)"
+            "APUSH(a)"
+            "STAT(s)"
+            "PHYSICS(P)"
+            "CALC(C)"
+            "LANG(l)"
+            "SPAN(f)"
+            "MULTI(m)"
+            "CS(S)"
+            "ROBO(r)"
+            "SCIOLY(g)"
+            "|"
+            "DONE(d)"
+            "CANCELLED(c)"
+            "|"
+            "PROG(p)"))
+)
+(setq org-todo-keyword-faces'(
+        ("TODO" . org-warning)
+        ("TEST" .  (:foreground "#e06c75" :weight bold))
+        ("APUSH" . "#e5c07b")
+        ("STAT" . "#61afef")
+        ("PHYSICS" . "#98c379")
+        ("CALC" . "#61afef")
+        ("LANG" . "#d19a66")
+        ("SPAN" . "#d19a66")
+        ("MULTI" . "#56b6c2")
+        ("CS" . "#56b6c2")
+        ("ROBO" . "#be5046")
+        ("SCIOLY" . "#98c379")
+        ("DONE" . "#5c6370")
+        ("CANCELLED" . (:foreground "#4b5263" :weight bold))
+        ("PROG" . "#e5c07b")
+))
 #+end_src
 
 ** Disable Blank Line from M-RET
