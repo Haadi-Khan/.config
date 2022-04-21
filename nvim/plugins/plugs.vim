@@ -20,9 +20,10 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'neoclide/coc.nvim', {'branch': 'release'} 							" LSP
 	Plug 'hrsh7th/vim-vsnip' 													" Snippets
 	Plug 'hrsh7th/vim-vsnip-integ' 												" Needed for Snippets
-	Plug 'git@github.com:bfrg/vim-cpp-modern.git'                 				" C++ Syntax Highlight 
+    Plug 'git@github.com:octol/vim-cpp-enhanced-highlight.git'                  " C++ Syntax Highlighting
 	Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } 					" Python Syntax Highlight
 	Plug 'uiiaoo/java-syntax.vim' 												" Java Syntax Highlight
+    Plug 'git@github.com:puremourning/vimspector.git'                           " Debugger
 	Plug 'z3t0/arduvim'
 	
 	" File navigation and searching

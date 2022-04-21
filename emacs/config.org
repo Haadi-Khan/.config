@@ -1,11 +1,17 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Haadi Khan
 
+*WIP*
+| Goal         | Progress                                |
+|--------------+-----------------------------------------|
+| File Configs | Grammar stuff needs to be done for text |
+| Java         | LSP needs to be configured              |
+| Python       | Entire setup required                   |
+
 * Startup
 Order Matters, do NOT mess with it
-
-** Setup Package.el To Work With MELPA
-#+begin_src lisp :tangle ~/.emacs.d/config.el :tangle  ~/.emacs.d/config.el
+** Setup MELPA
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el :tangle  ~/.emacs.d/config.el
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -16,7 +22,7 @@ Order Matters, do NOT mess with it
 ** Use-Package
 Install use-package and enable ':ensure t' globally.  The ':ensure' keyword causes the package(s) within use-package statements to be installed automatically if not already present on your system.  To avoid having to add ':ensure t' to every use-package statement in this config, I set 'use-package-always-ensure'.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
@@ -24,7 +30,7 @@ Install use-package and enable ':ensure t' globally.  The ':ensure' keyword caus
 
 ** Evil Mode
 Enable Vim
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -38,6 +44,7 @@ Enable Vim
   (setq evil-collection-mode-list '(dashboard dired ibuffer))
   (evil-collection-init))
 (use-package evil-tutor)
+(require 'undo-tree)
 (global-undo-tree-mode)
 (evil-set-undo-system 'undo-tree)
 (use-package key-chord)
@@ -47,7 +54,7 @@ Enable Vim
 
 ** General Keybindings
 Package which makes setting keybinds way easier
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package general
   :config
   (general-evil-setup t))
@@ -57,7 +64,7 @@ Package which makes setting keybinds way easier
 Vim is fast. Emacs is slow. Make Emacs not slow.
 ** Garbage collection
 Makes startup faster by reducing the frequency of garbage collection
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 ;; Using garbage magic hack.
  (use-package gcmh
    :config
@@ -79,7 +86,7 @@ Makes startup faster by reducing the frequency of garbage collection
 (setq gc-cons-threshold (* 2 1000 1000))
 #+end_src
 ** Native Compile
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 ;; Silence compiler warnings as they can be pretty disruptive
 (if (boundp 'comp-deferred-compilation)
     (setq comp-deferred-compilation nil)
@@ -94,59 +101,47 @@ Makes startup faster by reducing the frequency of garbage collection
 Basic Settings for Emacs
 
 ** Theme
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package doom-themes)
-(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-      doom-themes-enable-italic t) ; if nil, italics is universally disabled
-(load-theme 'doom-one t)
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(load-theme 'atom-one-dark t)
 #+end_src
 
 ** Disable Toolbars and Scrollbars
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 #+end_src
 
 ** Line Configuration
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
 (setq display-line-numbers-type 'relative)
-(setq scroll-margin 8)
+;;(setq scroll-margin 8)
 
+;;(setq-default tab-width 4)
 (require 'fill-column-indicator)
 (setq-default fill-column-indicator '(foreground-color . "#E0DFDB"))
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'prog-mode-hook #'turn-on-fci-mode)
 #+end_src
 
 ** Indent Guides
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'character)
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;;(setq highlight-indent-guides-method 'character)
 #+end_src
 
-** Tabs
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package centaur-tabs
-:config
-  (centaur-tabs-mode 1)
-:bind
-  (("C-x C-x" . centaur-tabs--kill-this-buffer-dont-ask))
-)
-#+end_src
 ** Doom Modeline
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package doom-modeline)
 (doom-modeline-mode 1)
 #+end_src
 
 ** Icons
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package all-the-icons)
 #+end_src
 ** Fonts
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (set-face-attribute 'default nil
   :font "Roboto Mono"
   :height 140
@@ -171,7 +166,7 @@ Basic Settings for Emacs
 ** Zooming
 You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 ;; zoom in/out like we do everywhere else.
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -179,19 +174,28 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
 
+** Scrolling
+Emacs' default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
+(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+#+end_src
 ** Emojis
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 #+end_src
 ** Delete Selection
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (delete-selection-mode t)
 #+end_src
 
-* Buffer + Bookmarks
+* Buffer Options
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (nvmap :prefix "SPC"
        "b b"   '(ibuffer :which-key "Ibuffer")
        "b c"   '(clone-indirect-buffer-other-window :which-key "Clone indirect buffer other window")
@@ -207,7 +211,7 @@ Dashboard when starting Emacs, looks cool
 
 ** Configuring Dashboard
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
@@ -228,15 +232,13 @@ Dashboard when starting Emacs, looks cool
 #+end_src
 
 ** Dashboard in Emacsclient
-This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*.
+This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 #+end_src
 
 * Elisp Evaluation
-I choose to use the format 'SPC e' plus 'key' for these (I also use 'SPC e' for 'eww' keybindings).
-
 | COMMAND         | DESCRIPTION                                    | KEYBINDING |
 |-----------------+------------------------------------------------+------------|
 | eval-buffer     | /Evaluate elisp in buffer/                       | SPC e b    |
@@ -245,7 +247,7 @@ I choose to use the format 'SPC e' plus 'key' for these (I also use 'SPC e' for 
 | eval-last-sexp  | /Evaluate elisp expression before point/         | SPC e l    |
 | eval-region     | /Evaluate elisp in region/                       | SPC e r    |
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
        "e d"   '(eval-defun :which-key "Eval defun")
@@ -277,7 +279,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 | peep-dired-next-file | /Move to next file in peep-dired-mode/     | j          |
 | peep-dired-prev-file | /Move to previous file in peep-dired-mode/ | k          |
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package all-the-icons-dired)
 (use-package dired-open)
 (use-package peep-dired)
@@ -309,7 +311,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 * File Configs
 ** File-related Keybindings
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "."     '(find-file :which-key "Find file")
        "f f"   '(find-file :which-key "Find file")
@@ -327,7 +329,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 ** Installing Some Useful File-related Modules
 Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package recentf
   :config
   (recentf-mode))
@@ -336,7 +338,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 #+end_src
 
 ** Useful File Functions
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (defun dt/show-and-copy-buffer-path ()
   "Show and copy the full path to the current file in the minibuffer."
   (interactive)
@@ -358,7 +360,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 
 ** File Specific Configs
 *** Text Modes
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 ;; Spell Checking
 (use-package flyspell-popup)
 (require 'flyspell)
@@ -382,13 +384,17 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 * Keybinds
 General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  It certainly is easier on the hands than constantly using CTRL for a prefix.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "SPC"   '(counsel-M-x :which-key "M-x")
        "c c"   '(compile :which-key "Compile")
        "c C"   '(recompile :which-key "Recompile")
        "h r r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs config")
-       "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines"))
+       "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
+       "o m"   '(magit :which-key "Open Magit"))
+(nvmap :keymaps 'override :prefix "SPC"
+       "j k"   '(treemacs :which-key "Toggle Treemacs")
+       "j K"   '(treemacs-select-directory :which-key "Select Treemacs Directory"))
 (nvmap :keymaps 'override :prefix "SPC"
        "m *"   '(org-ctrl-c-star :which-key "Org-ctrl-c-star")
        "m +"   '(org-ctrl-c-minus :which-key "Org-ctrl-c-minus")
@@ -414,7 +420,7 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
 ** Installing Ivy And Basic Setup
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp  :tangle ~/.emacs.d/config.el
 (use-package counsel
   :after ivy
   :config (counsel-mode))
@@ -449,12 +455,12 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
 ** M-x Improvements
 The following line removes the annoying '^' in things like counsel-M-x and other ivy/counsel prompts.  The default '^' string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I'm searching for a command without knowing what it begins with though.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp  :tangle ~/.emacs.d/config.el
 (setq ivy-initial-inputs-alist nil)
 #+end_src
 
 Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src  emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package smex)
 (smex-initialize)
 #+end_src
@@ -475,7 +481,7 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 
 =NOTE:= If the setting for 'ivy-posframe-display' is set to 'nil' (false), anything that is set to 'ivy-display-function-fallback' will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to 't' (true), then the fallback position will be centered in the window.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
   (use-package ivy-posframe
     :init
     (setq ivy-posframe-display-functions-alist
@@ -499,100 +505,71 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 #+end_src
 
 * Languages
-Adding packages for programming langauges, so we can have nice things like syntax highlighting.
+Adding lsps and syntax highlighting for programming
+
+** General
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :config
+(lsp-enable-which-key-integration t))
+(setq lsp-lens-enable nil)
+
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-idle-delay 0.1)
+#+end_src
+** C++
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(c-add-style "my-style" 
+	     '("stroustrup"
+	       (indent-tabs-mode . t)        ; use spaces rather than tabs
+	       (c-basic-offset . 4)            ; indent by four spaces
+	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+				   (brace-list-open . 0)
+				   (statement-case-open . +)))))
+(defun my-c++-mode-hook ()
+  (c-set-style "my-style")        ; use my-style defined above
+  (auto-fill-mode)         
+  (lsp t)
+  (c-toggle-auto-hungry-state 1))
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+(require 'modern-cpp-font-lock)
+(add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
+#+end_src
 
 ** Java
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(condition-case nil
-    (require 'use-package)
-  (file-error
-   (require 'package)
-   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-   (package-initialize)
-   (package-refresh-contents)
-   (package-install 'use-package)
-   (setq use-package-always-ensure t)
-   (require 'use-package)))
-
-(use-package flycheck)
-(use-package yasnippet :config (yas-global-mode))
-(use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration))
-  :config (setq lsp-completion-enable-additional-text-edit nil))
-(use-package hydra)
-(use-package company)
-(use-package lsp-ui)
-(use-package which-key :config (which-key-mode))
-(use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
-(use-package dap-mode :after lsp-mode :config (dap-auto-configure-mode))
-(use-package dap-java :ensure nil)
-(use-package helm-lsp)
-(use-package helm
-  :config (helm-mode))
-(use-package lsp-treemacs)
-(require 'lsp-java)
-(add-hook 'java-mode-hook #'lsp)
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 #+end_src
 
 ** Python
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp 
+(require 'lsp-python-ms)
+(setq lsp-python-ms-auto-install-server t)
+(add-hook 'python-mode-hook #'lsp) ; or lsp-deferred
+;; for executable of language server, if it's not symlinked on your PATH
+
+(setq lsp-python-ms-executable
+      "~/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
+
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
 #+end_src
 
-** C++
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-#+end_src
-
-** Misc.
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package markdown-mode)
-#+end_src
-
-* Magit
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
-(setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
-;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
-(defun me/magit-status-bare ()
-  "set --git-dir and --work-tree in `magit-git-global-arguments' to `bare-git-dir' and `bare-work-tree' and calls `magit-status'"
-  (interactive)
-  (require 'magit-git)
-  (add-to-list 'magit-git-global-arguments bare-git-dir)
-  (add-to-list 'magit-git-global-arguments bare-work-tree)
-  (call-interactively 'magit-status))
-
-;; if you use `me/magit-status-bare' you cant use `magit-status' on other other repos you have to unset `--git-dir' and `--work-tree'
-;; use `me/magit-status' insted it unsets those before calling `magit-status'
-(defun me/magit-status ()
-  "removes --git-dir and --work-tree in `magit-git-global-arguments' and calls `magit-status'"
-  (interactive)
-  (require 'magit-git)
-  (setq magit-git-global-arguments (remove bare-git-dir magit-git-global-arguments))
-  (setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
-  (call-interactively 'magit-status))
-
-(use-package magit)
- #+end_src
- 
-* Neotree
-Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  NeoTree provides following themes: classic, ascii, arrow, icons, and nerd.  Theme can be configed by setting "two" themes for neo-theme: one for the GUI and one for the terminal.  I like to use 'SPC t' for 'toggle' keybindings, so I have used 'SPC t n' for toggle-neotree.
-
-| COMMAND        | DESCRIPTION               | KEYBINDING |
-|----------------+---------------------------+------------|
-| neotree-toggle | /Toggle neotree/            | SPC t n    |
-| neotree- dir   | /Open directory in neotree/ | SPC d n    |
-
-#+BEGIN_SRC lisp :tangle ~/.emacs.d/config.el
-;; Function for setting a fixed width for neotree.
-;; Defaults to 25 but I make it a bit longer (35) in the 'use-package neotree'.
-(use-package treemacs)
-(use-package treemacs-evil)
-#+END_SRC
-  
 * Org Mode
-Org Mode is killer feature within Emacs
-
 ** Setup
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package evil-org
   :ensure t
   :after org
@@ -614,6 +591,8 @@ Org Mode is killer feature within Emacs
       org-src-tab-acts-natively t
       org-edit-src-content-indentation 0)
 (custom-set-faces
+    '(org-document-title ((t (:inherit outline-1 :height 1.25))))
+    '(org-document-info ((t (:inherit outline-1 :height 1.15))))
     '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
     '(org-level-2 ((t (:inherit outline-2 :height 1.125))))
     '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
@@ -623,7 +602,7 @@ Org Mode is killer feature within Emacs
 #+end_src
 
 ** Enabling Org Bullets
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package org-superstar ; "prettier" bullets
   :hook (org-mode . org-superstar-mode)
   :config
@@ -641,7 +620,7 @@ Org Mode is killer feature within Emacs
 ** Org Link Abbreviations
 This allows for the use of abbreviations that will get expanded out into a lengthy URL.
    
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 ;; An example of how this works.
 ;; [[arch-wiki:Name_of_Page][Description]]
 (setq org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
@@ -654,7 +633,7 @@ This allows for the use of abbreviations that will get expanded out into a lengt
 ** Org Todo Keywords
 This lets us create the various TODO tags that we can use in Org.
    
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
     '((sequence
             "TODO(t)"
@@ -695,7 +674,7 @@ This lets us create the various TODO tags that we can use in Org.
 #+end_src
 
 ** Disable Blank Line from M-RET
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq org-blank-before-new-entry (quote ((heading . nil)
                                          (plain-list-item . nil))))
 #+end_src
@@ -715,7 +694,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 | <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
 | <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package org-tempo
   :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
 #+end_src
@@ -723,7 +702,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 ** Source Code Block Syntax Highlighting
 We want the same syntax highlighting in source blocks as in the native language files.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq org-src-fontify-natively t
     org-src-tab-acts-natively t
     org-confirm-babel-evaluate nil
@@ -733,7 +712,7 @@ We want the same syntax highlighting in source blocks as in the native language 
 ** Automatically Create Table of Contents
 Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful useful for README files on GitHub).  Use :TOC: to create the table.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
   (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -741,13 +720,138 @@ Toc-org helps you to have an up-to-date table of contents in org files without e
 
 ** LaTeX within Org Mode
 LaTeX is fire, make it so I can take better math/physics notes
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
 #+end_src
 
+* Magit
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
+(setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
+;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
+(defun me/magit-status-bare ()
+  "set --git-dir and --work-tree in `magit-git-global-arguments' to `bare-git-dir' and `bare-work-tree' and calls `magit-status'"
+  (interactive)
+  (require 'magit-git)
+  (add-to-list 'magit-git-global-arguments bare-git-dir)
+  (add-to-list 'magit-git-global-arguments bare-work-tree)
+  (call-interactively 'magit-status))
+
+;; if you use `me/magit-status-bare' you cant use `magit-status' on other other repos you have to unset `--git-dir' and `--work-tree'
+;; use `me/magit-status' insted it unsets those before calling `magit-status'
+(defun me/magit-status ()
+  "removes --git-dir and --work-tree in `magit-git-global-arguments' and calls `magit-status'"
+  (interactive)
+  (require 'magit-git)
+  (setq magit-git-global-arguments (remove bare-git-dir magit-git-global-arguments))
+  (setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
+  (call-interactively 'magit-status))
+
+(use-package magit)
+ #+end_src
+ 
+* Treemacs
+-- UNDER CONSTRUCTION --
+Need to setup Treemacs with all my presets from vim
+
+| COMMAND        | DESCRIPTION               | KEYBINDING |
+|----------------+---------------------------+------------|
+| neotree-toggle | /Toggle neotree/            | SPC t n    |
+| neotree- dir   | /Open directory in neotree/ | SPC d n    |
+
+#+BEGIN_src emacs-lisp :tangle ~/.emacs.d/config.el
+;; Function for setting a fixed width for neotree.
+;; Defaults to 25 but I make it a bit longer (35) in the 'use-package neotree'.
+(use-package treemacs)
+(use-package treemacs-evil)
+(add-hook 'treemacs-mode 'display-line-numbers-mode 0)
+(treemacs-load-theme "Atom")
+#+END_SRC
+  
+* Perspective
+The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package perspective
+  :bind
+  ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
+  :config
+  (persp-mode))
+#+end_src
+
+* Projectile
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package projectile
+  :config
+  (projectile-global-mode 1))
+#+end_src
+
+* Registers
+Emacs registers are compartments where you can save text, rectangles and positions for later use. Once you save text or a rectangle in a register, you can copy it into the buffer once or many times; once you save a position in a register, you can jump back to that position once or many times.  The default GNU Emacs keybindings for these commands (with the exception of counsel-register) involves 'C-x r' followed by one or more other keys.  I wanted to make this a little more user friendly, so I chose to replace the 'C-x r' part of the key chords with 'SPC r'.
+
+| COMMAND                          | DESCRIPTION                      | KEYBINDING |
+|----------------------------------+----------------------------------+------------|
+| copy-to-register                 | /Copy to register/                 | SPC r c    |
+| frameset-to-register             | /Frameset to register/             | SPC r f    |
+| insert-register                  | /Insert contents of register/      | SPC r i    |
+| jump-to-register                 | /Jump to register/                 | SPC r j    |
+| list-registers                   | /List registers/                   | SPC r l    |
+| number-to-register               | /Number to register/               | SPC r n    |
+| counsel-register                 | /Interactively choose a register/  | SPC r r    |
+| view-register                    | /View a register/                  | SPC r v    |
+| window-configuration-to-register | /Window configuration to register/ | SPC r w    |
+| increment-register               | /Increment register/               | SPC r +    |
+| point-to-register                | /Point to register/                | SPC r SPC  |
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(nvmap :prefix "SPC"
+       "r c"   '(copy-to-register :which-key "Copy to register")
+       "r f"   '(frameset-to-register :which-key "Frameset to register")
+       "r i"   '(insert-register :which-key "Insert register")
+       "r j"   '(jump-to-register :which-key "Jump to register")
+       "r l"   '(list-registers :which-key "List registers")
+       "r n"   '(number-to-register :which-key "Number to register")
+       "r r"   '(counsel-register :which-key "Choose a register")
+       "r v"   '(view-register :which-key "View a register")
+       "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
+       "r +"   '(increment-register :which-key "Increment register")
+       "r SPC" '(point-to-register :which-key "Point to register"))
+#+end_src
+
+* Terminal
+Terminal Emulator
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package vterm)
+(setq shell-file-name "/bin/zsh"
+      vterm-max-scrollback 5000)
+(nvmap :prefix "SPC"
+       "o t"   '(vterm :which-key "Terminal"))
+#+end_src
+* Window Control
+Makes organizing buffers far easier
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(winner-mode 1)
+(nvmap :prefix "SPC"
+       ;; Window splits
+       "w c"   '(evil-window-delete :which-key "Close window")
+       "w n"   '(evil-window-new :which-key "New window")
+       "w s"   '(evil-window-split :which-key "Horizontal split window")
+       "w v"   '(evil-window-vsplit :which-key "Vertical split window")
+       ;; Window motions
+       "w h"   '(evil-window-left :which-key "Window left")
+       "w j"   '(evil-window-down :which-key "Window down")
+       "w k"   '(evil-window-up :which-key "Window up")
+       "w l"   '(evil-window-right :which-key "Window right")
+       "w w"   '(evil-window-next :which-key "Goto next window")
+       ;; winner mode
+       "w <left>"  '(winner-undo :which-key "Winner undo")
+       "w <right>" '(winner-redo :which-key "Winner redo"))
+#+end_src
+
 * RSS Reader
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package elfeed
   :config
   (setq elfeed-search-feed-face ":foreground #fff :weight bold"
@@ -787,7 +891,7 @@ LaTeX is fire, make it so I can take better math/physics notes
 
 #+RESULTS:
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package projectile
   :config
   (projectile-global-mode 1))
@@ -795,7 +899,7 @@ LaTeX is fire, make it so I can take better math/physics notes
 * Web Browser
 Because of the RSS reader, a basic web browser would be appreciated. EAF browser allows CSS to be rendered, something which eww can't do
 ** EAF
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package eaf
   :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
   :custom
@@ -814,7 +918,7 @@ Because of the RSS reader, a basic web browser would be appreciated. EAF browser
 #+end_src
 ** Vimium
 This enables vim keys for navigation
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (define-key key-translation-map (kbd "SPC")
     (lambda (prompt)
       (if (derived-mode-p 'eaf-mode)
@@ -829,138 +933,16 @@ This enables vim keys for navigation
 #+end_src
 ** Configs
 Some basic browser configs
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq eaf-browser-translate-language "es")
 (setq eaf-browser-enable-adblocker t)
 #+end_src
-* Perspective
-The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package perspective
-  :bind
-  ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
-  :config
-  (persp-mode))
-#+end_src
-
-* Projectile
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package projectile
-  :config
-  (projectile-global-mode 1))
-#+end_src
-
-* Registers
-Emacs registers are compartments where you can save text, rectangles and positions for later use. Once you save text or a rectangle in a register, you can copy it into the buffer once or many times; once you save a position in a register, you can jump back to that position once or many times.  The default GNU Emacs keybindings for these commands (with the exception of counsel-register) involves 'C-x r' followed by one or more other keys.  I wanted to make this a little more user friendly, so I chose to replace the 'C-x r' part of the key chords with 'SPC r'.
-
-| COMMAND                          | DESCRIPTION                      | KEYBINDING |
-|----------------------------------+----------------------------------+------------|
-| copy-to-register                 | /Copy to register/                 | SPC r c    |
-| frameset-to-register             | /Frameset to register/             | SPC r f    |
-| insert-register                  | /Insert contents of register/      | SPC r i    |
-| jump-to-register                 | /Jump to register/                 | SPC r j    |
-| list-registers                   | /List registers/                   | SPC r l    |
-| number-to-register               | /Number to register/               | SPC r n    |
-| counsel-register                 | /Interactively choose a register/  | SPC r r    |
-| view-register                    | /View a register/                  | SPC r v    |
-| window-configuration-to-register | /Window configuration to register/ | SPC r w    |
-| increment-register               | /Increment register/               | SPC r +    |
-| point-to-register                | /Point to register/                | SPC r SPC  |
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(nvmap :prefix "SPC"
-       "r c"   '(copy-to-register :which-key "Copy to register")
-       "r f"   '(frameset-to-register :which-key "Frameset to register")
-       "r i"   '(insert-register :which-key "Insert register")
-       "r j"   '(jump-to-register :which-key "Jump to register")
-       "r l"   '(list-registers :which-key "List registers")
-       "r n"   '(number-to-register :which-key "Number to register")
-       "r r"   '(counsel-register :which-key "Choose a register")
-       "r v"   '(view-register :which-key "View a register")
-       "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
-       "r +"   '(increment-register :which-key "Increment register")
-       "r SPC" '(point-to-register :which-key "Point to register"))
-#+end_src
-
-* Scrolling Speeds
-Emacs' default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
-(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-#+end_src
-
-* Shells
-In my configs, all of my shells (bash, fish, zsh and the ESHELL) require my shell-color-scripts-git package to be installed.  On Arch Linux, you can install it from the AUR.  Otherwise, go to my shell-color-scripts repository on GitLab to get it.
-
-** Eshell
-Eshell is an Emacs 'shell' that is written in Elisp.
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(nvmap :prefix "SPC"
-       "e h"   '(counsel-esh-history :which-key "Eshell history")
-       "e s"   '(eshell :which-key "Eshell"))
-#+end_src
-
-+ 'eshell-syntax-highlighting' -- adds fish/zsh-like syntax highlighting.
-+ 'eshell-rc-script' -- your profile for eshell; like a bashrc for eshell.
-+ 'eshell-aliases-file' -- sets an aliases file for the eshell.
-  
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package eshell-syntax-highlighting
-  :after esh-mode
-  :config
-  (eshell-syntax-highlighting-global-mode +1))
-
-(setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
-      eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
-      eshell-history-size 5000
-      eshell-buffer-maximum-lines 5000
-      eshell-hist-ignoredups t
-      eshell-scroll-to-bottom-on-input t
-      eshell-destroy-buffer-when-process-dies t
-      eshell-visual-commands'("bash" "htop" "ssh" "top" "zsh"))
-#+end_src
-
-** Vterm
-Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package vterm)
-(setq shell-file-name "/bin/zsh"
-      vterm-max-scrollback 5000)
-#+end_src
-
-* Window Control
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(winner-mode 1)
-(nvmap :prefix "SPC"
-       ;; Window splits
-       "w c"   '(evil-window-delete :which-key "Close window")
-       "w n"   '(evil-window-new :which-key "New window")
-       "w s"   '(evil-window-split :which-key "Horizontal split window")
-       "w v"   '(evil-window-vsplit :which-key "Vertical split window")
-       ;; Window motions
-       "w h"   '(evil-window-left :which-key "Window left")
-       "w j"   '(evil-window-down :which-key "Window down")
-       "w k"   '(evil-window-up :which-key "Window up")
-       "w l"   '(evil-window-right :which-key "Window right")
-       "w w"   '(evil-window-next :which-key "Goto next window")
-       ;; winner mode
-       "w <left>"  '(winner-undo :which-key "Winner undo")
-       "w <right>" '(winner-redo :which-key "Winner redo"))
-#+end_src
-
 * Which Key
 Which-key is a minor mode for Emacs that displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
 
 =NOTE:= Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
 
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package which-key
   :init
   (setq which-key-side-window-location 'bottom
@@ -978,17 +960,9 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 (which-key-mode)
 #+end_src
 
-* Writeroom Mode
-A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
-
-#+begin_src lisp :tangle ~/.emacs.d/config.el
-(use-package writeroom-mode)
-#+end_src
 * Misc. Config
-Configuration stuff which doesn't really fit anywhere else
-
 ** No Junk Files
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (setq
     make-backup-files nil
     auto-save-default nil
@@ -997,8 +971,33 @@ Configuration stuff which doesn't really fit anywhere else
 
 ** Google Translate
 Handy for Spanish
-#+begin_src lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package google-translate)
 (require 'google-translate)
 (require 'google-translate-default-ui)
+#+end_src
+
+** Prayer Times
+To integrate Islamic prayer times into Emacs, we have to manually add the package since it isn't on melpa
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(load "awqat.el") 
+#+end_src
+
+Next, we have to set some variables for our config
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(require 'awqat)
+(setq calendar-latitude 40.8082241
+      calendar-longitude -73.3886462)
+(setq awqat-asr-hanafi nil)
+(setq awqat-fajr-angle -15.0)
+(setq awqat-isha-angle -15.0)
+(setq org-agenda-include-diary t)
+#+end_src
+
+** Writeroom Mode
+A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package writeroom-mode)
 #+end_src

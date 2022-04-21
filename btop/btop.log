@@ -86,3 +86,25 @@ Use --utf-force argument to force start if you're sure your terminal can handle 
 
 2022/02/26 (20:56:42) | ===> btop++ v.1.2.3
 2022/02/26 (20:56:42) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/02 (21:53:23) | ===> btop++ v.1.2.5
+2022/04/02 (21:53:23) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/12 (21:15:37) | ===> btop++ v.1.2.5
+2022/04/12 (21:15:37) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/12 (21:16:12) | ===> btop++ v.1.2.5
+2022/04/12 (21:16:12) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/15 (11:55:25) | ===> btop++ v.1.2.5
+2022/04/15 (11:55:25) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/16 (17:20:38) | ===> btop++ v.1.2.5
+2022/04/16 (17:20:38) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+
+2022/04/17 (18:06:11) | ===> btop++ v.1.2.5
+2022/04/17 (18:06:11) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.
+2022/04/18 (00:21:22) | ERROR: Stall in Runner thread, restarting!
+
+2022/04/20 (01:17:01) | ===> btop++ v.1.2.5
+2022/04/20 (01:17:01) | WARNING: No UTF-8 locale detected! Forcing start with --utf-force argument.

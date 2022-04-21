@@ -71,7 +71,7 @@
 
 	modules-left = i3
 	modules-center = mpd
-	modules-right = pulseaudio xkeyboard memory cpu wlan eth weather battery date powermenu
+	modules-right = pulseaudio xkeyboard memory cpu wlan eth next-prayer weather battery date powermenu
 
 	tray-position = right
 	tray-padding = 2
@@ -306,3 +306,9 @@
 	menu-2-0-exec = sudo poweroff
 	menu-2-1 = cancel
 	menu-2-1-exec = menu-open-0
+
+[module/next-prayer]
+    type = custom/script
+    exec = next-prayer --hybrid
+    interval = 29
+	format-underline = #98c379

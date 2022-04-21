@@ -9,6 +9,8 @@ celluloid/
 Code/
 GIMP/
 appimagelauncher.cfg
+cef_user_data/
+cura/
 coc/
 configstore/
 dconf/
@@ -32,6 +34,7 @@ nvim/undodir/
 ookla/
 pavucontrol.ini
 pulse/
+retroarch/
 Slack/
 systemd/
 Unknown Organization/
