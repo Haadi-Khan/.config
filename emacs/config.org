@@ -151,11 +151,11 @@ Basic Settings for Emacs
 #+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (set-face-attribute 'default nil
   :font "Roboto Mono"
-  :height 140
+  :height 120
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
   :font "Roboto Mono"
-  :height 160
+  :height 140
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
   :font "Roboto Mono"
@@ -514,7 +514,8 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 * Languages
 Adding lsps and syntax highlighting for programming
 
-** General
+** LSP
+This is the base configs for LSP Mode in Emacs
 #+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (use-package lsp-mode
     :commands (lsp lsp-deferred)
@@ -533,7 +534,29 @@ Adding lsps and syntax highlighting for programming
       lsp-idle-delay 0.1)
 
 #+end_src
+** DAP
+This is the base configs for DAP Mode in Emacs. LSP Mode is required for this to work
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+end_src
+** Keybind Map
+This is a section for all the keybinds for language features. This will be
+broken up across LSP and DAP features.
+*** LSP
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(nvmap :keymaps 'override :prefix "SPC"
+       "c r"   '(compile :which-key "Rename Symbol"))
+#+end_src
+*** DAP
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(nvmap :keymaps 'override :prefix "SPC"
+       "c b"   '(dap-breakpoint-toggle :which-key "Toggle Breakpoint")
+       "c d"   '(dap-debug-last :which-key "Debug Code")
+       "c u"   '(dap-next :which-key "Step Over")
+       "c i"   '(dap-step-in :which-key "Step Into")
+       "c o"   '(dap-continue :which-key "Continue"))
+#+end_src
 ** C++
+*** LSP + Comfort Settings
 #+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 (require 'modern-cpp-font-lock) ;; Syntax Highlighting
 (require 'clang-format+) ;; Auto formatting
@@ -555,8 +578,45 @@ Adding lsps and syntax highlighting for programming
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c-mode-common-hook 'my-c++-mode-hook)
+
 #+end_src
 
+*** Debugger
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(use-package dap-mode
+  :defer
+  :custom
+  (dap-auto-configure-mode t                           "Automatically configure dap.")
+  (dap-auto-configure-features
+   '(sessions locals breakpoints expressions tooltip)  "Remove the button panel in the top.")
+  :config
+  ;;; dap for c++
+  (require 'dap-lldb)
+
+  ;;; set the debugger executable (c++)
+  (setq dap-lldb-debug-program '("/usr/bin/lldb-vscode"))
+
+  ;;; ask user for executable to debug if not specified explicitly (c++)
+  (setq dap-lldb-debugged-program-function (lambda () (read-file-name "Select file to debug.")))
+
+  ;;; default debug template for (c++)
+  (dap-register-debug-template
+   "C++ LLDB dap"
+   (list :type "lldb-vscode"
+         :cwd nil
+         :args nil
+         :request "launch"
+         :program nil))
+  
+  (defun dap-debug-create-or-edit-json-template ()
+    "Edit the C++ debugging configuration or create + edit if none exists yet."
+    (interactive)
+    (let ((filename (concat (lsp-workspace-root) "/launch.json"))
+	  (default "~/.emacs.d/default-launch.json"))
+      (unless (file-exists-p filename)
+	(copy-file default filename))
+      (find-file-existing filename))))
+#+end_src
 ** Java
 #+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
 #+end_src
@@ -593,7 +653,7 @@ Adding lsps and syntax highlighting for programming
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/todos.org")
       org-default-notes-file (expand-file-name "notes.org" org-directory)
-      org-ellipsis " ▼ "
+      org-ellipsis "..."
       org-log-done 'time
       org-journal-dir "~/org/journal/"
       org-journal-date-format "%B %d, %Y (%A) "
