@@ -1,3 +1,4 @@
+*~
 AppleMusic/
 Badlion Client/
 BadlionClient/
@@ -17,7 +18,10 @@ dconf/
 discord/
 dunst/
 emacs/
-emacs.d/
+!emacs/config.org
+!emacs/init.el
+!emacs/emacs-dash.png
+!emacs/lisp/awqat.el
 FRC Utilities/
 gthumb/
 guvcview2/

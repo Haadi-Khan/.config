@@ -120,15 +120,15 @@ bindsym $mod+shift+p fullscreen toggle global
 
 
 # Workspaces
-	set $ws1 1 Chrome
-	set $ws2 2 Flex
-	set $ws3 3 Code
-	set $ws4 4 Discord+Music
-	set $ws5 5 Email
-	set $ws6 6 Windows
-	set $ws7 7 Gimp
+	set $ws1 1 
+	set $ws2 2
+	set $ws3 3
+	set $ws4 4
+	set $ws5 5
+	set $ws6 6
+	set $ws7 7
 	set $ws8 8
-	set $ws9 9 Games
+	set $ws9 9
 	set $ws10 10
 
 # switch to workspace

@@ -11,7 +11,7 @@
 * Startup
 Order Matters, do NOT mess with it
 ** Setup MELPA
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el :tangle  ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el :tangle  ~/.config/emacs/config.el
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -22,7 +22,7 @@ Order Matters, do NOT mess with it
 ** Use-Package
 Install use-package and enable ':ensure t' globally.  The ':ensure' keyword causes the package(s) within use-package statements to be installed automatically if not already present on your system.  To avoid having to add ':ensure t' to every use-package statement in this config, I set 'use-package-always-ensure'.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
@@ -30,7 +30,7 @@ Install use-package and enable ':ensure t' globally.  The ':ensure' keyword caus
 
 ** Evil Mode
 Enable Vim
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -54,7 +54,7 @@ Enable Vim
 
 ** General Keybindings
 Package which makes setting keybinds way easier
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package general
   :config
   (general-evil-setup t))
@@ -62,7 +62,7 @@ Package which makes setting keybinds way easier
 
 ** Auto Save
 Who doesn't love continuous auto save
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'real-auto-save)
 (add-hook 'prog-mode-hook 'real-auto-save-mode)
 (setq real-auto-save-interval .1) ;; in seconds
@@ -71,7 +71,7 @@ Who doesn't love continuous auto save
 Vim is fast. Emacs is slow. Make Emacs not slow.
 ** Garbage collection
 Makes startup faster by reducing the frequency of garbage collection
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; Using garbage magic hack.
  (use-package gcmh
    :config
@@ -93,7 +93,7 @@ Makes startup faster by reducing the frequency of garbage collection
 (setq gc-cons-threshold (* 2 1000 1000))
 #+end_src
 ** Native Compile
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; Silence compiler warnings as they can be pretty disruptive
 (if (boundp 'comp-deferred-compilation)
     (setq comp-deferred-compilation nil)
@@ -108,18 +108,18 @@ Makes startup faster by reducing the frequency of garbage collection
 Basic Settings for Emacs
 
 ** Theme
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (load-theme 'atom-one-dark t)
 #+end_src
 
 ** Disable Toolbars and Scrollbars
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 #+end_src
 
 ** Line Configuration
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
 (setq display-line-numbers-type 'relative)
@@ -132,23 +132,23 @@ Basic Settings for Emacs
 #+end_src
 
 ** Indent Guides
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 ;;(setq highlight-indent-guides-method 'character)
 #+end_src
 
 ** Doom Modeline
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package doom-modeline)
 (doom-modeline-mode 1)
 #+end_src
 
 ** Icons
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package all-the-icons)
 #+end_src
 ** Fonts
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (set-face-attribute 'default nil
   :font "Roboto Mono"
   :height 120
@@ -173,7 +173,7 @@ Basic Settings for Emacs
 ** Zooming
 You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; zoom in/out like we do everywhere else.
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -184,25 +184,25 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 ** Scrolling
 Emacs' default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
 (setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 #+end_src
 ** Emojis
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 #+end_src
 ** Delete Selection
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (delete-selection-mode t)
 #+end_src
 
 * Buffer Options
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :prefix "SPC"
        "b b"   '(ibuffer :which-key "Ibuffer")
        "b c"   '(clone-indirect-buffer-other-window :which-key "Clone indirect buffer other window")
@@ -218,14 +218,14 @@ Dashboard when starting Emacs, looks cool
 
 ** Configuring Dashboard
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/.emacs.d/emacs-dash.png")  ;; use custom image as banner
+  (setq dashboard-startup-banner "~/.config/emacs/emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
                           (agenda . 5 )
@@ -241,7 +241,7 @@ Dashboard when starting Emacs, looks cool
 ** Dashboard in Emacsclient
 This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 #+end_src
 
@@ -254,7 +254,7 @@ This setting ensures that emacsclient always opens on *dashboard* rather than *s
 | eval-last-sexp  | /Evaluate elisp expression before point/         | SPC e l    |
 | eval-region     | /Evaluate elisp in region/                       | SPC e r    |
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
        "e d"   '(eval-defun :which-key "Eval defun")
@@ -286,7 +286,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 | peep-dired-next-file | /Move to next file in peep-dired-mode/     | j          |
 | peep-dired-prev-file | /Move to previous file in peep-dired-mode/ | k          |
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package all-the-icons-dired)
 (use-package dired-open)
 (use-package peep-dired)
@@ -318,7 +318,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 * File Configs
 ** File-related Keybindings
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
        "."     '(find-file :which-key "Find file")
        "f f"   '(find-file :which-key "Find file")
@@ -336,7 +336,7 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 ** Installing Some Useful File-related Modules
 Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package recentf
   :config
   (recentf-mode))
@@ -345,7 +345,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 #+end_src
 
 ** Useful File Functions
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (defun dt/show-and-copy-buffer-path ()
   "Show and copy the full path to the current file in the minibuffer."
   (interactive)
@@ -367,7 +367,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 
 ** File Specific Configs
 *** Text Modes
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; Spell Checking
 (use-package flyspell-popup)
 (require 'flyspell)
@@ -391,12 +391,10 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 * Keybinds
 General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  It certainly is easier on the hands than constantly using CTRL for a prefix.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "SPC"   '(counsel-M-x :which-key "M-x")
-       "c c"   '(compile :which-key "Compile")
-       "c C"   '(recompile :which-key "Recompile")
-       "h r r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs config")
+       "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :which-key "Reload emacs config")
        "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
        "o m"   '(magit :which-key "Open Magit"))
 (nvmap :keymaps 'override :prefix "SPC"
@@ -427,7 +425,7 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
 ** Installing Ivy And Basic Setup
-#+begin_src emacs-lisp  :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp  :tangle ~/.config/emacs/config.el
 (use-package counsel
   :after ivy
   :config (counsel-mode))
@@ -462,12 +460,12 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
 ** M-x Improvements
 The following line removes the annoying '^' in things like counsel-M-x and other ivy/counsel prompts.  The default '^' string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I'm searching for a command without knowing what it begins with though.
 
-#+begin_src emacs-lisp  :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp  :tangle ~/.config/emacs/config.el
 (setq ivy-initial-inputs-alist nil)
 #+end_src
 
 Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
-#+begin_src  emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src  emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package smex)
 (smex-initialize)
 #+end_src
@@ -488,7 +486,7 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 
 =NOTE:= If the setting for 'ivy-posframe-display' is set to 'nil' (false), anything that is set to 'ivy-display-function-fallback' will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to 't' (true), then the fallback position will be centered in the window.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
   (use-package ivy-posframe
     :init
     (setq ivy-posframe-display-functions-alist
@@ -516,38 +514,46 @@ Adding lsps and syntax highlighting for programming
 
 ** LSP
 This is the base configs for LSP Mode in Emacs
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-mode
-    :commands (lsp lsp-deferred)
+    :commands
+        (lsp lsp-deferred)
     :init
-    (setq lsp-keymap-prefix "C-c l")
+        (setq lsp-keymap-prefix "C-c l")
+        (setq gc-cons-threshold (* 100 1024 1024)
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-idle-delay 0.0
+        company-minimum-prefix-length 1
+        lsp-idle-delay 0.1)
     :config
-(lsp-enable-which-key-integration t))
-(setq lsp-lens-enable nil)
-;;(setq lsp-ui-sideline-enable nil)
-
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-idle-delay 0.1)
-
+        (setq lsp-lens-enable nil)
+        (lsp-enable-which-key-integration t)
+)
 #+end_src
 ** DAP
 This is the base configs for DAP Mode in Emacs. LSP Mode is required for this to work
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package dap-mode
+    :defer
+    :custom
+        (dap-auto-configure-mode t                           "Automatically configure dap.")
+        (dap-auto-configure-features
+        '(sessions locals breakpoints expressions tooltip)  "Remove the button panel in the top.")
+)
 #+end_src
 ** Keybind Map
 This is a section for all the keybinds for language features. This will be
 broken up across LSP and DAP features.
 *** LSP
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :keymaps 'override :prefix "SPC"
-       "c r"   '(compile :which-key "Rename Symbol"))
+       "c c"   '(compile :which-key "Compile")
+;;       "c C"   '(recompile :which-key "Recompile")
+       "c r"   '(lsp-rename :which-key "Rename Symbol"))
 #+end_src
 *** DAP
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "c b"   '(dap-breakpoint-toggle :which-key "Toggle Breakpoint")
        "c d"   '(dap-debug-last :which-key "Debug Code")
@@ -557,7 +563,7 @@ broken up across LSP and DAP features.
 #+end_src
 ** C++
 *** LSP + Comfort Settings
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'modern-cpp-font-lock) ;; Syntax Highlighting
 (require 'clang-format+) ;; Auto formatting
 
@@ -574,6 +580,8 @@ broken up across LSP and DAP features.
   (auto-fill-mode)         
   (lsp t)
   (clang-format+-mode)
+  (setq compile-command "cd .. && g++ -g $(find ./src -type f -iregex \".*\\.cpp\") -o ./bin/")
+
   (modern-c++-font-lock-mode)
   (c-toggle-auto-hungry-state 1))
 
@@ -582,23 +590,14 @@ broken up across LSP and DAP features.
 #+end_src
 
 *** Debugger
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
-(use-package dap-mode
-  :defer
-  :custom
-  (dap-auto-configure-mode t                           "Automatically configure dap.")
-  (dap-auto-configure-features
-   '(sessions locals breakpoints expressions tooltip)  "Remove the button panel in the top.")
-  :config
-  ;;; dap for c++
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;; This hook covers everything needed to debug c++ code
+(defun c++-debug-hook ()
   (require 'dap-lldb)
-
   ;;; set the debugger executable (c++)
   (setq dap-lldb-debug-program '("/usr/bin/lldb-vscode"))
-
   ;;; ask user for executable to debug if not specified explicitly (c++)
   (setq dap-lldb-debugged-program-function (lambda () (read-file-name "Select file to debug.")))
-
   ;;; default debug template for (c++)
   (dap-register-debug-template
    "C++ LLDB dap"
@@ -615,10 +614,13 @@ broken up across LSP and DAP features.
 	  (default "~/.emacs.d/default-launch.json"))
       (unless (file-exists-p filename)
 	(copy-file default filename))
-      (find-file-existing filename))))
+      (find-file-existing filename)))
+)
+
+(add-hook 'c-mode-common-hook 'c++-debug-hook)
 #+end_src
 ** Java
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 #+end_src
 
 ** Python
@@ -641,7 +643,7 @@ broken up across LSP and DAP features.
 
 * Org Mode
 ** Setup
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package evil-org
   :ensure t
   :after org
@@ -674,7 +676,7 @@ broken up across LSP and DAP features.
 #+end_src
 
 ** Enabling Org Bullets
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-superstar ; "prettier" bullets
   :hook (org-mode . org-superstar-mode)
   :config
@@ -692,7 +694,7 @@ broken up across LSP and DAP features.
 ** Org Link Abbreviations
 This allows for the use of abbreviations that will get expanded out into a lengthy URL.
    
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; An example of how this works.
 ;; [[arch-wiki:Name_of_Page][Description]]
 (setq org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
@@ -705,7 +707,7 @@ This allows for the use of abbreviations that will get expanded out into a lengt
 ** Org Todo Keywords
 This lets us create the various TODO tags that we can use in Org.
    
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
     '((sequence
             "TODO(t)"
@@ -746,7 +748,7 @@ This lets us create the various TODO tags that we can use in Org.
 #+end_src
 
 ** Disable Blank Line from M-RET
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-blank-before-new-entry (quote ((heading . nil)
                                          (plain-list-item . nil))))
 #+end_src
@@ -766,7 +768,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 | <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
 | <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-tempo
   :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
 #+end_src
@@ -774,7 +776,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 ** Source Code Block Syntax Highlighting
 We want the same syntax highlighting in source blocks as in the native language files.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-src-fontify-natively t
     org-src-tab-acts-natively t
     org-confirm-babel-evaluate nil
@@ -784,7 +786,7 @@ We want the same syntax highlighting in source blocks as in the native language 
 ** Automatically Create Table of Contents
 Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful useful for README files on GitHub).  Use :TOC: to create the table.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
   (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -792,14 +794,14 @@ Toc-org helps you to have an up-to-date table of contents in org files without e
 
 ** LaTeX within Org Mode
 LaTeX is fire, make it so I can take better math/physics notes
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
 #+end_src
 
 * Magit
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
 (setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
 ;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
@@ -825,7 +827,7 @@ LaTeX is fire, make it so I can take better math/physics notes
  #+end_src
  
 * Treemacs
-#+BEGIN_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+BEGIN_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package treemacs)
 (use-package treemacs-evil)
 (add-hook 'treemacs-mode 'display-line-numbers-mode 0)
@@ -833,7 +835,7 @@ LaTeX is fire, make it so I can take better math/physics notes
 #+END_SRC
 
 This is my custom keymap for the treemacs window
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (define-key treemacs-mode-map (kbd "a") 'treemacs-create-file)
 (define-key treemacs-mode-map (kbd "A") 'treemacs-create-dir)
 (define-key treemacs-mode-map (kbd "s") 'treemacs-create-file)
@@ -842,7 +844,7 @@ This is my custom keymap for the treemacs window
 * Perspective
 The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package perspective
   :bind
   ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
@@ -851,7 +853,7 @@ The Perspective package provides multiple named workspaces (or "perspectives") i
 #+end_src
 
 * Projectile
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package projectile
   :config
   (projectile-global-mode 1))
@@ -874,7 +876,7 @@ Emacs registers are compartments where you can save text, rectangles and positio
 | increment-register               | /Increment register/               | SPC r +    |
 | point-to-register                | /Point to register/                | SPC r SPC  |
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :prefix "SPC"
        "r c"   '(copy-to-register :which-key "Copy to register")
        "r f"   '(frameset-to-register :which-key "Frameset to register")
@@ -891,7 +893,7 @@ Emacs registers are compartments where you can save text, rectangles and positio
 
 * Terminal
 Terminal Emulator
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package vterm)
 (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000)
@@ -900,7 +902,7 @@ Terminal Emulator
 #+end_src
 * Window Control
 Makes organizing buffers far easier
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (winner-mode 1)
 (nvmap :prefix "SPC"
        ;; Window splits
@@ -920,7 +922,7 @@ Makes organizing buffers far easier
 #+end_src
 
 * RSS Reader
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package elfeed
   :config
   (setq elfeed-search-feed-face ":foreground #fff :weight bold"
@@ -960,7 +962,7 @@ Makes organizing buffers far easier
 
 #+RESULTS:
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package projectile
   :config
   (projectile-global-mode 1))
@@ -968,7 +970,7 @@ Makes organizing buffers far easier
 * Web Browser
 Because of the RSS reader, a basic web browser would be appreciated. EAF browser allows CSS to be rendered, something which eww can't do
 ** EAF
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
++begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package eaf
   :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
   :custom
@@ -985,9 +987,9 @@ Because of the RSS reader, a basic web browser would be appreciated. EAF browser
 (require 'eaf-browser)
 (require 'eaf-evil)
 #+end_src
-** Vimium
+* Vimium
 This enables vim keys for navigation
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
++begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (define-key key-translation-map (kbd "SPC")
     (lambda (prompt)
       (if (derived-mode-p 'eaf-mode)
@@ -1002,7 +1004,7 @@ This enables vim keys for navigation
 #+end_src
 ** Configs
 Some basic browser configs
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
++begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq eaf-browser-translate-language "es")
 (setq eaf-browser-enable-adblocker t)
 #+end_src
@@ -1011,7 +1013,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 
 =NOTE:= Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package which-key
   :init
   (setq which-key-side-window-location 'bottom
@@ -1031,7 +1033,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 
 * Misc. Config
 ** No Junk Files
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq
     make-backup-files nil
     auto-save-default nil
@@ -1040,7 +1042,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 
 ** Google Translate
 Handy for Spanish
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package google-translate)
 (require 'google-translate)
 (require 'google-translate-default-ui)
@@ -1048,13 +1050,13 @@ Handy for Spanish
 
 ** Prayer Times
 To integrate Islamic prayer times into Emacs, we have to manually add the package since it isn't on melpa
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(add-to-list 'load-path "~/.config/emacs/lisp/")
 (load "awqat.el") 
 #+end_src
 
 Next, we have to set some variables for our config
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'awqat)
 (setq calendar-latitude 40.8082241
       calendar-longitude -73.3886462)
@@ -1067,6 +1069,6 @@ Next, we have to set some variables for our config
 ** Writeroom Mode
 A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package writeroom-mode)
 #+end_src
