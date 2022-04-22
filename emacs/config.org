@@ -60,6 +60,13 @@ Package which makes setting keybinds way easier
   (general-evil-setup t))
 #+end_src
 
+** Auto Save
+Who doesn't love continuous auto save
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(require 'real-auto-save)
+(add-hook 'prog-mode-hook 'real-auto-save-mode)
+(setq real-auto-save-interval .1) ;; in seconds
+#+end_src
 * Speed Improvements
 Vim is fast. Emacs is slow. Make Emacs not slow.
 ** Garbage collection
@@ -516,6 +523,7 @@ Adding lsps and syntax highlighting for programming
     :config
 (lsp-enable-which-key-integration t))
 (setq lsp-lens-enable nil)
+;;(setq lsp-ui-sideline-enable nil)
 
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
@@ -523,26 +531,30 @@ Adding lsps and syntax highlighting for programming
       company-idle-delay 0.0
       company-minimum-prefix-length 1
       lsp-idle-delay 0.1)
+
 #+end_src
 ** C++
 #+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(require 'modern-cpp-font-lock) ;; Syntax Highlighting
+(require 'clang-format+) ;; Auto formatting
+
 (c-add-style "my-style" 
 	     '("stroustrup"
-	       (indent-tabs-mode . t)        ; use spaces rather than tabs
+	       (indent-tabs-mode . nil)        ; use spaces rather than tabs
 	       (c-basic-offset . 4)            ; indent by four spaces
 	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
 				   (brace-list-open . 0)
 				   (statement-case-open . +)))))
+
 (defun my-c++-mode-hook ()
   (c-set-style "my-style")        ; use my-style defined above
   (auto-fill-mode)         
   (lsp t)
+  (clang-format+-mode)
+  (modern-c++-font-lock-mode)
   (c-toggle-auto-hungry-state 1))
 
-(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-
-(require 'modern-cpp-font-lock)
-(add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
+(add-hook 'c-mode-common-hook 'my-c++-mode-hook)
 #+end_src
 
 ** Java
@@ -753,22 +765,19 @@ LaTeX is fire, make it so I can take better math/physics notes
  #+end_src
  
 * Treemacs
--- UNDER CONSTRUCTION --
-Need to setup Treemacs with all my presets from vim
-
-| COMMAND        | DESCRIPTION               | KEYBINDING |
-|----------------+---------------------------+------------|
-| neotree-toggle | /Toggle neotree/            | SPC t n    |
-| neotree- dir   | /Open directory in neotree/ | SPC d n    |
-
 #+BEGIN_src emacs-lisp :tangle ~/.emacs.d/config.el
-;; Function for setting a fixed width for neotree.
-;; Defaults to 25 but I make it a bit longer (35) in the 'use-package neotree'.
 (use-package treemacs)
 (use-package treemacs-evil)
 (add-hook 'treemacs-mode 'display-line-numbers-mode 0)
 (treemacs-load-theme "Atom")
 #+END_SRC
+
+This is my custom keymap for the treemacs window
+#+begin_src emacs-lisp :tangle ~/.emacs.d/config.el
+(define-key treemacs-mode-map (kbd "a") 'treemacs-create-file)
+(define-key treemacs-mode-map (kbd "A") 'treemacs-create-dir)
+(define-key treemacs-mode-map (kbd "s") 'treemacs-create-file)
+#+end_src
   
 * Perspective
 The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
