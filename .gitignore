@@ -22,6 +22,10 @@ emacs/
 !emacs/init.el
 !emacs/emacs-dash.png
 !emacs/lisp/awqat.el
+paradox-launcher-v2/
+obs-studio/
+kritadisplayrc
+kritarc
 FRC Utilities/
 gthumb/
 guvcview2/

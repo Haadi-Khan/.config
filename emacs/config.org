@@ -6,12 +6,11 @@
 |--------------+-----------------------------------------|
 | File Configs | Grammar stuff needs to be done for text |
 | Java         | LSP needs to be configured              |
-| Python       | Entire setup required                   |
 
 * Startup
 Order Matters, do NOT mess with it
 ** Setup MELPA
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el :tangle  ~/.config/emacs/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -43,7 +42,6 @@ Enable Vim
   :config
   (setq evil-collection-mode-list '(dashboard dired ibuffer))
   (evil-collection-init))
-(use-package evil-tutor)
 (require 'undo-tree)
 (global-undo-tree-mode)
 (evil-set-undo-system 'undo-tree)
@@ -64,8 +62,8 @@ Package which makes setting keybinds way easier
 Who doesn't love continuous auto save
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'real-auto-save)
-(add-hook 'prog-mode-hook 'real-auto-save-mode)
-(setq real-auto-save-interval .1) ;; in seconds
+(real-auto-save-mode 1)
+(setq real-auto-save-interval 5) ;; in seconds
 #+end_src
 * Speed Improvements
 Vim is fast. Emacs is slow. Make Emacs not slow.
@@ -114,6 +112,8 @@ Basic Settings for Emacs
 
 ** Disable Toolbars and Scrollbars
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;;(menu-bar-mode 1)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 #+end_src
@@ -123,18 +123,19 @@ Basic Settings for Emacs
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
 (setq display-line-numbers-type 'relative)
-;;(setq scroll-margin 8)
+(setq scroll-margin 8)
+(add-hook 'prog-mode-hook 'hs-minor-mode)
 
 ;;(setq-default tab-width 4)
 (require 'fill-column-indicator)
-(setq-default fill-column-indicator '(foreground-color . "#E0DFDB"))
-(add-hook 'prog-mode-hook #'turn-on-fci-mode)
+(setq fci-rule-width 5)
+(add-hook 'prog-mode-hook 'fci-mode)
 #+end_src
 
 ** Indent Guides
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;;(setq highlight-indent-guides-method 'character)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-method 'character)
 #+end_src
 
 ** Doom Modeline
@@ -273,12 +274,11 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 | dired-jump | /Jump to current directory in dired/ | SPC d j    |
 
 ** Keybindings Within Dired
-| COMMAND            | DESCRIPTION                                 | KEYBINDING |
-|--------------------+---------------------------------------------+------------|
-| dired-view-file    | /View file in dired/                          | SPC d v    |
-| dired-up-directory | /Go up in directory tree/                     | h          |
-| dired-find-file    | /Go down in directory tree (or open if file)/ | l          |
-
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(define-key dired-mode-map "a" 'dired-create-empty-file)
+(define-key dired-mode-map "A" 'dired-create-directory)
+(define-key dired-mode-map "/" 'find-name-dired)
+#+end_src
 ** Keybindings For Peep-Dired-Mode
 | COMMAND              | DESCRIPTION                              | KEYBINDING |
 |----------------------+------------------------------------------+------------|
@@ -315,87 +315,18 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
                               ("mp4" . "mpv")))
 #+end_src
 
-* File Configs
-** File-related Keybindings
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
-       "."     '(find-file :which-key "Find file")
-       "f f"   '(find-file :which-key "Find file")
-       "f r"   '(counsel-recentf :which-key "Recent files")
-       "f s"   '(save-buffer :which-key "Save file")
-       "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
-       "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
-       "f C"   '(copy-file :which-key "Copy file")
-       "f D"   '(delete-file :which-key "Delete file")
-       "f R"   '(rename-file :which-key "Rename file")
-       "f S"   '(write-file :which-key "Save file as...")
-       "f U"   '(sudo-edit :which-key "Sudo edit file"))
-#+end_src
-
-** Installing Some Useful File-related Modules
-Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package recentf
-  :config
-  (recentf-mode))
-(use-package sudo-edit) ;; Utilities for opening files with sudo
-
-#+end_src
-
-** Useful File Functions
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(defun dt/show-and-copy-buffer-path ()
-  "Show and copy the full path to the current file in the minibuffer."
-  (interactive)
-  ;; list-buffers-directory is the variable set in dired buffers
-  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
-    (if file-name
-        (message (kill-new file-name))
-      (error "Buffer not visiting a file"))))
-(defun dt/show-buffer-path-name ()
-  "Show the full path to the current file in the minibuffer."
-  (interactive)
-  (let ((file-name (buffer-file-name)))
-    (if file-name
-        (progn
-          (message file-name)
-          (kill-new file-name))
-      (error "Buffer not visiting a file"))))
-#+end_src
-
-** File Specific Configs
-*** Text Modes
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;; Spell Checking
-(use-package flyspell-popup)
-(require 'flyspell)
-(add-hook 'text-mode-hook 'flyspell-mode)
-(setq ispell-program-name "hunspell")
-(add-hook 'text-mode-hook 'visual-line-mode)
-;;(defvar mu-languages-ring nil "Languages ring for Ispell")
-;;
-;;(let ((languages '("en_US" "es_ES")))
-  ;;(validate-setq mu-languages-ring (make-ring (length languages)))
-  ;;(dolist (elem languages) (ring-insert mu-languages-ring elem)))
-;;
-;;(defun mu-cycle-ispell-languages ()
-  ;;(interactive)
-  ;;(let ((language (ring-ref mu-languages-ring -1)))
-    ;;(ring-insert mu-languages-ring language)
-    ;;(ispell-change-dictionary language)))
-
-
-#+end_src
 * Keybinds
 General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  It certainly is easier on the hands than constantly using CTRL for a prefix.
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "SPC"   '(counsel-M-x :which-key "M-x")
-       "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :which-key "Reload emacs config")
+       "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/config.el")) :which-key "Reload emacs config")
        "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
+       "t j"   '(flyspell-auto-correct-word :which-key "Auto Correct Word")
+       "t k"   '(flyspell-correct-word-before-point :which-key "Auto Correct Menu")
+       "t l"   '(langtool-check :which-key "Auto Correct Menu")
+       "t ;"   '(langtool-check-done :which-key "Auto Correct Menu")
        "o m"   '(magit :which-key "Open Magit"))
 (nvmap :keymaps 'override :prefix "SPC"
        "j k"   '(treemacs :which-key "Toggle Treemacs")
@@ -414,7 +345,7 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
        "m s"   '(org-schedule :which-key "Org set schedule")'
        "m t"   '(org-todo :which-key "Org todo")
        "m x"   '(org-toggle-checkbox :which-key "Org toggle checkbox")
-       "m B"   '(org-babel-tangle :which-key "Org babel tangle")
+       "m b"   '(org-babel-tangle :which-key "Org babel tangle")
        "m I"   '(org-toggle-inline-images :which-key "Org toggle inline imager")
        "m T"   '(org-todo-list :which-key "Org todo list")
        "o a"   '(org-agenda :which-key "Org agenda")
@@ -530,6 +461,15 @@ This is the base configs for LSP Mode in Emacs
         (setq lsp-lens-enable nil)
         (lsp-enable-which-key-integration t)
 )
+
+#+end_src
+** Tree Sitter
+Tree Sitter is a package which allows for better syntax highlighting
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package tree-sitter
+  :ensure t
+  :init (require 'tree-sitter-langs)
+)
 #+end_src
 ** DAP
 This is the base configs for DAP Mode in Emacs. LSP Mode is required for this to work
@@ -549,7 +489,7 @@ broken up across LSP and DAP features.
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :keymaps 'override :prefix "SPC"
        "c c"   '(compile :which-key "Compile")
-;;       "c C"   '(recompile :which-key "Recompile")
+       "c t"   '(projectile-test-project :which-key "Run Unit Tests")
        "c r"   '(lsp-rename :which-key "Rename Symbol"))
 #+end_src
 *** DAP
@@ -577,13 +517,12 @@ broken up across LSP and DAP features.
 
 (defun my-c++-mode-hook ()
   (c-set-style "my-style")        ; use my-style defined above
-  (auto-fill-mode)         
   (lsp t)
-  (clang-format+-mode)
-  (setq compile-command "cd .. && g++ -g $(find ./src -type f -iregex \".*\\.cpp\") -o ./bin/")
-
-  (modern-c++-font-lock-mode)
-  (c-toggle-auto-hungry-state 1))
+  (tree-sitter-hl-mode)
+  (clang-format+-mode 1)
+  ;;(setq compile-command "cd .. && g++ -g $(find ./src -type f -iregex \".*\\.cpp\") -o ./bin/")
+  (setq compile-command "cd .. && g++ -o bin/minesweeper $(find ./src -type f -iregex \".*\\.cpp\") -LC:/dev/lib -lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio -lsfml-network")
+)
 
 (add-hook 'c-mode-common-hook 'my-c++-mode-hook)
 
@@ -620,27 +559,115 @@ broken up across LSP and DAP features.
 (add-hook 'c-mode-common-hook 'c++-debug-hook)
 #+end_src
 ** Java
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-#+end_src
++begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package 'lsp-java
+:ensure t
+:hook (java-mode . (lambda ()
+                          (require 'lsp-java)
+                          (lsp))))  ; or lsp-deferred
+(require 'dap-java)
++end_src
 
 ** Python
 #+begin_src emacs-lisp 
-(require 'lsp-python-ms)
-(setq lsp-python-ms-auto-install-server t)
-(add-hook 'python-mode-hook #'lsp) ; or lsp-deferred
-;; for executable of language server, if it's not symlinked on your PATH
-
-(setq lsp-python-ms-executable
-      "~/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
-
-(use-package lsp-python-ms
+(use-package lsp-pyright
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
+                          (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
+(dap-python-debugger 'debugpy)
+(require 'dap-python)
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
+(add-hook 'python-mode 'tree-sitter-hl-mode)
 #+end_src
 
+* File Configs
+** File-related Keybindings
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
+       "."     '(find-file :which-key "Find file")
+       "f f"   '(find-file :which-key "Find file")
+       "f p"   '(projectile-find-file :which-key "Find File in Project")
+       "f r"   '(counsel-recentf :which-key "Recent files")
+       "f s"   '(save-buffer :which-key "Save file")
+       "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
+       "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
+       "f C"   '(copy-file :which-key "Copy file")
+       "f D"   '(delete-file :which-key "Delete file")
+       "f R"   '(rename-file :which-key "Rename file")
+       "f S"   '(write-file :which-key "Save file as...")
+       "f U"   '(sudo-edit :which-key "Sudo edit file"))
+#+end_src
+
+** Installing Some Useful File-related Modules
+Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package recentf
+  :config
+  (recentf-mode))
+(use-package sudo-edit) ;; Utilities for opening files with sudo
+
+#+end_src
+
+** Useful File Functions
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(defun dt/show-and-copy-buffer-path ()
+  "Show and copy the full path to the current file in the minibuffer."
+  (interactive)
+  ;; list-buffers-directory is the variable set in dired buffers
+  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
+    (if file-name
+        (message (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+(defun dt/show-buffer-path-name ()
+  "Show the full path to the current file in the minibuffer."
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (if file-name
+        (progn
+          (message file-name)
+          (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+#+end_src
+
+** File Specific Configs
+*** Text Modes
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;; Spell Checking
+(use-package langtool
+  :hook (text-mode . (lambda ()
+                          (require 'langtool)))
+  :config
+    ;; Setup Langtool and set default language to US English
+    (setq langtool-java-classpath
+          "/usr/share/languagetool:/usr/share/java/languagetool/*")
+    (setq langtool-default-language "en-US")
+)
+(use-package flyspell-popup)
+(use-package flyspell
+  :hook (text-mode . (lambda ()
+                          (require 'flyspell))))
+(setq ispell-program-name "hunspell")
+(add-hook 'text-mode-hook 'visual-line-mode)
+
+;;(defvar mu-languages-ring nil "Languages ring for Ispell")
+;;
+;;(let ((languages '("en_US" "es_ES")))
+  ;;(validate-setq mu-languages-ring (make-ring (length languages)))
+  ;;(dolist (elem languages) (ring-insert mu-languages-ring elem)))
+;;
+;;(defun mu-cycle-ispell-languages ()
+  ;;(interactive)
+  ;;(let ((language (ring-ref mu-languages-ring -1)))
+    ;;(ring-insert mu-languages-ring language)
+    ;;(ispell-change-dictionary language)))
+
+
+#+end_src
 * Org Mode
 ** Setup
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
@@ -857,6 +884,8 @@ The Perspective package provides multiple named workspaces (or "perspectives") i
 (use-package projectile
   :config
   (projectile-global-mode 1))
+;; This is a feature to make running unit tests easier, turn off if you projects you didn't write
+;;(setq compilation-read-command nil)
 #+end_src
 
 * Registers
@@ -972,7 +1001,7 @@ Because of the RSS reader, a basic web browser would be appreciated. EAF browser
 ** EAF
 +begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package eaf
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
+  :load-path "~/.config/emacs/site-lisp/emacs-application-framework"
   :custom
   ; See https://github.com/emacs-eaf/emacs-application-framework/wiki/Customization
   (eaf-browser-continue-where-left-off t)
@@ -987,7 +1016,7 @@ Because of the RSS reader, a basic web browser would be appreciated. EAF browser
 (require 'eaf-browser)
 (require 'eaf-evil)
 #+end_src
-* Vimium
+** Vimium
 This enables vim keys for navigation
 +begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (define-key key-translation-map (kbd "SPC")
@@ -1058,11 +1087,11 @@ To integrate Islamic prayer times into Emacs, we have to manually add the packag
 Next, we have to set some variables for our config
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'awqat)
-(setq calendar-latitude 40.8082241
-      calendar-longitude -73.3886462)
+(setq calendar-latitude 40.812119
+    calendar-longitude -73.3432)
 (setq awqat-asr-hanafi nil)
-(setq awqat-fajr-angle -15.0)
-(setq awqat-isha-angle -15.0)
+(setq awqat-fajr-angle 15.0)
+(setq awqat-isha-angle 15.0)
 (setq org-agenda-include-diary t)
 #+end_src
 
@@ -1071,4 +1100,9 @@ A minor mode for Emacs that implements a distraction-free writing mode similar t
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package writeroom-mode)
+#+end_src
+** Pomodoro Timer
+Package to enable pomodoro timing within emacs itself
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package pomodoro)
 #+end_src
