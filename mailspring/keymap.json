@@ -1,0 +1,23 @@
+{
+  "core:previous-item": "k",
+  "core:next-item": "j",
+  "core:find-in-thread": "/",
+  "core:focus-item": "l",
+  "core:remove-from-view": "d",
+  "core:star-item": "s",
+  "core:select-item": "v",
+  "multiselect-list:select-all": "shift+v+g",
+  "thread-list:select-read": "v r",
+  "thread-list:select-unread": "v u",
+  "thread-list:select-starred": "v s",
+  "core:mark-as-unread": "m u",
+  "core:report-as-spam": "m s",
+  "core:mark-as-read": "m r",
+  "core:forward": "f",
+  "core:reply-all": "shift+r",
+  "core:reply": "r",
+  "core:focus-search": "/",
+  "window:sync-mail-now": "mod+r",
+  "navigation:go-to-inbox": "shift+h",
+  "navigation:go-to-sent": "shift+l"
+}
