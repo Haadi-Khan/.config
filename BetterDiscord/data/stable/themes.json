@@ -1,16 +1,10 @@
 {
-<<<<<<< HEAD
-    "OneDark": false,
-    "Tokyo Night": false,
-    "dracula": false,
-    "       Nordic": true,
-    "       onedarkic": false,
-    "       onedark": true
-=======
     "ClearVision": false,
     "Dark+": false,
+    "OneDark": false,
+    "hljs-atom-one-dark.css": false,
     "deepbluetheme": false,
-    "OneDark": true,
-    "hljs-atom-one-dark.css": true
->>>>>>> laptop
+    "dracula": false,
+    "       onedark": true,
+    "Tokyo Night": false
 }

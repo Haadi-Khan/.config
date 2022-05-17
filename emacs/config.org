@@ -125,6 +125,7 @@ Basic Settings for Emacs
 (setq display-line-numbers-type 'relative)
 (setq scroll-margin 8)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'origami-mode)
 
 ;;(setq-default tab-width 4)
 (require 'fill-column-indicator)
@@ -224,7 +225,7 @@ Dashboard when starting Emacs, looks cool
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
+  ;;(setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.config/emacs/emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
@@ -275,9 +276,14 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 
 ** Keybindings Within Dired
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(define-key dired-mode-map "a" 'dired-create-empty-file)
-(define-key dired-mode-map "A" 'dired-create-directory)
-(define-key dired-mode-map "/" 'find-name-dired)
+(require 'ranger)
+;;(use-package ranger
+;;:after dired
+;;:config
+    ;;(setq ranger-modify-header nil)
+    ;;(setq ranger-max-parent-width 0.12)
+    ;;(setq ranger-width-preview 0.55)
+    ;;(setq ranger-dont-show-binary t))
 #+end_src
 ** Keybindings For Peep-Dired-Mode
 | COMMAND              | DESCRIPTION                              | KEYBINDING |
@@ -325,8 +331,8 @@ General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have 
        "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
        "t j"   '(flyspell-auto-correct-word :which-key "Auto Correct Word")
        "t k"   '(flyspell-correct-word-before-point :which-key "Auto Correct Menu")
-       "t l"   '(langtool-check :which-key "Auto Correct Menu")
-       "t ;"   '(langtool-check-done :which-key "Auto Correct Menu")
+       "t l"   '(langtool-check :which-key "Grammar Check")
+       "t ;"   '(langtool-check-done :which-key "Toggle Grammar Check")
        "o m"   '(magit :which-key "Open Magit"))
 (nvmap :keymaps 'override :prefix "SPC"
        "j k"   '(treemacs :which-key "Toggle Treemacs")
@@ -458,6 +464,7 @@ This is the base configs for LSP Mode in Emacs
         company-minimum-prefix-length 1
         lsp-idle-delay 0.1)
     :config
+        (lsp-enable-snippet t)
         (setq lsp-lens-enable nil)
         (lsp-enable-which-key-integration t)
 )
@@ -559,28 +566,36 @@ broken up across LSP and DAP features.
 (add-hook 'c-mode-common-hook 'c++-debug-hook)
 #+end_src
 ** Java
-+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package 'lsp-java
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package lsp-java
 :ensure t
 :hook (java-mode . (lambda ()
                           (require 'lsp-java)
                           (lsp))))  ; or lsp-deferred
 (require 'dap-java)
-+end_src
+#+end_src
 
 ** Python
-#+begin_src emacs-lisp 
+*** Basic Config
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
-(dap-python-debugger 'debugpy)
 (require 'dap-python)
+(setq dap-python-debugger 'debugpy)
 (use-package pyvenv
-  :config
-  (pyvenv-mode 1))
+    :config (pyvenv-mode 1))
+
 (add-hook 'python-mode 'tree-sitter-hl-mode)
+#+end_src
+*** Jupyter Notebooks
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(require 'ein)
+(setq ein:use-auto-complete t)
+(setq ein:use-smartrep t)
+(add-hook 'ein:notebook-mode-map 'undo-tree-mode) 
 #+end_src
 
 * File Configs
@@ -588,18 +603,18 @@ broken up across LSP and DAP features.
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
-       "."     '(find-file :which-key "Find file")
-       "f f"   '(find-file :which-key "Find file")
-       "f p"   '(projectile-find-file :which-key "Find File in Project")
-       "f r"   '(counsel-recentf :which-key "Recent files")
-       "f s"   '(save-buffer :which-key "Save file")
-       "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
-       "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
-       "f C"   '(copy-file :which-key "Copy file")
-       "f D"   '(delete-file :which-key "Delete file")
-       "f R"   '(rename-file :which-key "Rename file")
-       "f S"   '(write-file :which-key "Save file as...")
-       "f U"   '(sudo-edit :which-key "Sudo edit file"))
+    "."     '(find-file :which-key "Find file")
+    "f f"   '(find-file :which-key "Find file")
+    "f p"   '(projectile-find-file :which-key "Find File in Project")
+    "f r"   '(counsel-recentf :which-key "Recent files")
+    "f s"   '(save-buffer :which-key "Save file")
+    "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
+    "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
+    "f C"   '(copy-file :which-key "Copy file")
+    "f D"   '(delete-file :which-key "Delete file")
+    "f R"   '(rename-file :which-key "Rename file")
+    "f S"   '(write-file :which-key "Save file as...")
+    "f U"   '(sudo-edit :which-key "Sudo edit file"))
 #+end_src
 
 ** Installing Some Useful File-related Modules
@@ -607,8 +622,8 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package recentf
-  :config
-  (recentf-mode))
+:config
+(recentf-mode))
 (use-package sudo-edit) ;; Utilities for opening files with sudo
 
 #+end_src
@@ -616,22 +631,22 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 ** Useful File Functions
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (defun dt/show-and-copy-buffer-path ()
-  "Show and copy the full path to the current file in the minibuffer."
-  (interactive)
-  ;; list-buffers-directory is the variable set in dired buffers
-  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
-    (if file-name
-        (message (kill-new file-name))
-      (error "Buffer not visiting a file"))))
+"Show and copy the full path to the current file in the minibuffer."
+(interactive)
+;; list-buffers-directory is the variable set in dired buffers
+(let ((file-name (or (buffer-file-name) list-buffers-directory)))
+(if file-name
+    (message (kill-new file-name))
+    (error "Buffer not visiting a file"))))
 (defun dt/show-buffer-path-name ()
-  "Show the full path to the current file in the minibuffer."
-  (interactive)
-  (let ((file-name (buffer-file-name)))
-    (if file-name
-        (progn
-          (message file-name)
-          (kill-new file-name))
-      (error "Buffer not visiting a file"))))
+"Show the full path to the current file in the minibuffer."
+(interactive)
+(let ((file-name (buffer-file-name)))
+(if file-name
+    (progn
+	(message file-name)
+	(kill-new file-name))
+    (error "Buffer not visiting a file"))))
 #+end_src
 
 ** File Specific Configs
@@ -639,32 +654,32 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; Spell Checking
 (use-package langtool
-  :hook (text-mode . (lambda ()
-                          (require 'langtool)))
-  :config
-    ;; Setup Langtool and set default language to US English
-    (setq langtool-java-classpath
-          "/usr/share/languagetool:/usr/share/java/languagetool/*")
-    (setq langtool-default-language "en-US")
+:hook (text-mode . (lambda ()
+			(require 'langtool)))
+:config
+;; Setup Langtool and set default language to US English
+(setq langtool-java-classpath
+	"/usr/share/languagetool:/usr/share/java/languagetool/*")
+(setq langtool-default-language "en-US")
 )
 (use-package flyspell-popup)
 (use-package flyspell
-  :hook (text-mode . (lambda ()
-                          (require 'flyspell))))
+:hook (text-mode . (lambda ()
+			(require 'flyspell))))
 (setq ispell-program-name "hunspell")
 (add-hook 'text-mode-hook 'visual-line-mode)
 
 ;;(defvar mu-languages-ring nil "Languages ring for Ispell")
 ;;
 ;;(let ((languages '("en_US" "es_ES")))
-  ;;(validate-setq mu-languages-ring (make-ring (length languages)))
-  ;;(dolist (elem languages) (ring-insert mu-languages-ring elem)))
+;;(validate-setq mu-languages-ring (make-ring (length languages)))
+;;(dolist (elem languages) (ring-insert mu-languages-ring elem)))
 ;;
 ;;(defun mu-cycle-ispell-languages ()
-  ;;(interactive)
-  ;;(let ((language (ring-ref mu-languages-ring -1)))
-    ;;(ring-insert mu-languages-ring language)
-    ;;(ispell-change-dictionary language)))
+;;(interactive)
+;;(let ((language (ring-ref mu-languages-ring -1)))
+;;(ring-insert mu-languages-ring language)
+;;(ispell-change-dictionary language)))
 
 
 #+end_src
@@ -672,112 +687,115 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 ** Setup
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package evil-org
-  :ensure t
-  :after org
-  :hook (org-mode . (lambda () evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+:ensure t
+:after org
+:hook (org-mode . (lambda () evil-org-mode))
+:config
+(setq split-width-threshold nil)
+(require 'evil-org-agenda)
+(evil-org-agenda-set-keys))
 (add-hook 'org-mode-hook 'org-indent-mode)
+(add-hook 'org-mode-hook 'writeroom-mode)
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/todos.org")
-      org-default-notes-file (expand-file-name "notes.org" org-directory)
-      org-ellipsis "..."
-      org-log-done 'time
-      org-journal-dir "~/org/journal/"
-      org-journal-date-format "%B %d, %Y (%A) "
-      org-journal-file-format "%Y-%m-%d.org"
-      org-hide-emphasis-markers t)
+    org-agenda-files '("~/org/todos.org")
+    org-default-notes-file (expand-file-name "notes.org" org-directory)
+    org-ellipsis "..."
+    org-log-done 'time
+    org-journal-dir "~/org/journal/"
+    org-journal-date-format "%B %d, %Y (%A) "
+    org-journal-file-format "%Y-%m-%d.org"
+    org-hide-emphasis-markers t)
 (setq org-src-preserve-indentation nil
-      org-src-tab-acts-natively t
-      org-edit-src-content-indentation 0)
+    org-src-tab-acts-natively t
+    org-edit-src-content-indentation 0)
 (custom-set-faces
-    '(org-document-title ((t (:inherit outline-1 :height 1.25))))
-    '(org-document-info ((t (:inherit outline-1 :height 1.15))))
-    '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
-    '(org-level-2 ((t (:inherit outline-2 :height 1.125))))
-    '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
-    '(org-level-4 ((t (:inherit outline-4 :height 1.075))))
-    '(org-level-5 ((t (:inherit outline-5 :height 1.05))))
+'(org-document-title ((t (:inherit outline-1 :height 1.25))))
+'(org-document-info ((t (:inherit outline-1 :height 1.15))))
+'(org-level-1 ((t (:inherit outline-1 :height 1.15))))
+'(org-level-2 ((t (:inherit outline-2 :height 1.125))))
+'(org-level-3 ((t (:inherit outline-3 :height 1.1))))
+'(org-level-4 ((t (:inherit outline-4 :height 1.075))))
+'(org-level-5 ((t (:inherit outline-5 :height 1.05))))
 )
+(define-key org-mode-map (kbd "<tab>") 'org-cycle)
 #+end_src
 
 ** Enabling Org Bullets
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-superstar ; "prettier" bullets
-  :hook (org-mode . org-superstar-mode)
-  :config
-  ;; Make leading stars truly invisible, by rendering them as spaces!
-  (setq org-superstar-leading-bullet ?\s
-        org-superstar-leading-fallback ?\s
-        org-hide-leading-stars nil
-        org-superstar-todo-bullet-alist
-        '(("TODO" . 9744)
-          ("[ ]"  . 9744)
-          ("DONE" . 9745)
-          ("[X]"  . 9745))))
+:hook (org-mode . org-superstar-mode)
+:config
+;; Make leading stars truly invisible, by rendering them as spaces!
+(setq org-superstar-leading-bullet ?\s
+    org-superstar-leading-fallback ?\s
+    org-hide-leading-stars nil
+    org-superstar-todo-bullet-alist
+    '(("TODO" . 9744)
+	("[ ]"  . 9744)
+	("DONE" . 9745)
+	("[X]"  . 9745))))
 #+end_src
 
 ** Org Link Abbreviations
 This allows for the use of abbreviations that will get expanded out into a lengthy URL.
-   
+
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; An example of how this works.
 ;; [[arch-wiki:Name_of_Page][Description]]
 (setq org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
-        '(("google" . "http://www.google.com/search?q=")
-          ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
-          ("ddg" . "https://duckduckgo.com/?q=")
-          ("wiki" . "https://en.wikipedia.org/wiki/")))
+    '(("google" . "http://www.google.com/search?q=")
+	("arch-wiki" . "https://wiki.archlinux.org/index.php/")
+	("ddg" . "https://duckduckgo.com/?q=")
+	("wiki" . "https://en.wikipedia.org/wiki/")))
 #+end_src
 
 ** Org Todo Keywords
 This lets us create the various TODO tags that we can use in Org.
-   
+
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
-    '((sequence
-            "TODO(t)"
-            "TEST(T)"
-            "APUSH(a)"
-            "STAT(s)"
-            "PHYSICS(P)"
-            "CALC(C)"
-            "LANG(l)"
-            "SPAN(f)"
-            "MULTI(m)"
-            "CS(S)"
-            "ROBO(r)"
-            "SCIOLY(g)"
-            "|"
-            "DONE(d)"
-            "CANCELLED(c)"
-            "|"
-            "PROG(p)"))
+'((sequence
+	"TODO(t)"
+	"TEST(T)"
+	"APUSH(a)"
+	"STAT(s)"
+	"PHYSICS(P)"
+	"CALC(C)"
+	"LANG(l)"
+	"SPAN(f)"
+	"MULTI(m)"
+	"CS(S)"
+	"ROBO(r)"
+	"SCIOLY(g)"
+	"|"
+	"DONE(d)"
+	"CANCELLED(c)"
+	"|"
+	"PROG(p)"))
 )
 (setq org-todo-keyword-faces'(
-        ("TODO" . org-warning)
-        ("TEST" .  (:foreground "#e06c75" :weight bold))
-        ("APUSH" . "#e5c07b")
-        ("STAT" . "#61afef")
-        ("PHYSICS" . "#98c379")
-        ("CALC" . "#61afef")
-        ("LANG" . "#d19a66")
-        ("SPAN" . "#d19a66")
-        ("MULTI" . "#56b6c2")
-        ("CS" . "#56b6c2")
-        ("ROBO" . "#be5046")
-        ("SCIOLY" . "#98c379")
-        ("DONE" . "#5c6370")
-        ("CANCELLED" . (:foreground "#4b5263" :weight bold))
-        ("PROG" . "#e5c07b")
+    ("TODO" . org-warning)
+    ("TEST" .  (:foreground "#e06c75" :weight bold))
+    ("APUSH" . "#e5c07b")
+    ("STAT" . "#61afef")
+    ("PHYSICS" . "#98c379")
+    ("CALC" . "#61afef")
+    ("LANG" . "#d19a66")
+    ("SPAN" . "#d19a66")
+    ("MULTI" . "#56b6c2")
+    ("CS" . "#56b6c2")
+    ("ROBO" . "#be5046")
+    ("SCIOLY" . "#98c379")
+    ("DONE" . "#5c6370")
+    ("CANCELLED" . (:foreground "#4b5263" :weight bold))
+    ("PROG" . "#e5c07b")
 ))
 #+end_src
 
 ** Disable Blank Line from M-RET
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-blank-before-new-entry (quote ((heading . nil)
-                                         (plain-list-item . nil))))
+					(plain-list-item . nil))))
 #+end_src
 ** Source Code Block Tag Expansion
 Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
@@ -797,7 +815,7 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-tempo
-  :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
+:ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
 #+end_src
 
 ** Source Code Block Syntax Highlighting
@@ -805,18 +823,18 @@ We want the same syntax highlighting in source blocks as in the native language 
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq org-src-fontify-natively t
-    org-src-tab-acts-natively t
-    org-confirm-babel-evaluate nil
-    org-edit-src-content-indentation 0)
+org-src-tab-acts-natively t
+org-confirm-babel-evaluate nil
+org-edit-src-content-indentation 0)
 #+end_src
 
 ** Automatically Create Table of Contents
 Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful useful for README files on GitHub).  Use :TOC: to create the table.
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-  (use-package toc-org
-    :commands toc-org-enable
-    :init (add-hook 'org-mode-hook 'toc-org-enable))
+(use-package toc-org
+:commands toc-org-enable
+:init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 ** LaTeX within Org Mode
@@ -825,6 +843,69 @@ LaTeX is fire, make it so I can take better math/physics notes
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
 #+end_src
+** Org Roam
+Basically lets note taking go on crack
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(defun my/org-roam-select-quantum ()
+  (interactive)
+  (org-roam-node-read
+   nil
+   (lambda (node)
+     (member "Quantum-Mech" (org-roam-node-tags node)))
+   (lambda (completion-a completion-b)
+     (< (length (org-roam-node-title (cdr completion-a)))
+        (length (org-roam-node-title (cdr completion-b)))))
+   t))
+(defun my/org-roam-select-particle ()
+  (interactive)
+  (org-roam-node-read
+   nil
+   (lambda (node)
+     (member "Particle-Physics" (org-roam-node-tags node)))
+   (lambda (completion-a completion-b)
+     (< (length (org-roam-node-title (cdr completion-a)))
+        (length (org-roam-node-title (cdr completion-b)))))
+   t))
+(defun my/org-roam-select-ml ()
+  (interactive)
+  (org-roam-node-read
+   nil
+   (lambda (node)
+     (member "ML" (org-roam-node-tags node)))
+   (lambda (completion-a completion-b)
+     (< (length (org-roam-node-title (cdr completion-a)))
+        (length (org-roam-node-title (cdr completion-b)))))
+   t))
+(defun my/org-roam-select-dsa ()
+  (interactive)
+  (org-roam-node-read
+   nil
+   (lambda (node)
+     (member "DSA" (org-roam-node-tags node)))
+   (lambda (completion-a completion-b)
+     (< (length (org-roam-node-title (cdr completion-a)))
+        (length (org-roam-node-title (cdr completion-b)))))
+   t))
+#+end_src 
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package org-roam
+:ensure t
+:custom
+(org-roam-directory "~/org-roam")
+:config
+(org-roam-setup)
+)
+(nvmap :keymaps 'override :prefix "SPC"
+    "m r r"   '(org-roam-buffer-toggle :which-key "Toggle Org Roam")
+    "m r a"   '(org-roam-tag-add :which-key "Add Org Roam Tag")
+    "m r f"   '(org-roam-node-find :which-key "Find Org Node")
+    "m r q"   '(my/org-roam-select-quantum() :which-key "Pick Quantum Note")
+    "m r p"   '(my/org-roam-select-particle() :which-key "Pick Par. Phy. Note")
+    "m r m"   '(my/org-roam-select-ml() :which-key "Pick ML Note")
+    "m r d"   '(my/org-roam-select-dsa() :which-key "Pick DSA Note")
+    "m r i"   '(org-roam-node-insert :which-key "Insert New Org Node"))
+#+end_src 
 
 * Magit
 
@@ -833,26 +914,26 @@ LaTeX is fire, make it so I can take better math/physics notes
 (setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
 ;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
 (defun me/magit-status-bare ()
-  "set --git-dir and --work-tree in `magit-git-global-arguments' to `bare-git-dir' and `bare-work-tree' and calls `magit-status'"
-  (interactive)
-  (require 'magit-git)
-  (add-to-list 'magit-git-global-arguments bare-git-dir)
-  (add-to-list 'magit-git-global-arguments bare-work-tree)
-  (call-interactively 'magit-status))
+"set --git-dir and --work-tree in `magit-git-global-arguments' to `bare-git-dir' and `bare-work-tree' and calls `magit-status'"
+(interactive)
+(require 'magit-git)
+(add-to-list 'magit-git-global-arguments bare-git-dir)
+(add-to-list 'magit-git-global-arguments bare-work-tree)
+(call-interactively 'magit-status))
 
 ;; if you use `me/magit-status-bare' you cant use `magit-status' on other other repos you have to unset `--git-dir' and `--work-tree'
 ;; use `me/magit-status' insted it unsets those before calling `magit-status'
 (defun me/magit-status ()
-  "removes --git-dir and --work-tree in `magit-git-global-arguments' and calls `magit-status'"
-  (interactive)
-  (require 'magit-git)
-  (setq magit-git-global-arguments (remove bare-git-dir magit-git-global-arguments))
-  (setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
-  (call-interactively 'magit-status))
+"removes --git-dir and --work-tree in `magit-git-global-arguments' and calls `magit-status'"
+(interactive)
+(require 'magit-git)
+(setq magit-git-global-arguments (remove bare-git-dir magit-git-global-arguments))
+(setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
+(call-interactively 'magit-status))
 
 (use-package magit)
- #+end_src
- 
+#+end_src
+
 * Treemacs
 #+BEGIN_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package treemacs)
@@ -867,23 +948,23 @@ This is my custom keymap for the treemacs window
 (define-key treemacs-mode-map (kbd "A") 'treemacs-create-dir)
 (define-key treemacs-mode-map (kbd "s") 'treemacs-create-file)
 #+end_src
-  
+
 * Perspective
 The Perspective package provides multiple named workspaces (or "perspectives") in Emacs, similar to multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout. This makes it easy to work on many separate projects without getting lost in all the buffers. Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available.
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package perspective
-  :bind
-  ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
-  :config
-  (persp-mode))
+:bind
+("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
+:config
+(persp-mode))
 #+end_src
 
 * Projectile
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package projectile
-  :config
-  (projectile-global-mode 1))
+:config
+(projectile-global-mode 1))
 ;; This is a feature to make running unit tests easier, turn off if you projects you didn't write
 ;;(setq compilation-read-command nil)
 #+end_src
@@ -907,17 +988,17 @@ Emacs registers are compartments where you can save text, rectangles and positio
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :prefix "SPC"
-       "r c"   '(copy-to-register :which-key "Copy to register")
-       "r f"   '(frameset-to-register :which-key "Frameset to register")
-       "r i"   '(insert-register :which-key "Insert register")
-       "r j"   '(jump-to-register :which-key "Jump to register")
-       "r l"   '(list-registers :which-key "List registers")
-       "r n"   '(number-to-register :which-key "Number to register")
-       "r r"   '(counsel-register :which-key "Choose a register")
-       "r v"   '(view-register :which-key "View a register")
-       "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
-       "r +"   '(increment-register :which-key "Increment register")
-       "r SPC" '(point-to-register :which-key "Point to register"))
+    "r c"   '(copy-to-register :which-key "Copy to register")
+    "r f"   '(frameset-to-register :which-key "Frameset to register")
+    "r i"   '(insert-register :which-key "Insert register")
+    "r j"   '(jump-to-register :which-key "Jump to register")
+    "r l"   '(list-registers :which-key "List registers")
+    "r n"   '(number-to-register :which-key "Number to register")
+    "r r"   '(counsel-register :which-key "Choose a register")
+    "r v"   '(view-register :which-key "View a register")
+    "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
+    "r +"   '(increment-register :which-key "Increment register")
+    "r SPC" '(point-to-register :which-key "Point to register"))
 #+end_src
 
 * Terminal
@@ -1060,6 +1141,17 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 (which-key-mode)
 #+end_src
 
+* ERC
+This is more for shits and gigs while I try to make emacs use discord
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(setq erc-server "localhost"
+  erc-port "6667"
+  erc-track-shorten-start 8
+  erc-auto-query 'bury)
+
+(use-package erc-image
+  :after erc)
+#+end_src
 * Misc. Config
 ** No Junk Files
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el

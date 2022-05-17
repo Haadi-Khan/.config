@@ -21,7 +21,8 @@
 #   |------+------+------+------+------+------|      |------+------+------+------+------+------|
 #   | Ctrl | Mod  | Alt  | Rofi |      | Home |      |  =   |      | LArr | DArr | UArr | RArr |
 #   |------+------+------+------+SwiFlo+------|      |------+ Term +------+------+------+------|
-#   |      |      |      |      |      | End  |      |  -   |      |       |     |      |      | `-----------------------------------------|      |-----------------------------------------'
+#   |      |      |      |      |      | End  |      |  -   |      |       |     |      |      |
+#   `-----------------------------------------|      |-----------------------------------------'
 #
 #   Mod + Shift
 #   ,-----------------------------------------|      |-----------------------------------------.
@@ -67,11 +68,9 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 
 # Gaps
 	for_window [class="^.*"] border pixel 2
-	gaps inner 12
-	gaps outer 10
+	gaps outer 1
 	smart_borders on
 	smart_borders no_gaps
-	border_radius 3
 
 # Use pactl to adjust volume in PulseAudio.
 	set $refresh_i3status killall -SIGUSR1 i3status
@@ -159,7 +158,7 @@ bindsym $mod+Shift+c move container to workspace number $ws10
 assign [class="code"] $ws3
 assign [class="discord"] $ws4
 assign [class="Cider"] $ws4
-assign [class="Thunderbird"] $ws5
+assign [class="Mailspring"] $ws5
 assign [class="Slack"] $ws5
 
 exec discord

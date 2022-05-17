@@ -1,24 +1,11 @@
 {
     "general": {
-        "emotes": false,
-        "publicServers": false,
+        "emotes": true,
+        "publicServers": true,
         "voiceDisconnect": false,
-<<<<<<< HEAD
         "showToasts": true,
         "mediaKeys": false
     },
-=======
-        "showToasts": false,
-        "mediaKeys": false
-    },
-    "appearance": {
-        "twentyFourHour": false,
-        "hideGiftButton": true,
-        "hideGIFButton": false,
-        "minimalMode": false,
-        "coloredText": false
-    },
->>>>>>> laptop
     "addons": {
         "addonErrors": true,
         "autoReload": true,
@@ -26,7 +13,6 @@
     },
     "customcss": {
         "customcss": true,
-<<<<<<< HEAD
         "liveUpdate": false,
         "openAction": "settings"
     },
@@ -37,23 +23,11 @@
         "quickSuggestions": true,
         "fontSize": 14,
         "renderWhitespace": "selection"
-=======
-        "liveUpdate": true,
-        "openAction": "settings"
-    },
-    "developer": {
-        "debuggerHotkey": false,
-        "reactDevTools": false,
-        "inspectElement": false,
-        "devToolsWarning": false,
-        "debugLogs": false
->>>>>>> laptop
     },
     "window": {
         "transparency": false,
         "removeMinimumSize": false,
         "frame": false
-<<<<<<< HEAD
     },
     "developer": {
         "debugLogs": false,
@@ -62,7 +36,5 @@
         "reactDevTools": false,
         "inspectElement": false,
         "devToolsWarning": false
-=======
->>>>>>> laptop
     }
 }
