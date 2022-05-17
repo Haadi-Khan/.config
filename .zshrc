@@ -32,7 +32,6 @@ alias cdwn="cd /run/media/haadi/Storage/Downloads"
 alias vi="nvim"
 alias vim="nvim"
 alias vimrc="nvim ~/.config/nvim/ ."
-alias i3c="nvim ~/.config/i3/config"
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
 alias cdh="cd ~"
 alias btop="btop --utf-force"
@@ -42,7 +41,11 @@ alias td="cd ~docs/org/ && git pull && vi todos.org"
 alias gp="git add --all && git commit -m \"Commit\" && git push"
 alias tty-clock="tty-clock -s -x -C 6 -t"
 alias fusion="./.local/share/applications/wine/Programs/Autodesk/fusion360-launcher.sh"
+alias emacs="emacsclient -c -a \"Emacs\""
+alias em="emacsclient -c -a \"Emacs\""
 alias remacs="killall emacs && /usr/bin/emacs --daemon &"
+alias i3c="emacs ~/.config/i3/config"
+alias ml="jupyter lab --no-browser"
 hash -d docs=/run/media/haadi/Storage/Documents
 hash -d dwn=/run/media/haadi/Storage/Downloads
 
@@ -65,3 +68,5 @@ finext() {
 gcomp() {
     g++ -g $(find ./src -type f -iregex ".*\.cpp") -o ./bin/"$1"
 }
+
+eval $(thefuck --alias)
