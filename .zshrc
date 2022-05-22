@@ -3,7 +3,7 @@ USE_POWERLINE="true"
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-EDITOR=nvim
+export EDITOR='emacsclient -c -a \"Emacs\"'
 bindkey -v
 
 # History in cache directory:
@@ -24,30 +24,37 @@ bindkey '^ ' autosuggest-accept
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 source /usr/share/autojump/autojump.zsh 2>/dev/null
-alias ls="exa -a"
 
+# Quality of life rebinds
+alias ls="exa -a" # Superior ls prompt
+
+# CDs and links to frequent locations
 alias cdoc="cd /run/media/haadi/Storage/Documents"
 alias cdp="cd /run/media/haadi/Storage/Documents/Programs"
 alias cdwn="cd /run/media/haadi/Storage/Downloads"
-alias vi="nvim"
-alias vim="nvim"
-alias vimrc="nvim ~/.config/nvim/ ."
-alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
-alias cdh="cd ~"
-alias btop="btop --utf-force"
-alias tmux="tmux -f ~/.dotfiles/tmux/tmux.conf"
-alias blc="cd ~/Applications && ./BadlionClient_2b786aee9df7ac8ea9752d318ea76329"
-alias td="cd ~docs/org/ && git pull && vi todos.org"
-alias gp="git add --all && git commit -m \"Commit\" && git push"
-alias tty-clock="tty-clock -s -x -C 6 -t"
-alias fusion="./.local/share/applications/wine/Programs/Autodesk/fusion360-launcher.sh"
-alias emacs="emacsclient -c -a \"Emacs\""
-alias em="emacsclient -c -a \"Emacs\""
-alias remacs="killall emacs && /usr/bin/emacs --daemon &"
-alias i3c="emacs ~/.config/i3/config"
-alias ml="jupyter lab --no-browser"
 hash -d docs=/run/media/haadi/Storage/Documents
 hash -d dwn=/run/media/haadi/Storage/Downloads
+
+# Quality of Life aliases
+alias vi="nvim"
+alias vim="nvim"
+alias em="emacsclient -c -a \"Emacs\""
+alias remacs="killall emacs && /usr/bin/emacs --daemon &"
+
+# Config file Binds
+alias vimrc="nvim ~/.config/nvim/ ."
+alias i3c="emacs ~/.config/i3/config"
+
+# Random stuff to be lazy
+alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
+alias btop="btop --utf-force"
+alias tmux="tmux -f ~/.dotfiles/tmux/tmux.conf"
+alias gp="git add --all && git commit -m \"Commit\" && git push"
+
+# Misc.
+alias ml="jupyter lab --no-browser"
+alias tty-clock="tty-clock -s -x -C 6 -t"
+eval $(thefuck --alias)
 
 # CD into a directory and open vim
 vicd() {
@@ -68,5 +75,3 @@ finext() {
 gcomp() {
     g++ -g $(find ./src -type f -iregex ".*\.cpp") -o ./bin/"$1"
 }
-
-eval $(thefuck --alias)

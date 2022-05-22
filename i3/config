@@ -52,7 +52,11 @@ set $mod Mod4
 	exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 	exec discord
 	exec cider
-	exec /usr/bin/emacs --daemon &
+	exec nitrogen --restore
+	exec compton
+	exec feh --bg-scale /run/media/haadi/Storage/Pictures/Wallpaper.png
+	exec xrandr --output DVI-D-0 --off --output HDMI-0 --off --output DP-0 --primary --mode 1920x1080 --pos 0x0 --rate 144.00 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-4 --off --output DP-5 --off
+	exec /usr/bin/emacs --daemon
 
 # Colors
 set $bg-color 	         #4b5263
@@ -85,7 +89,7 @@ floating_modifier $mod
 bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 bindsym $mod+apostrophe exec rofi -show drun -lines 3 -eh 2 -width 100 -padding 80 -opacity "65" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 12"
 bindsym $mod+q kill
 # change focus
