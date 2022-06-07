@@ -30,25 +30,26 @@ Install use-package and enable ':ensure t' globally.  The ':ensure' keyword caus
 ** Evil Mode
 Enable Vim
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-  (use-package evil
-    :init      ;; tweak evil's configuration before loading it
-    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-    (setq evil-want-keybinding nil)
-    (setq evil-vsplit-window-right t)
-    (setq evil-split-window-below t)
-    (evil-mode))
-  (use-package evil-collection ;; adds vim everywhere
-    :after evil
-    :config
-    (setq evil-collection-mode-list '(dashboard dired ibuffer))
-    (evil-collection-init))
-  (require 'undo-tree)
-  (global-undo-tree-mode)
-  (evil-set-undo-system 'undo-tree)
-  (use-package key-chord
-  :ensure t)
-  (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
+(use-package evil
+  :init      ;; tweak evil's configuration before loading it
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (setq evil-want-C-u-scroll t)
+  (evil-mode))
+(use-package evil-collection ;; adds vim everywhere
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
+(require 'undo-tree)
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
+(use-package key-chord
+:ensure t)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
 #+end_src
 
 ** General Keybindings
@@ -457,18 +458,17 @@ This is the base configs for LSP Mode in Emacs
         (lsp lsp-deferred)
     :init
         (setq lsp-keymap-prefix "C-c l")
-        (setq gc-cons-threshold (* 100 1024 1024)
-        read-process-output-max (* 1024 1024)
+        (setq gc-cons-threshold 1000000000)
+        (setq read-process-output-max (* 1024 1024)
         treemacs-space-between-root-nodes nil
         company-idle-delay 0.0
         company-minimum-prefix-length 1
-        lsp-idle-delay 0.1)
+        lsp-idle-delay 0.0)
     :config
         (lsp-enable-snippet t)
         (setq lsp-lens-enable nil)
         (lsp-enable-which-key-integration t)
 )
-
 #+end_src
 ** Tree Sitter
 Tree Sitter is a package which allows for better syntax highlighting
@@ -572,6 +572,21 @@ broken up across LSP and DAP features.
                           (require 'lsp-java)
                           (lsp))))  ; or lsp-deferred
 (require 'dap-java)
+#+end_src
+
+** Dart
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package dart-mode
+:ensure t)
+(use-package lsp-dart
+:ensure t
+:hook (dart-mode . (lambda ()
+                          (require 'lsp-dart)
+                          (lsp)))
+:config
+    (setq lsp-dart-dap-flutter-hot-reload-on-save t)
+    (setq lsp-dart-flutter-sdk-dir "~/.flutter/flutter/")
+)
 #+end_src
 
 ** Python

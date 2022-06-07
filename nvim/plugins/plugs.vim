@@ -4,7 +4,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'vim-airline/vim-airline' 				 								" Status Bar
 	Plug 'tc50cal/vim-terminal' 												" Integrated Terminal
 	Plug 'scrooloose/nerdcommenter' 											" Comment Out Code
-    Plug 'lukas-reineke/indent-blankline.nvim'                                  " Indent Guides
+	Plug 'lukas-reineke/indent-blankline.nvim'                                  " Indent Guides
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 								" File Tree Coloring
 	Plug 'ryanoasis/vim-devicons' 				  								" File Icons in Tree
 	Plug 'kyazdani42/nvim-web-devicons'		  									" File Icons in Tabs
@@ -13,17 +13,16 @@ call plug#begin('~/.config/nvim/plugged')
 	" Git Stuff
 	Plug 'TimUntersberger/neogit'                                               " Magit Plugin
 	Plug 'sindrets/diffview.nvim' 												" Magit Diffs
-    Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-lua/plenary.nvim'
 	Plug 'airblade/vim-gitgutter' 												" Edited Lines
 
 	" Code Autocomplete and highlighting
 	Plug 'neoclide/coc.nvim', {'branch': 'release'} 							" LSP
 	Plug 'hrsh7th/vim-vsnip' 													" Snippets
 	Plug 'hrsh7th/vim-vsnip-integ' 												" Needed for Snippets
-    Plug 'git@github.com:octol/vim-cpp-enhanced-highlight.git'                  " C++ Syntax Highlighting
+	Plug 'git@github.com:octol/vim-cpp-enhanced-highlight.git'                  " C++ Syntax Highlighting
 	Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } 					" Python Syntax Highlight
 	Plug 'uiiaoo/java-syntax.vim' 												" Java Syntax Highlight
-    Plug 'git@github.com:puremourning/vimspector.git'                           " Debugger
 	Plug 'z3t0/arduvim'
 	
 	" File navigation and searching

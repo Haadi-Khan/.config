@@ -27,6 +27,8 @@ source /usr/share/autojump/autojump.zsh 2>/dev/null
 
 # Quality of life rebinds
 alias ls="exa -a" # Superior ls prompt
+alias grep="rg" # Use ripgrep always instead of grep
+alias mk="mkdir"
 
 # CDs and links to frequent locations
 alias cdoc="cd /run/media/haadi/Storage/Documents"
@@ -75,3 +77,25 @@ finext() {
 gcomp() {
     g++ -g $(find ./src -type f -iregex ".*\.cpp") -o ./bin/"$1"
 }
+# Simple Timer
+timer() {
+    start="$(( $(date '+%s') + $1))"
+    while [ $start -ge $(date +%s) ]; do
+        time="$(( $start - $(date +%s) ))"
+        printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+        sleep 0.1
+    done
+}
+
+# Flutter Crap
+unset JAVA_OPTS
+#export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+#export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
+export ANDROID_HOME="/home/haadi/Android/Sdk"
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+#export PATH=$PATH:$ANDROID_HOME/emulator
+#export PATH=$PATH:$ANDROID_HOME/platform-tools/
+#export PATH=$PATH:$ANDROID_HOME/tools/bin/
+#export PATH=$PATH:$ANDROID_HOME/tools/
+#export PATH=$ANDROID_HOME/emulator:$PATH
+export PATH="/home/haadi/.flutter/flutter/bin:$PATH"
