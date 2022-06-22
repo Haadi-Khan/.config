@@ -2,7 +2,7 @@
     "ClearVision": false,
     "Dark+": false,
     "OneDark": false,
-    "hljs-atom-one-dark.css": false,
+    "hljs-atom-one-dark.css": true,
     "deepbluetheme": false,
     "dracula": false,
     "       onedark": true,
