@@ -122,6 +122,7 @@ Basic Settings for Emacs
 
 ** Line Configuration
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(setq fringe-indicator-alist nil)
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
 (setq display-line-numbers-type 'relative)
@@ -223,22 +224,23 @@ Dashboard when starting Emacs, looks cool
 ** Configuring Dashboard
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-      (use-package dashboard
-	:init      ;; tweak dashboard config before loading it
-	(setq dashboard-set-heading-icons t)
-	(setq dashboard-set-file-icons t)
-	;;(setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
-	;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-	(setq dashboard-startup-banner "~/.config/emacs/emacs-dash.png")  ;; use custom image as banner
-	(setq dashboard-center-content nil) ;; set to 't' for centered content
-	(setq dashboard-items '((recents . 5)
-				(agenda . 5)
-				(bookmarks . 5)
-				(projects . 3)))
-	:config
-	(dashboard-setup-startup-hook)
-	(dashboard-modify-heading-icons '((recents . "file-text")
-				    (bookmarks . "book"))))
+(use-package dashboard
+  :init      ;; tweak dashboard config before loading it
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  ;;(setq dashboard-banner-logo-title "Emacs: Sweaty Virgin Editor")
+  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-startup-banner "~/.config/emacs/emacs-dash.png")  ;; use custom image as banner
+  (setq dashboard-center-content nil) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 3)
+                          (projects . 3)
+                          (registers . 3)))
+  :config
+  (dashboard-setup-startup-hook)
+  (dashboard-modify-heading-icons '((recents . "file-text")
+			      (bookmarks . "book"))))
 #+end_src
 
 ** Dashboard in Emacsclient
@@ -462,11 +464,15 @@ This is the base configs for LSP Mode in Emacs
         (setq read-process-output-max (* 1024 1024)
         treemacs-space-between-root-nodes nil
         company-idle-delay 0.0
+        lsp-auto-configure t
         company-minimum-prefix-length 1
         lsp-idle-delay 0.0)
     :config
-        (setq lsp-enable-snippet t)
-        (setq lsp-enable-which-key-integration t)
+        (lsp-enable-snippet t)
+        (setq lsp-lens-enable nil)
+        (lsp-enable-which-key-integration t)
+        (evil-global-set-key (kbd "C-SPC") #'company-complete)
+        (evil-global-set-key (kbd "C-.") #'lsp-execute-code-action)
 )
 #+end_src
 ** Tree Sitter
@@ -510,6 +516,7 @@ broken up across LSP and DAP features.
 ** C++
 *** LSP + Comfort Settings
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(require 'modern-cpp-font-lock) ;; Syntax Highlighting
 (require 'clang-format+) ;; Auto formatting
 
 (c-add-style "my-style" 
@@ -563,6 +570,15 @@ broken up across LSP and DAP features.
 
 (add-hook 'c-mode-common-hook 'c++-debug-hook)
 #+end_src
+** Dart
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package lsp-dart
+:ensure t
+:hook (dart-mode . (lambda()
+(require 'lsp-dart)
+(lsp))))
+
+#+end_src
 ** Java
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-java
@@ -606,11 +622,11 @@ broken up across LSP and DAP features.
 (add-hook 'python-mode 'tree-sitter-hl-mode)
 #+end_src
 *** Jupyter Notebooks
-+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(require 'ein)
-(setq ein:use-auto-complete t)
-(setq ein:use-smartrep t)
-(add-hook 'ein:notebook-mode-map 'undo-tree-mode) 
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;;(require 'ein)
+;;(setq ein:use-auto-complete t)
+;;(setq ein:use-smartrep t)
+;;(add-hook 'ein:notebook-mode-map 'undo-tree-mode) 
 #+end_src
 
 * File Configs
@@ -772,16 +788,15 @@ This lets us create the various TODO tags that we can use in Org.
 '((sequence
 	"TODO(t)"
 	"TEST(T)"
-	"APUSH(a)"
-	"STAT(s)"
+	"SPAN(S)"
+	"MACRO(m)"
+	"PSYCH(p)"
+	"LIT(l)"
+	"GUIT(g)"
 	"PHYSICS(P)"
-	"CALC(C)"
-	"LANG(l)"
-	"SPAN(f)"
-	"MULTI(m)"
-	"CS(S)"
+	"LINALG(L)"
 	"ROBO(r)"
-	"SCIOLY(g)"
+	"SCIOLY(s)"
 	"|"
 	"DONE(d)"
 	"CANCELLED(c)"
@@ -791,14 +806,13 @@ This lets us create the various TODO tags that we can use in Org.
 (setq org-todo-keyword-faces'(
     ("TODO" . org-warning)
     ("TEST" .  (:foreground "#e06c75" :weight bold))
-    ("APUSH" . "#e5c07b")
-    ("STAT" . "#61afef")
-    ("PHYSICS" . "#98c379")
-    ("CALC" . "#61afef")
-    ("LANG" . "#d19a66")
     ("SPAN" . "#d19a66")
-    ("MULTI" . "#56b6c2")
-    ("CS" . "#56b6c2")
+    ("MACRO" . "#e5c07b")
+    ("PSYCH" . "#98c379")
+    ("LIT" . "#d19a66")
+    ("GUIT" . "#56b6c2")
+    ("PHYSICS" . "#98c379")
+    ("LINALG" . "#61afef")
     ("ROBO" . "#be5046")
     ("SCIOLY" . "#98c379")
     ("DONE" . "#5c6370")
@@ -908,11 +922,13 @@ Basically lets note taking go on crack
 :ensure t
 :custom
 (org-roam-directory "~/org-roam")
+(org-roam-dailies-directory "journal/")
 :config
 (org-roam-setup)
 )
 (nvmap :keymaps 'override :prefix "SPC"
     "m r r"   '(org-roam-buffer-toggle :which-key "Toggle Org Roam")
+    "m r j"   '(org-roam-dailies-capture-today :which-key "Org Roam Journal")
     "m r a"   '(org-roam-tag-add :which-key "Add Org Roam Tag")
     "m r f"   '(org-roam-node-find :which-key "Find Org Node")
     "m r q"   '(my/org-roam-select-quantum() :which-key "Pick Quantum Note")
@@ -1186,20 +1202,20 @@ Handy for Spanish
 
 ** Prayer Times
 To integrate Islamic prayer times into Emacs, we have to manually add the package since it isn't on melpa
-+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (add-to-list 'load-path "~/.config/emacs/lisp/")
 (load "awqat.el") 
 #+end_src
 
 Next, we have to set some variables for our config
-+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(require 'awqat)
-(setq calendar-latitude 40.812119
-    calendar-longitude -73.3432)
-(setq awqat-asr-hanafi nil)
-(setq awqat-fajr-angle 15.0)
-(setq awqat-isha-angle 15.0)
-(setq org-agenda-include-diary t)
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;;(require 'awqat)
+;;(setq calendar-latitude 40.812119
+;;    calendar-longitude -73.3432)
+;;(setq awqat-asr-hanafi nil)
+;;(setq awqat-fajr-angle 15.0)
+;;(setq awqat-isha-angle 15.0)
+;;(setq org-agenda-include-diary t)
 #+end_src
 
 ** Writeroom Mode
