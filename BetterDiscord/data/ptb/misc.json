@@ -1,0 +1,12 @@
+{
+    "version": "1.5.3",
+    "emoteVersion": "v1.5.3",
+    "favoriteEmotes": {
+        "BRUH": "https://cdn.frankerfacez.com/emoticon/306816/1"
+    },
+    "drawerStates": {
+        "emotes": {
+            "categories": true
+        }
+    }
+}

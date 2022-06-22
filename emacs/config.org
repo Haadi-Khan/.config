@@ -465,9 +465,8 @@ This is the base configs for LSP Mode in Emacs
         company-minimum-prefix-length 1
         lsp-idle-delay 0.0)
     :config
-        (lsp-enable-snippet t)
-        (setq lsp-lens-enable nil)
-        (lsp-enable-which-key-integration t)
+        (setq lsp-enable-snippet t)
+        (setq lsp-enable-which-key-integration t)
 )
 #+end_src
 ** Tree Sitter
@@ -576,14 +575,16 @@ broken up across LSP and DAP features.
 
 ** Dart
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(require 'rainbow-delimiters)
 (use-package dart-mode
 :ensure t)
 (use-package lsp-dart
 :ensure t
 :hook (dart-mode . (lambda ()
                           (require 'lsp-dart)
-                          (lsp)))
+                          (lsp)(rainbow-delimeters-mode)))
 :config
+    (setq lsp-dart-flutter-widget-guides nil)
     (setq lsp-dart-dap-flutter-hot-reload-on-save t)
     (setq lsp-dart-flutter-sdk-dir "~/.flutter/flutter/")
 )

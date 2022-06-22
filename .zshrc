@@ -3,7 +3,8 @@ USE_POWERLINE="true"
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-export EDITOR='emacsclient -c -a \"Emacs\"'
+export EDITOR=nvim
+# export EDITOR='emacsclient -c -a \"Emacs\"'
 bindkey -v
 
 # History in cache directory:
@@ -91,7 +92,7 @@ timer() {
 unset JAVA_OPTS
 #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 #export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
-export ANDROID_HOME="/home/haadi/Android/Sdk"
+export ANDROID_HOME="/opt/android-sdk"
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 #export PATH=$PATH:$ANDROID_HOME/emulator
 #export PATH=$PATH:$ANDROID_HOME/platform-tools/
