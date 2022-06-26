@@ -6,7 +6,7 @@
 #██║██████╔╝    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝ 
 #╚═╝╚═════╝      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
 #
-# i3 Config 2022-01-23
+# i3 Config 2022-06-25
 #   
 
 #   Mod
@@ -47,18 +47,23 @@ set $monitor_left DP-0
 set $monitor_right DP-3
 
 # Startup Processes
-	font pango:SF UI Display 12
+	font pango:Recursive Sn Lnr St 12
 	exec --no-startup-id dex --autostart --environment i3
 	exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 	exec --no-startup-id nm-applet
 	exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-	exec discord
-	exec cider
+
 	exec nitrogen --restore
 	exec compton
 	exec feh --bg-scale /run/media/haadi/Storage/Pictures/Wallpaper.png
 	exec xrandr --output DVI-D-0 --off --output HDMI-0 --off --output DP-0 --primary --mode 1920x1080 --pos 0x0 --rate 144.00 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-4 --off --output DP-5 --off
-	exec /usr/bin/emacs --daemon
+
+	exec discord
+	exec cider
+	exec mailspring
+	exec slack
+	exec /usr/bin/emacs --daemon &
+	exec autotiling -w 1 2 4 9
 
 # Colors
 set $bg-color 	         #4b5263
@@ -74,7 +79,8 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 
 # Gaps
 	for_window [class="^.*"] border pixel 2
-	gaps outer 1
+	gaps outer 5
+	gaps inner 5
 	smart_borders on
 	smart_borders no_gaps
 
@@ -86,7 +92,6 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 	bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i2status
 	bindsym XF86AudioPause exec playerctl play-pause
 
-floating_modifier $mod
 # Screenshot utility
 bindsym --release Mod1+Shift+s exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -177,16 +182,12 @@ assign [class="discord"] $ws4
 assign [class="Cider"] $ws4
 assign [class="Mailspring"] $ws5
 assign [class="Slack"] $ws5
-
-exec discord
-exec cider
-exec mailspring
-exec /usr/bin/emacs --daemon &
-exec autotiling -w 1 2 4 9
+assign [class="Lunar Client"] $ws9
+assign [class="Badlion Client"] $ws9
 
 #bindsym $mod+Shift+c reload
 bindsym $mod+n exec emacsclient -c -a 'emacs'
-bindsym $mod+m exec chromium
+bindsym $mod+m exec librewolf
 bindsym $mod+comma exec thunar
 bindsym $mod+Shift+1 restart
 bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

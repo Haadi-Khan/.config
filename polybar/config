@@ -42,12 +42,11 @@
 	; vim:ft=dosini
 
 [bar/haadibar]
-	;monitor = ${env:MONITOR:}
+	monitor = ${env:MONITOR:}
 	width = 100%
 	height = 24
-	;offset-x = 1%
+	;offset-x = 100%
 	;offset-y = 1%
-	radius = 6.0
 	fixed-center = false
 
 	background = ${colors.background}
@@ -56,22 +55,25 @@
 	line-size = 3
 	line-color = #f00
 
-	border-size = 4
+	border-size = 0
 	border-color = #00000000
 
 	padding-left = 0
-	padding-right = 2
+	padding-right = 0
 
 	module-margin-left = 1
 	module-margin-right = 2
 
-	font-0 = SF UI Display:pixelsize=11;1
+	font-0 = Recursive Sn Lnr St Med:pixelsize=11;1
 	font-1 = unifont:fontformat=truetype:size=8:antialias=true;0
 	font-2 = siji:pixelsize=10;1
+	font-3 = Font Awesome 5 Free:pixelsize=12;2
+	font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
+	font-5 = Font Awesome 5 Brands:pixelsize=12;2
 
 	modules-left = i3
 	modules-center = mpd
-	modules-right = pulseaudio xkeyboard memory cpu weather battery date powermenu
+	modules-right = pulseaudio xkeyboard memory cpu weather battery date
 
 	tray-position = right
 	tray-padding = 2

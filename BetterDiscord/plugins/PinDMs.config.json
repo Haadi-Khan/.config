@@ -1,0 +1,74 @@
+{
+	"all": {
+		"general": {
+			"pinIcon": true,
+			"unreadAmount": true,
+			"channelAmount": true
+		},
+		"pinned": {
+			"295595875168813058": {
+				"channelList": {
+					"2019163331477088": {
+						"id": "2019163331477088",
+						"name": "DMs",
+						"dms": [
+							"629105524973240360",
+							"472540806796804107",
+							"407705954541633537",
+							"654487194890797072",
+							"890799806795100203"
+						],
+						"pos": 0,
+						"collapsed": false,
+						"color": [
+							171,
+							178,
+							191,
+							1
+						]
+					},
+					"7058378065665010": {
+						"id": "7058378065665010",
+						"name": "GCs",
+						"dms": [
+							"949148545762590720",
+							"756620034876506173",
+							"985980656238616656",
+							"929790511382954054"
+						],
+						"pos": 1,
+						"collapsed": false,
+						"color": [
+							171,
+							178,
+							191,
+							1
+						]
+					}
+				}
+			}
+		},
+		"preCategories": {
+			"friends": {
+				"enabled": false,
+				"collapsed": false
+			},
+			"blocked": {
+				"enabled": false,
+				"collapsed": false
+			},
+			"bots": {
+				"enabled": false,
+				"collapsed": false
+			},
+			"groups": {
+				"enabled": false,
+				"collapsed": false
+			}
+		},
+		"recentOrder": {
+			"channelList": false,
+			"guildList": false
+		}
+	}
+}

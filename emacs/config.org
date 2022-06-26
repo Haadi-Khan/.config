@@ -155,22 +155,22 @@ Basic Settings for Emacs
 ** Fonts
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (set-face-attribute 'default nil
-  :font "Roboto Mono"
+  :font "Recursive Mn Lnr St"
   :height 120
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
-  :font "Roboto Mono"
+  :font "Recursive Mn Lnr St"
   :height 140
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "Roboto Mono"
+  :font "Recursive Mn Lnr St"
   :height 110
   :weight 'medium)
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
 
 ;; Needed if using emacsclient. Otherwise, your fonts will be smaller than expected.
-(add-to-list 'default-frame-alist '(font . "Roboto Mono-11"))
+(add-to-list 'default-frame-alist '(font . "Recursive Mn Lnr St-11"))
 ;; changes certain keywords to symbols, such as lamda!
 (setq global-prettify-symbols-mode t)
 #+end_src
@@ -234,9 +234,8 @@ Dashboard when starting Emacs, looks cool
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
                           (agenda . 5 )
-                          (bookmarks . 3)
-                          (projects . 3)
-                          (registers . 3)))
+                          (bookmarks . 5)
+                          (projects . 3)))
   :config
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
@@ -1203,8 +1202,8 @@ Handy for Spanish
 ** Prayer Times
 To integrate Islamic prayer times into Emacs, we have to manually add the package since it isn't on melpa
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(add-to-list 'load-path "~/.config/emacs/lisp/")
-(load "awqat.el") 
+;;(add-to-list 'load-path "~/.config/emacs/lisp/")
+;;(load "awqat.el") 
 #+end_src
 
 Next, we have to set some variables for our config
