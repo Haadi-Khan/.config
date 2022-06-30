@@ -5,7 +5,6 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 
 export EDITOR=nvim
 # export EDITOR='emacsclient -c -a \"Emacs\"'
-bindkey -v
 
 # History in cache directory:
 HISTSIZE=10000

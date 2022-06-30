@@ -17,300 +17,281 @@
 ;==========================================================
 
 [colors]
-	;background = ${xrdb:color0:#222}
-	background = #282c34
-	background-alt = #2c313a
-	;foreground = ${xrdb:color7:#222}
-	foreground = #dfdfdf
-	foreground-alt = #5294e2
-	primary = #5294e2
-	secondary = #5294e2
-	alert = #e06c75
+    ;background = ${xrdb:color0:#222}
+    background = #282c34
+    background-alt = #2c313a
+    ;foreground = ${xrdb:color7:#222}
+    foreground = #dfdfdf
+    foreground-alt = #5294e2
+    primary = #5294e2
+    secondary = #5294e2
+    alert = #e06c75
 
-[settings]
-	screenchange-reload = true
-	;compositing-background = xor
-	;compositing-background = screen
-	;compositing-foreground = source
-	;compositing-border = over
-	;pseudo-transparency = false
+[bar/main]
+    monitor =  ${env:MONITOR:}
+    radius = 10
+    height = 20pt
+    fixed-center = false
+    background = ${colors.background}
+    foreground = ${colors.foreground}
+    line-size = 3pt
+    line-color = #foo
 
-[global/wm]
-	margin-top = 5
-	margin-bottom = 5
+    border-color = #00000000
+    border-size = 5
 
-	; vim:ft=dosini
+    padding = 0
+    padding-left = 1
+    padding-right = 1
 
-[bar/haadibar]
-	monitor = ${env:MONITOR:}
-	width = 100%
-	height = 24
-	;offset-x = 100%
-	;offset-y = 1%
-	fixed-center = false
+    module-margin-left = 1
+    module-margin-right = 1
 
-	background = ${colors.background}
-	foreground = ${colors.foreground}
+    font-0 = Recursive Sn Lnr St:pixelsize=12
+    font-1 = FontAwesome:size=12;4
+    font-2 = Meslo Nerd Font:size=10;2
 
-	line-size = 3
-	line-color = #f00
+    width = 7.25%
 
-	border-size = 0
-	border-color = #00000000
+    cursor-click = pointer
+    cursor-scroll = ns-resize
 
-	padding-left = 0
-	padding-right = 0
+    enable-ipc = true
 
-	module-margin-left = 1
-	module-margin-right = 2
+[bar/workspaces]
+    inherit = bar/main
+    width = 7.25%
+    modules-center = i3
 
-	font-0 = Recursive Sn Lnr St Med:pixelsize=11;1
-	font-1 = unifont:fontformat=truetype:size=8:antialias=true;0
-	font-2 = siji:pixelsize=10;1
-	font-3 = Font Awesome 5 Free:pixelsize=12;2
-	font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
-	font-5 = Font Awesome 5 Brands:pixelsize=12;2
+[bar/sidebar]
+    override-redirect = true
+    wm-restack = i3
+    inherit = bar/main
+    width = 27%
+    offset-x = 73%
+    module-margin-left = 0
+    modules-center = date pulseaudio wlan memory cpu weather power 
 
-	modules-left = i3
-	modules-center = mpd
-	modules-right = pulseaudio xkeyboard memory cpu weather battery date
-
-	tray-position = right
-	tray-padding = 2
-	;tray-background = #0063ff
-
-	;wm-restack = i3
-
-	;override-redirect = true
-
-	;scroll-up = i3wm-wsnext
-	;scroll-down = i3wm-wsprev
-
-	cursor-click = pointer
-	cursor-scroll = ns-resize
+[module/power]
+    type = custom/text
+    content-foreground = ${colors.primary}
+    content-padding = 1
+    content = ""
+    click-left = ~/.config/rofi/scripts/powermenu.sh
 
 [module/i3]
-	type = internal/i3
-	format = <label-state> <label-mode>
-	index-sort = true
-	wrapping-scroll = false
+    type = internal/i3
+    pin-workspaces = true
+    show-urgent = true
+    index-sort = true
+    enable-click = true
+    enable-scroll = false
+    wrapping-scroll = false
+    reverse-scroll = false
+    fuzzy-match = true
+    ws-icon-0 = 1;
+    ws-icon-1 = 2;
+    ws-icon-2 = 3;
+    ws-icon-3 = 4;
+    ws-icon-4 = 5;
+    ws-icon-5 = 6;
+    ws-icon-6 = 7;
+    ws-icon-7 = 8;
+    ws-icon-8 = 9;
+    ws-icon-9 = 10;
+    ws-icon-default = 
 
-	; Only show workspaces on the same output as the bar
-	;pin-workspaces = true
+    format = <label-state> <label-mode>
+    label-mode = %mode%
 
-	label-mode-padding = 2
-	label-mode-foreground = #000
-	label-mode-background = ${colors.primary}
+    label-mode-padding = 2
+    label-mode-background = #e60053
+    label-focused = %icon% 
+    ; label-focused-foreground = #ffffff
+    label-focused-foreground = ${colors.primary}
+    label-focused-background = ${colors.background-alt}
+    label-focused-underline = ${colors.underline}
+    label-focused-padding = 1.5
 
-	; focused = Active workspace on focused monitor
-	label-focused = %name%
-	label-focused-background = ${colors.background-alt}
-	label-focused-underline= ${colors.primary}
-	label-focused-padding = 2
+    label-active = " "
+    label-active-foreground = ${color.alert}
+    label-active-background = ${color.bg}
 
-	; unfocused = Inactive workspace on any monitor
-	label-unfocused = %name%
-	label-unfocused-padding = 2
+    label-unfocused = %icon%
+    label-unfocused-foreground = ${colors.secondary-alt}
+    label-unfocused-padding = 1.5
 
-	; visible = Active workspace on unfocused monitor
-	label-visible = %name%
-	label-visible-background = ${self.label-focused-background}
-	label-visible-underline = ${self.label-focused-underline}
-	label-visible-padding = ${self.label-focused-padding}
+    label-visible = %icon%
+    label-visible-underline = ${colors.underline}
+    label-visible-padding = 1.5
 
-	; urgent = Workspace with urgency hint set
-	label-urgent = %name%
-	label-urgent-background = ${colors.alert}
-	label-urgent-padding = 2
-
-	; Separator in between workspaces
-	; label-separator = |
-
-[module/pulseaudio]
-	type = internal/pulseaudio
-
-	format-volume = <label-volume> <bar-volume>
-	label-volume = VOL %percentage%%
-	label-volume-foreground = ${root.foreground}
-
-	label-muted = 🔇 muted
-	label-muted-foreground = #666
-
-	bar-volume-width = 15
-	bar-volume-foreground-0 = #55aa55
-	bar-volume-foreground-1 = #55aa55
-	bar-volume-foreground-2 = #55aa55
-	bar-volume-foreground-3 = #55aa55
-	bar-volume-foreground-4 = #55aa55
-	bar-volume-foreground-5 = #f5a70a
-	bar-volume-foreground-6 = #ff5555
-	bar-volume-gradient = false
-	bar-volume-indicator = |
-	bar-volume-indicator-font = 2
-	bar-volume-fill = ─
-	bar-volume-fill-font = 2
-	bar-volume-empty = ─
-	bar-volume-empty-font = 2
-	bar-volume-empty-foreground = #404552
-
-[module/xkeyboard]
-	type = internal/xkeyboard
-	blacklist-0 = num lock
-
-	format-prefix = " "
-	format-prefix-foreground = ${colors.foreground-alt}
-	format-prefix-underline = #e06c75
-
-	label-layout = %layout%
-	label-layout-underline = #e06c75
-
-	label-indicator-padding = 2
-	label-indicator-margin = 1
-	label-indicator-background = #e06c75
-	label-indicator-underline = #e06c75
-
-[module/memory]
-	type = internal/memory
-	interval = 2
-	format-prefix = " "
-	format-prefix-foreground = ${colors.foreground-alt}
-	format-underline = #98c379
-	label = %percentage_used%%
-
-[module/cpu]
-	type = internal/cpu
-	interval = 2
-	format-prefix = " "
-	format-prefix-foreground = ${colors.foreground-alt}
-	format-underline = #e5c07b
-	label = %percentage:2%%
-
-[module/wlan]
-	type = internal/network
-	interface = wlp0s20f0u1
-	interval = 3.0
-
-	format-connected = <ramp-signal> <label-connected>
-	format-connected-underline = #61afef
-	label-connected = %essid%
-
-	format-disconnected =
-	;format-disconnected = <label-disconnected>
-	;format-disconnected-underline = ${self.format-connected-underline}
-	;label-disconnected = %ifname% disconnected
-	;label-disconnected-foreground = ${colors.foreground-alt}
-
-	ramp-signal-0 = 
-	ramp-signal-1 = 
-	ramp-signal-2 = 
-	ramp-signal-3 = 
-	ramp-signal-4 = 
-	ramp-signal-foreground = ${colors.foreground-alt}
-
-[module/eth]
-	type = internal/network
-	interface = eno1
-	interval = 3.0
-
-	format-connected-underline = #61afef
-	format-connected-prefix = " "
-	format-connected-prefix-foreground = ${colors.foreground-alt}
-	label-connected = %local_ip%
-
-	format-disconnected =
-	;format-disconnected = <label-disconnected>
-	;format-disconnected-underline = ${self.format-connected-underline}
-	;label-disconnected = %ifname% disconnected
-	;label-disconnected-foreground = ${colors.foreground-alt}
+    label-urgent = %icon%
+    label-urgent-foreground = #000000
+    label-urgent-background = #bd2c40
+    label-urgent-padding = 1.5
 
 [module/battery]
-	type = internal/battery
-	battery = BAT1
-	adapter = ACAD
-	full-at = 98
+    type = internal/battery
+    full-at = 98
+    low-at = 5
+    battery = BAT0
+    adapter = ADP1
+    poll-interval = 5
+    time-format = %H:%M
 
-	format-charging = <animation-charging> <label-charging>
-	format-charging-underline = #e5c07b
+    format-charging-prefix = " " 
+    format-charging = <label-charging>
+    format-charging-underline = ${colors.underline}
+    format-charging-prefix-foreground=${colors.primary}
 
-	format-discharging = <animation-discharging> <label-discharging>
-	format-discharging-underline = #e5c07b
+    format-discharging-prefix = " "
+    format-discharging-prefix-foreground=${colors.primary}
+    format-discharging = %{A1:bash ~/.config/i3/scripts/power-profiles:}<label-discharging>%{A}
 
-	format-full-prefix = " "
-	format-full-prefix-foreground = ${colors.foreground-alt}
-	format-full-underline = #e5c07b
+    format-full-prefix = " "
+    ; format-full-prefix = " "
+    format-full-prefix-foreground=${colors.primary}
+    format-full = <label-full>
 
-	ramp-capacity-0 = 
-	ramp-capacity-1 = 
-	ramp-capacity-2 = 
-	ramp-capacity-foreground = ${colors.foreground-alt}
+    format-low-prefix = " " 
+    format-low-prefix-foreground=${colors.primary}
+    format-low = <label-low> 
 
-	animation-charging-0 = 
-	animation-charging-1 = 
-	animation-charging-2 = 
-	animation-charging-foreground = ${colors.foreground-alt}
-	animation-charging-framerate = 750
+    label-charging = %percentage%%
+    label-discharging = %percentage%%
+    label-full = Fully Charged
+    label-low = Battery Low
 
-	animation-discharging-0 = 
-	animation-discharging-1 = 
-	animation-discharging-2 = 
-	animation-discharging-foreground = ${colors.foreground-alt}
-	animation-discharging-framerate = 750
+    ramp-capacity-0 = 
+    ramp-capacity-1 = 
+    ramp-capacity-2 = 
+    ramp-capacity-3 = 
+    ramp-capacity-4 = 
 
-[module/weather]
-	type = custom/script
-	exec = ~/.config/polybar-forecast/polybar-forecast-linux-x86_64
-	exec-if = ping openweathermap.org -c 1
-	interval = 600
-	format-underline = #c678dd
+    animation-charging-0 = 
+    animation-charging-1 = 
+    animation-charging-2 = 
+    animation-charging-3 = 
+    animation-charging-4 = 
+    animation-charging-framerate = 750
+
+    animation-discharging-0 = 
+    animation-discharging-1 = 
+    animation-discharging-2 = 
+    animation-discharging-3 = 
+    animation-discharging-4 = 
+    animation-discharging-framerate = 500
+
+    animation-low-0 = !
+    animation-low-1 = 
+    animation-low-framerate = 200
+
+[module/pulseaudio]
+    type = internal/pulseaudio
+    interval = 5
+
+    format-volume-prefix = " "
+    format-volume-prefix-foreground = ${colors.primary}
+    format-volume =  <label-volume>
+    label-volume = %percentage%%
+
+    format-muted-prefix = " "
+    format-muted-prefix-foreground = ${colors.primary}
+    format-muted =  <label-muted>
+    ; label-muted = muted
+
+    click-right = pavucontrol
+
+    label-muted = muted
+    format-muted-foreground = ${colors.disabled}
+
+[module/xkeyboard]
+    type = internal/xkeyboard
+    blacklist-0 = scroll lock
+
+    format-prefix = " "
+    format-prefix-foreground = ${colors.primary}
+    format = <label-layout> <label-indicator>
+    format-spacing = 0
+
+    label-layout = %layout%
+    label-layout-padding = 0
+    # label-layout = %layout%
+    # label-layout-foreground = ${colors.primary}
+
+    layout-icon-default = some-icon
+    layout-icon-1 = US
+
+    indicator-icon-default = D
+    indicator-icon-0 = caps lock;C ; 
+    # indicator-icon-1 = scroll lock;-SL;+SL
+    indicator-icon-1 = num lock;N ;N 
+
+    label-indicator-on = %icon%
+    label-indicator-off = %icon%
+
+    label-indicator-padding = 2
+    label-indicator-margin = 1
+    label-indicator-foreground = ${colors.background}
+    label-indicator-background = ${colors.secondary}
+
+[module/memory]
+    type = internal/memory
+    interval = 2
+    format-prefix = " "
+    format-prefix-foreground = ${colors.primary}
+    label = %{A1:kitty btop:}%percentage_used%%%{A}
+
+[module/cpu]
+    type = internal/cpu
+    interval = 2
+    format-prefix = " "
+    format-prefix-foreground = ${colors.primary}
+    label = %{A1:kitty btop:}%percentage:2%%%{A}
+
+[network-base]
+    type = internal/network
+    interval = 5
+    format-connected = <label-connected>
+    format-disconnected = <label-disconnected>
+    label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
+
+[module/wlan]
+    type = internal/network
+    ; inherit = network-base
+    interface-type = wireless
+
+    format-connected-prefix =" "
+    format-connected-prefix-foreground = ${colors.primary}
+    format-connected = <label-connected>
+    ; format-connected-underline = ${colors.underline}
+    ; WAP, BSS, BSSID, SSID, ESS, & ESSID
+    ; label-connected = %upspeed% %downspeed%
+    label-connected = %{A1:bash ~/.config/rofi/rofi-wifi-menu.sh:}%essid%%{A}
+
+    format-disconnected-prefix =%{A1:bash ~/.config/rofi/rofi-wifi-menu.sh:}" "%{A}
+    format-disconnected-prefix-foreground = ${colors.primary}
+    format-disconnected = <label-disconnected>
+    label-disconnected = disconnected
 
 [module/date]
-	type = internal/date
-	interval = 1
+    type = internal/date
+    interval = 1
 
-	date = %a %d
-	date-alt = "%a %b %d %Y"
+    date = %a %d
+    date-alt = %b %d
+    time =   %I:%M %p
+    time-alt = "%I:%M:%S %p"
 
-	time = %I:%M %p
-	time-alt = %I:%M:%S %p
+    label = %date% %time% 
+    label-font = 0
 
-	format-prefix = 
-	format-prefix-foreground = ${colors.foreground-alt}
-	format-underline = #56B6c2
-
-	label = %date% %time%
-
-[module/powermenu]
-	type = custom/menu
-
-	expand-right = true
-
-	format-spacing = 1
-
-	label-open = PWR
-	format-underline = #e06c75
-	label-open-foreground = #ffffff
-	label-close =  cancel
-	label-close-foreground = #ffffff
-	label-separator = |
-	label-separator-foreground = ${colors.foreground-alt}
-
-	menu-0-0 = reboot
-	menu-0-0-exec = menu-open-1
-	menu-0-1 = power off
-	menu-0-1-exec = menu-open-2
-
-	menu-1-0 = cancel
-	menu-1-0-exec = menu-open-0
-	menu-1-1 = reboot
-	menu-1-1-exec = sudo reboot
-
-	menu-2-0 = power off
-	menu-2-0-exec = sudo poweroff
-	menu-2-1 = cancel
-	menu-2-1-exec = menu-open-0
-
-[module/next-prayer]
+[module/weather]
     type = custom/script
-    exec = next-prayer --hybrid
-    interval = 29
-	format-underline = #98c379
+    exec = ~/.config/polybar-forecast/polybar-forecast-linux-x86_64
+    exec-if = ping openweathermap.org -c 1
+    interval = 600
+
+[settings]
+    screenchange-reload = true
+    pseudo-transparency = true

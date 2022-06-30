@@ -58,12 +58,13 @@ set $monitor_right DP-3
 	exec feh --bg-scale /run/media/haadi/Storage/Pictures/Wallpaper.png
 	exec xrandr --output DVI-D-0 --off --output HDMI-0 --off --output DP-0 --primary --mode 1920x1080 --pos 0x0 --rate 144.00 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-4 --off --output DP-5 --off
 
+	exec ~/.config/xborder/xborders -c ~/.config/xborder/config.json
 	exec discord
 	exec cider
 	exec mailspring
 	exec slack
 	exec /usr/bin/emacs --daemon &
-	exec autotiling -w 1 2 4 9
+	exec autotiling -w 1 2 4 5 6 7 8 9 10
 
 # Colors
 set $bg-color 	         #4b5263
@@ -79,10 +80,11 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 
 # Gaps
 	for_window [class="^.*"] border pixel 2
-	gaps outer 5
-	gaps inner 5
+	gaps outer 4
+	gaps inner 4
 	smart_borders on
 	smart_borders no_gaps
+	
 
 # Use pactl to adjust volume in PulseAudio.
 	set $refresh_i3status killall -SIGUSR1 i3status

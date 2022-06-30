@@ -7,6 +7,6 @@ configuration {
 	terminal: "alacritty";
 	drun-match-fields: "name,generic,exec,categories";
 }
-//@theme "/home/haadi/.config/rofi/themes/window.rasi"
-//@theme "/home/haadi/.config/rofi/themes/drun.rasi"
-@theme "/home/haadi/.config/rofi/themes/window.rasi"
+//@theme "~/.config/rofi/themes/window.rasi"
+//@theme "~/.config/rofi/themes/drun.rasi"
+@theme "~/.config/rofi/themes/window.rasi"

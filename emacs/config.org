@@ -605,6 +605,14 @@ broken up across LSP and DAP features.
 )
 #+end_src
 
+** Rust
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package rust-mode
+:ensure t
+)
+(add-hook 'rust-mode-hook #'lsp)
+#+end_src
+
 ** Python
 *** Basic Config
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
