@@ -29,6 +29,7 @@
 
 [bar/main]
     monitor =  ${env:MONITOR:}
+    monitor-strict = false
     radius = 10
     height = 20pt
     fixed-center = false
@@ -58,10 +59,17 @@
 
     enable-ipc = true
 
-[bar/workspaces]
+[bar/lworkspaces]
     inherit = bar/main
+    monitor = DP-0
     width = 7.25%
-    modules-center = i3
+    modules-center = leftwksp
+
+[bar/rworkspaces]
+    inherit = bar/main
+    monitor = DP-3
+    width = 7.25%
+    modules-center = rightwksp
 
 [bar/sidebar]
     override-redirect = true
@@ -295,3 +303,13 @@
 [settings]
     screenchange-reload = true
     pseudo-transparency = true
+
+[module/leftwksp]
+type = custom/script
+interval = 0.1
+exec = "python3 ~/.config/polybar/LeftWksp.py"
+
+[module/rightwksp]
+type = custom/script
+interval = 0.1
+exec = "python3 ~/.config/polybar/RightWksp.py"

@@ -87,6 +87,11 @@ timer() {
     done
 }
 
+# RM Pattern Match
+rmp() {
+    find . -name '$1' -delete
+}
+
 # Flutter Crap
 unset JAVA_OPTS
 #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'

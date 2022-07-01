@@ -12,16 +12,16 @@ killall -q polybar
 
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload workspaces &
-    sleep 1
     MONITOR=$m polybar --reload sidebar &
     sleep 1
   done
 else
-  polybar --reload workspaces &
-  sleep 1
   polybar --reload sidebar &
   sleep 1
 fi
+polybar --reload lworkspaces &
+sleep 1
+polybar --reload rworkspaces &
+sleep 1
 
 echo "Bars launched..."
