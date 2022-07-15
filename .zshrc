@@ -64,6 +64,7 @@ alias ll="ls -al"
 alias gs="git status"
 alias ga="git add ."
 alias gc="git commit -a"
+alias gp="git push"
 alias gcl="git clone"
 alias gq="git add --all && git commit -m \"Commit\" && git push"
 
