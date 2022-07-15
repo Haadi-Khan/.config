@@ -1,4 +1,10 @@
 *~
+Signal/
+nextjs-nodejs/
+weylus/
+xborder/__pycache__/
+xournalpp/
+!xournalpp/settings.xml
 lunarclient/
 Android Open Source Project/
 Google/

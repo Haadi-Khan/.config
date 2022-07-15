@@ -1,3 +1,15 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+autoload -Uz compinit
+compinit
+
 # Use powerline
 USE_POWERLINE="true"
 autoload -U colors && colors
@@ -10,7 +22,9 @@ export EDITOR=nvim
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/zshhistory
+export HISTCONTROL=ignoreboth
 setopt appendhistory
+setopt autocd
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -26,7 +40,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/autojump/autojump.zsh 2>/dev/null
 
 # Quality of life rebinds
-alias ls="exa -a" # Superior ls prompt
+alias ls="exa" # Superior ls prompt
 alias grep="rg" # Use ripgrep always instead of grep
 alias mk="mkdir"
 
@@ -43,15 +57,23 @@ alias vim="nvim"
 alias em="emacsclient -c -a \"Emacs\""
 alias remacs="killall emacs && /usr/bin/emacs --daemon &"
 
+alias la="ls -a" # Superior ls prompt
+alias ll="ls -al"
+
+# Git Aliases
+alias gs="git status"
+alias ga="git add ."
+alias gc="git commit -a"
+alias gcl="git clone"
+alias gq="git add --all && git commit -m \"Commit\" && git push"
+
 # Config file Binds
 alias vimrc="nvim ~/.config/nvim/ ."
-alias i3c="emacs ~/.config/i3/config"
 
 # Random stuff to be lazy
 alias ytmp3="youtube-dl --prefer-ffmpeg --extract-audio --audio-format mp3"
 alias btop="btop --utf-force"
 alias tmux="tmux -f ~/.dotfiles/tmux/tmux.conf"
-alias gp="git add --all && git commit -m \"Commit\" && git push"
 
 # Misc.
 alias ml="jupyter lab --no-browser"
@@ -93,7 +115,7 @@ rmp() {
 }
 
 # Flutter Crap
-unset JAVA_OPTS
+#unset JAVA_OPTS
 #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 #export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
 export ANDROID_HOME="/opt/android-sdk"
@@ -104,3 +126,7 @@ export ANDROID_SDK_ROOT=$ANDROID_HOME
 #export PATH=$PATH:$ANDROID_HOME/tools/
 #export PATH=$ANDROID_HOME/emulator:$PATH
 export PATH="/home/haadi/.flutter/flutter/bin:$PATH"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

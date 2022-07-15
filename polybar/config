@@ -75,10 +75,25 @@
     override-redirect = true
     wm-restack = i3
     inherit = bar/main
-    width = 27%
-    offset-x = 73%
+    width = 28.5%
+    offset-x = 71.5%
     module-margin-left = 0
+    separator = "  "
     modules-center = date pulseaudio wlan memory cpu weather power 
+
+[bar/traybar]
+	monitor = DP-0
+    override-redirect = true
+    wm-restack = i3
+    inherit = bar/main
+    width = 11.4%
+    offset-x = 60.4%
+    module-margin-left = 0
+    separator = "  "
+	tray-position = center
+	tray-padding = 2
+    modules-center = cpu
+
 
 [module/power]
     type = custom/text

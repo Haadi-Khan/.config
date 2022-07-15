@@ -58,13 +58,13 @@ set $monitor_right DP-3
 	exec feh --bg-scale /run/media/haadi/Storage/Pictures/Wallpaper.png
 	exec xrandr --output DVI-D-0 --off --output HDMI-0 --off --output DP-0 --primary --mode 1920x1080 --pos 0x0 --rate 144.00 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-4 --off --output DP-5 --off
 
-	exec python ~/.config/xborder/xborders
-	exec discord
+	#exec python ~/.config/xborder/xborders
+	exec com.discordapp.Discord
 	exec cider
 	exec mailspring
 	exec slack
 	exec /usr/bin/emacs --daemon &
-	exec autotiling -w 1 2 4 5 6 7 8 9 10
+	exec autotiling
 
 # Colors
 set $bg-color 	         #4b5263
@@ -184,6 +184,8 @@ assign [class="discord"] $ws4
 assign [class="Cider"] $ws4
 assign [class="Mailspring"] $ws5
 assign [class="Slack"] $ws5
+assign [class="Gimp"] $ws7
+assign [class="Xournal++"] $ws7
 assign [class="Lunar Client"] $ws9
 assign [class="Badlion Client"] $ws9
 

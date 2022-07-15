@@ -1,55 +1,56 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Haadi Khan
 
-*WIP*
-| Goal         | Progress                                |
-|--------------+-----------------------------------------|
-| File Configs | Grammar stuff needs to be done for text |
-| Java         | LSP needs to be configured              |
-
 * Startup
-Order Matters, do NOT mess with it
-** Setup MELPA
+** Package Management
+MELPA + Use Package
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/")
+)
 (package-refresh-contents)
 (package-initialize)
-#+end_src
 
-** Use-Package
-Install use-package and enable ':ensure t' globally.  The ':ensure' keyword causes the package(s) within use-package statements to be installed automatically if not already present on your system.  To avoid having to add ':ensure t' to every use-package statement in this config, I set 'use-package-always-ensure'.
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+  (package-install 'use-package)
+)
 (setq use-package-always-ensure t)
 #+end_src
 
 ** Evil Mode
-Enable Vim
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package evil
-  :init      ;; tweak evil's configuration before loading it
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  :init      
   (setq evil-want-keybinding nil)
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
-  (setq evil-want-C-u-scroll t)
-  (evil-mode))
-(use-package evil-collection ;; adds vim everywhere
+  (setq evil-want-C-u-scroll t) ;; Enables C-u
+  (setq evil-want-C-i-jump nil) ;; Enables C-i/C-o like in Vim
+  (setq evil-set-undo-system 'undo-tree)
+  (evil-mode)
+)
+;; Undo System
+(use-package undo-tree 
   :after evil
   :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (evil-collection-init))
-(require 'undo-tree)
-(global-undo-tree-mode)
-(evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode)
+)
+
+;; Global Vim Usage
+(use-package evil-collection ;; adds vim everywhere
+  :after evil
+)
+(setq evil-collection-mode-list '(dashboard dired ibuffer))
+(evil-collection-init)
+
+;; Enables Custom Vim Maps
 (use-package key-chord
-:ensure t)
-(key-chord-mode 1)
-(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
+  :after evil
+  :config
+  (key-chord-mode 1)
+  (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state) 
+)
 #+end_src
 
 ** General Keybindings
@@ -57,37 +58,39 @@ Package which makes setting keybinds way easier
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package general
   :config
-  (general-evil-setup t))
+  (general-evil-setup t)
+)
 #+end_src
 
 ** Auto Save
 Who doesn't love continuous auto save
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(require 'real-auto-save)
-(real-auto-save-mode 1)
-(setq real-auto-save-interval 5) ;; in seconds
+(use-package real-auto-save
+  :config
+  (real-auto-save-mode 1)
+  (real-auto-save-interval 5) ;; in seconds
+)
 #+end_src
 * Speed Improvements
-Vim is fast. Emacs is slow. Make Emacs not slow.
 ** Garbage collection
 Makes startup faster by reducing the frequency of garbage collection
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 ;; Using garbage magic hack.
- (use-package gcmh
-   :config
-   (gcmh-mode 1))
+(use-package gcmh
+  :config
+  (gcmh-mode 1)
+)
 ;; Setting garbage collection threshold
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
+(setq gc-cons-threshold 402653184 gc-cons-percentage 0.6)
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
+  (lambda ()
+  (message "*** Emacs loaded in %s with %d garbage collections."
+      (format "%.2f seconds"
+      (float-time
+        (time-subtract after-init-time before-init-time)))
+        gcs-done)))
 
 ;; Silence compiler warnings as they can be pretty disruptive (setq comp-async-report-warnings-errors nil)
 (setq gc-cons-threshold (* 2 1000 1000))
@@ -107,50 +110,72 @@ Makes startup faster by reducing the frequency of garbage collection
 * Theming
 Basic Settings for Emacs
 
-** Theme
+** General
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;; Theme
 (load-theme 'atom-one-dark t)
-#+end_src
 
-** Disable Toolbars and Scrollbars
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;;(menu-bar-mode 1)
+;; Disable Window Decorations
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Icons
+(use-package all-the-icons)
+
+;; Emojis
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+
+;; Scrolling
+(use-package good-scroll
+  :config
+  (setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
+  (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
+  (setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
+  (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+  (setq scroll-margin 8)
+  (good-scroll-mode 1)
+)
+
+;; Line deleltion
+(delete-selection-mode t)
+
+;; Modeline
+(use-package doom-modeline)
+(doom-modeline-mode 1)
+
+;; Zooming
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
 
 ** Line Configuration
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(setq fringe-indicator-alist nil)
-(global-display-line-numbers-mode 1)
-(electric-pair-mode 1)
-(setq display-line-numbers-type 'relative)
-(setq scroll-margin 8)
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'origami-mode)
-
-;;(setq-default tab-width 4)
-(require 'fill-column-indicator)
-(setq fci-rule-width 5)
-(add-hook 'prog-mode-hook 'fci-mode)
-#+end_src
-
-** Indent Guides
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+;; Indent Guides
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (setq highlight-indent-guides-method 'character)
-#+end_src
 
-** Doom Modeline
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package doom-modeline)
-(doom-modeline-mode 1)
-#+end_src
+;; Line Numbers
+(setq fringe-indicator-alist nil)
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type 'relative)
+(setq-default tab-width 4)
 
-** Icons
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package all-the-icons)
+;; 80 Character Indicator
+(use-package fill-column-indicator
+  :config
+  (fci-rule-width 5)
+)
+
+;; Hooks
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'fci-mode)
+(origami-mode 1)
+(electric-pair-mode 1)
+
 #+end_src
 ** Fonts
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
@@ -175,38 +200,61 @@ Basic Settings for Emacs
 (setq global-prettify-symbols-mode t)
 #+end_src
 
-** Zooming
-You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
-
+* Keybinds
+** General
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;; zoom in/out like we do everywhere else.
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+(nvmap :keymaps 'override :prefix "SPC"
+       "SPC"   '(counsel-M-x :which-key "M-x")
+       "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/config.el")) :which-key "Reload emacs config")
+       "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
+       "t j"   '(flyspell-auto-correct-word :which-key "Auto Correct Word")
+       "t k"   '(flyspell-correct-word-before-point :which-key "Auto Correct Menu")
+       "t l"   '(langtool-check :which-key "Grammar Check")
+       "t ;"   '(langtool-check-done :which-key "Toggle Grammar Check")
+       "o m"   '(magit :which-key "Open Magit"))
 #+end_src
-
-** Scrolling
-Emacs' default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
-
+** Programming
+This is a section for all the keybinds for language features. This will be
+broken up across LSP and DAP features.
+*** LSP
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
-(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(nvmap :keymaps 'override :prefix "SPC"
+       "c c"   '(compile :which-key "Compile")
+       "c t"   '(projectile-test-project :which-key "Run Unit Tests")
+       "c r"   '(lsp-rename :which-key "Rename Symbol"))
 #+end_src
-** Emojis
+*** DAP
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+(nvmap :keymaps 'override :prefix "SPC"
+       "c b"   '(dap-breakpoint-toggle :which-key "Toggle Breakpoint")
+       "c d"   '(dap-debug-last :which-key "Debug Code")
+       "c u"   '(dap-next :which-key "Step Over")
+       "c i"   '(dap-step-in :which-key "Step Into")
+       "c o"   '(dap-continue :which-key "Continue"))
 #+end_src
-** Delete Selection
+** Org
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(delete-selection-mode t)
+(nvmap :keymaps 'override :prefix "SPC"
+       "m *"   '(org-ctrl-c-star :which-key "Org-ctrl-c-star")
+       "m +"   '(org-ctrl-c-minus :which-key "Org-ctrl-c-minus")
+       "m ."   '(counsel-org-goto :which-key "Counsel org goto")
+       "m d"   '(org-deadline :which-key "Org set deadline")'
+       "m e"   '(org-export-dispatch :which-key "Org export dispatch")
+       "m f"   '(org-footnote-new :which-key "Org footnote new")
+       "m h"   '(org-toggle-heading :which-key "Org toggle heading")
+       "m i"   '(org-toggle-item :which-key "Org toggle item")
+       "m n"   '(org-store-link :which-key "Org store link")
+       "m o"   '(org-set-property :which-key "Org set property")
+       "m s"   '(org-schedule :which-key "Org set schedule")'
+       "m t"   '(org-todo :which-key "Org todo")
+       "m x"   '(org-toggle-checkbox :which-key "Org toggle checkbox")
+       "m b"   '(org-babel-tangle :which-key "Org babel tangle")
+       "m I"   '(org-toggle-inline-images :which-key "Org toggle inline imager")
+       "m T"   '(org-todo-list :which-key "Org todo list")
+       )
 #+end_src
-
-* Buffer Options
-
+  
+** Buffer
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (nvmap :prefix "SPC"
        "b b"   '(ibuffer :which-key "Ibuffer")
@@ -217,7 +265,77 @@ Emacs' default scrolling is annoying because of the sudden half-page jumps.  Als
        "b B"   '(ibuffer-list-buffers :which-key "Ibuffer list buffers")
        "b K"   '(kill-buffer :which-key "Kill buffer"))
 #+end_src
-
+** Windows
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(winner-mode 1)
+(nvmap :prefix "SPC"
+       ;; Window splits
+       "w c"   '(evil-window-delete :which-key "Close window")
+       "w n"   '(evil-window-new :which-key "New window")
+       "w s"   '(evil-window-split :which-key "Horizontal split window")
+       "w v"   '(evil-window-vsplit :which-key "Vertical split window")
+       ;; Window motions
+       "w h"   '(evil-window-left :which-key "Window left")
+       "w j"   '(evil-window-down :which-key "Window down")
+       "w k"   '(evil-window-up :which-key "Window up")
+       "w l"   '(evil-window-right :which-key "Window right")
+       "w w"   '(evil-window-next :which-key "Goto next window")
+       ;; winner mode
+       "w <left>"  '(winner-undo :which-key "Winner undo")
+       "w <right>" '(winner-redo :which-key "Winner redo"))
+#+end_src
+** Open Application
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :keymaps 'override :prefix "SPC"
+       "o a"   '(org-agenda :which-key "Org agenda")
+       "o t"   '(vterm :which-key "Terminal"))
+#+end_src
+** Files
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
+    "."     '(find-file :which-key "Find file")
+    "f f"   '(find-file :which-key "Find file")
+    "f p"   '(projectile-find-file :which-key "Find File in Project")
+    "f r"   '(counsel-recentf :which-key "Recent files")
+    "f s"   '(save-buffer :which-key "Save file")
+    "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
+    "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
+    "f C"   '(copy-file :which-key "Copy file")
+    "f D"   '(delete-file :which-key "Delete file")
+    "f R"   '(rename-file :which-key "Rename file")
+    "f S"   '(write-file :which-key "Save file as...")
+    "f U"   '(sudo-edit :which-key "Sudo edit file"))
+#+end_src
+** Treemacs
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :keymaps 'override :prefix "SPC"
+       "j k"   '(treemacs :which-key "Toggle Treemacs")
+       "j K"   '(treemacs-select-directory :which-key "Select Treemacs Directory"))
+#+end_src
+** Elisp
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
+       "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
+       "e d"   '(eval-defun :which-key "Eval defun")
+       "e e"   '(eval-expression :which-key "Eval elisp expression")
+       "e l"   '(eval-last-sexp :which-key "Eval last sexression")
+       "e r"   '(eval-region :which-key "Eval region"))
+#+end_src
+** Registers
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(nvmap :prefix "SPC"
+    "r c"   '(copy-to-register :which-key "Copy to register")
+    "r f"   '(frameset-to-register :which-key "Frameset to register")
+    "r i"   '(insert-register :which-key "Insert register")
+    "r j"   '(jump-to-register :which-key "Jump to register")
+    "r l"   '(list-registers :which-key "List registers")
+    "r n"   '(number-to-register :which-key "Number to register")
+    "r r"   '(counsel-register :which-key "Choose a register")
+    "r v"   '(view-register :which-key "View a register")
+    "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
+    "r +"   '(increment-register :which-key "Increment register")
+    "r SPC" '(point-to-register :which-key "Point to register"))
+#+end_src
 * Dashboard
 Dashboard when starting Emacs, looks cool
 
@@ -249,24 +367,6 @@ This setting ensures that emacsclient always opens on *dashboard* rather than *s
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 #+end_src
 
-* Elisp Evaluation
-| COMMAND         | DESCRIPTION                                    | KEYBINDING |
-|-----------------+------------------------------------------------+------------|
-| eval-buffer     | /Evaluate elisp in buffer/                       | SPC e b    |
-| eval-defun      | /Evaluate the defun containing or after point/   | SPC e d    |
-| eval-expression | /Evaluate an elisp expression/                   | SPC e e    |
-| eval-last-sexp  | /Evaluate elisp expression before point/         | SPC e l    |
-| eval-region     | /Evaluate elisp in region/                       | SPC e r    |
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
-       "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
-       "e d"   '(eval-defun :which-key "Eval defun")
-       "e e"   '(eval-expression :which-key "Eval elisp expression")
-       "e l"   '(eval-last-sexp :which-key "Eval last sexression")
-       "e r"   '(eval-region :which-key "Eval region"))
-#+end_src
-  
 * Dired
 Dired is the file manager within Emacs.  Below, I setup keybindings for image previews (peep-dired).  I've chosen the format of 'SPC d' plus 'key'.
 
@@ -323,43 +423,6 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
                               ("mp4" . "mpv")))
 #+end_src
 
-* Keybinds
-General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  It certainly is easier on the hands than constantly using CTRL for a prefix.
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :keymaps 'override :prefix "SPC"
-       "SPC"   '(counsel-M-x :which-key "M-x")
-       "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/config.el")) :which-key "Reload emacs config")
-       "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines")
-       "t j"   '(flyspell-auto-correct-word :which-key "Auto Correct Word")
-       "t k"   '(flyspell-correct-word-before-point :which-key "Auto Correct Menu")
-       "t l"   '(langtool-check :which-key "Grammar Check")
-       "t ;"   '(langtool-check-done :which-key "Toggle Grammar Check")
-       "o m"   '(magit :which-key "Open Magit"))
-(nvmap :keymaps 'override :prefix "SPC"
-       "j k"   '(treemacs :which-key "Toggle Treemacs")
-       "j K"   '(treemacs-select-directory :which-key "Select Treemacs Directory"))
-(nvmap :keymaps 'override :prefix "SPC"
-       "m *"   '(org-ctrl-c-star :which-key "Org-ctrl-c-star")
-       "m +"   '(org-ctrl-c-minus :which-key "Org-ctrl-c-minus")
-       "m ."   '(counsel-org-goto :which-key "Counsel org goto")
-       "m d"   '(org-deadline :which-key "Org set deadline")'
-       "m e"   '(org-export-dispatch :which-key "Org export dispatch")
-       "m f"   '(org-footnote-new :which-key "Org footnote new")
-       "m h"   '(org-toggle-heading :which-key "Org toggle heading")
-       "m i"   '(org-toggle-item :which-key "Org toggle item")
-       "m n"   '(org-store-link :which-key "Org store link")
-       "m o"   '(org-set-property :which-key "Org set property")
-       "m s"   '(org-schedule :which-key "Org set schedule")'
-       "m t"   '(org-todo :which-key "Org todo")
-       "m x"   '(org-toggle-checkbox :which-key "Org toggle checkbox")
-       "m b"   '(org-babel-tangle :which-key "Org babel tangle")
-       "m I"   '(org-toggle-inline-images :which-key "Org toggle inline imager")
-       "m T"   '(org-todo-list :which-key "Org todo list")
-       "o a"   '(org-agenda :which-key "Org agenda")
-       )
-#+end_src
-  
 * Completion
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
@@ -448,37 +511,37 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
     (ivy-posframe-mode 1)) ; 1 enables posframe-mode, 0 disables it.
 #+end_src
 
-* Languages
+* Programming
 Adding lsps and syntax highlighting for programming
 
 ** LSP
 This is the base configs for LSP Mode in Emacs
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-mode
-    :commands
-        (lsp lsp-deferred)
-    :init
-        (setq lsp-keymap-prefix "C-c l")
-        (setq gc-cons-threshold 1000000000)
-        (setq read-process-output-max (* 1024 1024)
-        treemacs-space-between-root-nodes nil
-        company-idle-delay 0.0
-        lsp-auto-configure t
-        company-minimum-prefix-length 1
-        lsp-idle-delay 0.0)
-    :config
-        (lsp-enable-snippet t)
-        (setq lsp-lens-enable nil)
-        (lsp-enable-which-key-integration t)
-        (evil-global-set-key (kbd "C-SPC") #'company-complete)
-        (evil-global-set-key (kbd "C-.") #'lsp-execute-code-action)
+  :commands
+  (lsp lsp-deferred)
+
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  (setq gc-cons-threshold 1000000000)
+  (setq read-process-output-max (* 1024 1024)
+  treemacs-space-between-root-nodes nil
+  company-idle-delay 0.0
+  lsp-auto-configure t
+  company-minimum-prefix-length 1
+  lsp-idle-delay 0.0)
+
+  :config
+  (setq lsp-lens-enable nil)
+  (setq lsp-enable-which-key-integration t)
+  (setq evil-global-set-key (kbd "C-SPC") 'company-complete)
+  (setq evil-global-set-key (kbd "C-.") 'lsp-execute-code-action)
 )
 #+end_src
 ** Tree Sitter
 Tree Sitter is a package which allows for better syntax highlighting
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package tree-sitter
-  :ensure t
   :init (require 'tree-sitter-langs)
 )
 #+end_src
@@ -492,25 +555,6 @@ This is the base configs for DAP Mode in Emacs. LSP Mode is required for this to
         (dap-auto-configure-features
         '(sessions locals breakpoints expressions tooltip)  "Remove the button panel in the top.")
 )
-#+end_src
-** Keybind Map
-This is a section for all the keybinds for language features. This will be
-broken up across LSP and DAP features.
-*** LSP
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :keymaps 'override :prefix "SPC"
-       "c c"   '(compile :which-key "Compile")
-       "c t"   '(projectile-test-project :which-key "Run Unit Tests")
-       "c r"   '(lsp-rename :which-key "Rename Symbol"))
-#+end_src
-*** DAP
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :keymaps 'override :prefix "SPC"
-       "c b"   '(dap-breakpoint-toggle :which-key "Toggle Breakpoint")
-       "c d"   '(dap-debug-last :which-key "Debug Code")
-       "c u"   '(dap-next :which-key "Step Over")
-       "c i"   '(dap-step-in :which-key "Step Into")
-       "c o"   '(dap-continue :which-key "Continue"))
 #+end_src
 ** C++
 *** LSP + Comfort Settings
@@ -569,19 +613,25 @@ broken up across LSP and DAP features.
 
 (add-hook 'c-mode-common-hook 'c++-debug-hook)
 #+end_src
-** Dart
+** Rust
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package lsp-dart
-:ensure t
-:hook (dart-mode . (lambda()
-(require 'lsp-dart)
-(lsp))))
-
+(use-package rust-mode)
+(add-hook 'rust-mode 'lsp)
+(setq lsp-rust-analyzer-cargo-watch-command "clippy")
+(setq lsp-eldoc-render-all t)
+(setq lsp-rust-analyzer-server-display-inlay-hints t)
+(setq lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+(setq lsp-rust-analyzer-display-chaining-hints t)
+(setq lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+(setq lsp-rust-analyzer-display-closure-return-type-hints t)
+(setq lsp-rust-analyzer-display-parameter-hints nil)
+(setq lsp-rust-analyzer-display-reborrow-hints nil)
 #+end_src
+
 ** Java
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-java
-:ensure t
+
 :hook (java-mode . (lambda ()
                           (require 'lsp-java)
                           (lsp))))  ; or lsp-deferred
@@ -592,9 +642,9 @@ broken up across LSP and DAP features.
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (require 'rainbow-delimiters)
 (use-package dart-mode
-:ensure t)
+)
 (use-package lsp-dart
-:ensure t
+
 :hook (dart-mode . (lambda ()
                           (require 'lsp-dart)
                           (lsp)(rainbow-delimeters-mode)))
@@ -605,23 +655,15 @@ broken up across LSP and DAP features.
 )
 #+end_src
 
-** Rust
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package rust-mode
-:ensure t
-)
-(add-hook 'rust-mode-hook #'lsp)
-#+end_src
-
 ** Python
 *** Basic Config
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package lsp-pyright
-  :ensure t
+  
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
-(require 'dap-python)
+(use-package 'dap-python)
 (setq dap-python-debugger 'debugpy)
 (use-package pyvenv
     :config (pyvenv-mode 1))
@@ -637,24 +679,6 @@ broken up across LSP and DAP features.
 #+end_src
 
 * File Configs
-** File-related Keybindings
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
-    "."     '(find-file :which-key "Find file")
-    "f f"   '(find-file :which-key "Find file")
-    "f p"   '(projectile-find-file :which-key "Find File in Project")
-    "f r"   '(counsel-recentf :which-key "Recent files")
-    "f s"   '(save-buffer :which-key "Save file")
-    "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
-    "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
-    "f C"   '(copy-file :which-key "Copy file")
-    "f D"   '(delete-file :which-key "Delete file")
-    "f R"   '(rename-file :which-key "Rename file")
-    "f S"   '(write-file :which-key "Save file as...")
-    "f U"   '(sudo-edit :which-key "Sudo edit file"))
-#+end_src
-
 ** Installing Some Useful File-related Modules
 Though 'recentf' is one way to find recent files although I prefer using 'counsel-recentf'.
 
@@ -725,7 +749,7 @@ Though 'recentf' is one way to find recent files although I prefer using 'counse
 ** Setup
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package evil-org
-:ensure t
+
 :after org
 :hook (org-mode . (lambda () evil-org-mode))
 :config
@@ -852,6 +876,20 @@ Org-tempo is a package that allows for '<s' followed by TAB to expand to a begin
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-tempo
 :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
+(setq org-structure-template-alist
+  '(("a" . "export ascii\n")
+    ("c" . "center\n")
+    ("C" . "comment\n")
+    ("e" . "example\n")
+    ("E" . "export")
+    ("h" . "export html\n")
+    ("l" . "export latex\n")
+    ("q" . "quote\n")
+    ("s" . "src\n")
+    ("r" . "src rust\n")
+    ("p" . "src python\n")
+    ("j" . "src java\n")
+    ("v" . "verse\n")))
 #+end_src
 
 ** Source Code Block Syntax Highlighting
@@ -926,7 +964,7 @@ Basically lets note taking go on crack
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package org-roam
-:ensure t
+
 :custom
 (org-roam-directory "~/org-roam")
 (org-roam-dailies-directory "journal/")
@@ -946,7 +984,6 @@ Basically lets note taking go on crack
 #+end_src 
 
 * Magit
-
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
 (setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
@@ -973,12 +1010,12 @@ Basically lets note taking go on crack
 #+end_src
 
 * Treemacs
-#+BEGIN_src emacs-lisp :tangle ~/.config/emacs/config.el
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package treemacs)
 (use-package treemacs-evil)
 (add-hook 'treemacs-mode 'display-line-numbers-mode 0)
 (treemacs-load-theme "Atom")
-#+END_SRC
+#+end_src
 
 This is my custom keymap for the treemacs window
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
@@ -1007,68 +1044,13 @@ The Perspective package provides multiple named workspaces (or "perspectives") i
 ;;(setq compilation-read-command nil)
 #+end_src
 
-* Registers
-Emacs registers are compartments where you can save text, rectangles and positions for later use. Once you save text or a rectangle in a register, you can copy it into the buffer once or many times; once you save a position in a register, you can jump back to that position once or many times.  The default GNU Emacs keybindings for these commands (with the exception of counsel-register) involves 'C-x r' followed by one or more other keys.  I wanted to make this a little more user friendly, so I chose to replace the 'C-x r' part of the key chords with 'SPC r'.
-
-| COMMAND                          | DESCRIPTION                      | KEYBINDING |
-|----------------------------------+----------------------------------+------------|
-| copy-to-register                 | /Copy to register/                 | SPC r c    |
-| frameset-to-register             | /Frameset to register/             | SPC r f    |
-| insert-register                  | /Insert contents of register/      | SPC r i    |
-| jump-to-register                 | /Jump to register/                 | SPC r j    |
-| list-registers                   | /List registers/                   | SPC r l    |
-| number-to-register               | /Number to register/               | SPC r n    |
-| counsel-register                 | /Interactively choose a register/  | SPC r r    |
-| view-register                    | /View a register/                  | SPC r v    |
-| window-configuration-to-register | /Window configuration to register/ | SPC r w    |
-| increment-register               | /Increment register/               | SPC r +    |
-| point-to-register                | /Point to register/                | SPC r SPC  |
-
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(nvmap :prefix "SPC"
-    "r c"   '(copy-to-register :which-key "Copy to register")
-    "r f"   '(frameset-to-register :which-key "Frameset to register")
-    "r i"   '(insert-register :which-key "Insert register")
-    "r j"   '(jump-to-register :which-key "Jump to register")
-    "r l"   '(list-registers :which-key "List registers")
-    "r n"   '(number-to-register :which-key "Number to register")
-    "r r"   '(counsel-register :which-key "Choose a register")
-    "r v"   '(view-register :which-key "View a register")
-    "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
-    "r +"   '(increment-register :which-key "Increment register")
-    "r SPC" '(point-to-register :which-key "Point to register"))
-#+end_src
-
 * Terminal
 Terminal Emulator
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package vterm)
 (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000)
-(nvmap :prefix "SPC"
-       "o t"   '(vterm :which-key "Terminal"))
 #+end_src
-* Window Control
-Makes organizing buffers far easier
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(winner-mode 1)
-(nvmap :prefix "SPC"
-       ;; Window splits
-       "w c"   '(evil-window-delete :which-key "Close window")
-       "w n"   '(evil-window-new :which-key "New window")
-       "w s"   '(evil-window-split :which-key "Horizontal split window")
-       "w v"   '(evil-window-vsplit :which-key "Vertical split window")
-       ;; Window motions
-       "w h"   '(evil-window-left :which-key "Window left")
-       "w j"   '(evil-window-down :which-key "Window down")
-       "w k"   '(evil-window-up :which-key "Window up")
-       "w l"   '(evil-window-right :which-key "Window right")
-       "w w"   '(evil-window-next :which-key "Goto next window")
-       ;; winner mode
-       "w <left>"  '(winner-undo :which-key "Winner undo")
-       "w <right>" '(winner-redo :which-key "Winner redo"))
-#+end_src
-
 * RSS Reader
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package elfeed
@@ -1107,8 +1089,6 @@ Makes organizing buffers far easier
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
 #+end_src
-
-#+RESULTS:
 
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package projectile
@@ -1179,17 +1159,6 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 (which-key-mode)
 #+end_src
 
-* ERC
-This is more for shits and gigs while I try to make emacs use discord
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(setq erc-server "localhost"
-  erc-port "6667"
-  erc-track-shorten-start 8
-  erc-auto-query 'bury)
-
-(use-package erc-image
-  :after erc)
-#+end_src
 * Misc. Config
 ** No Junk Files
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
@@ -1199,35 +1168,7 @@ This is more for shits and gigs while I try to make emacs use discord
     create-lockfiles nil)
 #+end_src
 
-** Google Translate
-Handy for Spanish
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-(use-package google-translate)
-(require 'google-translate)
-(require 'google-translate-default-ui)
-#+end_src
-
-** Prayer Times
-To integrate Islamic prayer times into Emacs, we have to manually add the package since it isn't on melpa
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;;(add-to-list 'load-path "~/.config/emacs/lisp/")
-;;(load "awqat.el") 
-#+end_src
-
-Next, we have to set some variables for our config
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
-;;(require 'awqat)
-;;(setq calendar-latitude 40.812119
-;;    calendar-longitude -73.3432)
-;;(setq awqat-asr-hanafi nil)
-;;(setq awqat-fajr-angle 15.0)
-;;(setq awqat-isha-angle 15.0)
-;;(setq org-agenda-include-diary t)
-#+end_src
-
 ** Writeroom Mode
-A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
-
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
 (use-package writeroom-mode)
 #+end_src

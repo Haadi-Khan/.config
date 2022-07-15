@@ -8,8 +8,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-C-u-scroll t)
+ '(org-src-preserve-indentation nil)
  '(package-selected-packages
-   '(rust-mode rainbow-delimiters dart-server lsp-dart haskell-mode origami dap-python ein jupyter ranger org-roam erc-image bitlbee tree-sitter-langs tree-sitter langtool pomodoro lsp-origami python-mode yasnippet xah-fly-keys writeroom-mode which-key vterm use-package undo-tree treemacs-evil toc-org sudo-edit subed smex real-auto-save pyvenv projectile perspective peep-dired org-superstar org-fragtog org-evil org-edit-latex org-bullets one-themes neotree modern-cpp-font-lock magit lsp-ui lsp-python-ms lsp-pyright lsp-java key-chord ivy-rich ivy-posframe highlight-indent-guides helm-lsp google-translate general gcmh flyspell-popup flycheck fill-column-indicator evil-tutor evil-org evil-collection eshell-syntax-highlighting emojify elfeed-goodies doom-modeline dired-open dashboard counsel company clang-format+ centaur-tabs ccls atom-one-dark-theme all-the-icons-dired))
+   '(google-translate-default-ui nlinum-relative good-scroll rust-mode rainbow-delimiters dart-server lsp-dart haskell-mode origami dap-python ein jupyter ranger org-roam erc-image bitlbee tree-sitter-langs tree-sitter langtool pomodoro lsp-origami python-mode yasnippet xah-fly-keys writeroom-mode which-key vterm use-package undo-tree treemacs-evil toc-org sudo-edit subed smex real-auto-save pyvenv projectile perspective peep-dired org-superstar org-fragtog org-evil org-edit-latex org-bullets one-themes neotree modern-cpp-font-lock magit lsp-ui lsp-python-ms lsp-pyright lsp-java key-chord ivy-rich ivy-posframe highlight-indent-guides helm-lsp google-translate general gcmh flyspell-popup flycheck fill-column-indicator evil-tutor evil-org evil-collection eshell-syntax-highlighting emojify elfeed-goodies doom-modeline dired-open dashboard counsel company clang-format+ centaur-tabs ccls atom-one-dark-theme all-the-icons-dired))
  '(warning-suppress-types '((org-roam) (org-roam) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
