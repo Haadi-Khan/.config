@@ -1,4 +1,8 @@
 *~
+!VSCodium/User/keybindings.json
+!VSCodium/User/settings.json
+VSCodium/
+blender/
 Signal/
 nextjs-nodejs/
 weylus/
