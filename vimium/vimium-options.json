@@ -10,9 +10,9 @@
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
   "keyMappings": "# Insert your preferred key mappings here.",
-  "linkHintCharacters": "asdfgqwertzxcvb`[]\\",
+  "linkHintCharacters": "asdfqwerzxcv",
   "linkHintNumbers": "0123456789",
-  "newTabUrl": "https://www.startpage.com/",
+  "newTabUrl": "https://www.google.com/",
   "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
   "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
   "regexFindMode": false,
@@ -21,6 +21,6 @@
   "smoothScroll": true,
   "grabBackFocus": false,
   "searchEngines": "w: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\n\n# More examples.\n#\n# (Vimium supports search completion Wikipedia, as\n# above, and for these.)\n#\n# g: https://www.google.com/search?q=%s Google\n# l: https://www.google.com/search?q=%s&btnI I'm feeling lucky...\n# y: https://www.youtube.com/results?search_query=%s Youtube\n# gm: https://www.google.com/maps?q=%s Google maps\n# b: https://www.bing.com/search?q=%s Bing\n# d: https://duckduckgo.com/?q=%s DuckDuckGo\n# az: https://www.amazon.com/s/?field-keywords=%s Amazon\n# qw: https://www.qwant.com/?q=%s Qwant",
-  "searchUrl": "https://www.startpage.com/sp/search?query=",
+  "searchUrl": "https://www.google.com/search?q=",
   "userDefinedLinkHintCss": "/* HUD */\n\niframe.vimiumHUDFrame {\n    height: 30px;\n    min-height: 30px;\n}\n\ndiv.vimiumHUD {\n    background-color: #282c34;\n    border-color: #4b5263;\n    border-radius: 0;\n    border-style: solid;\n    border-width: 0 3px 0 0;\n    color: #4b5263;\nfont-family: \"Recursive Sn Lnr St\";\n    font-weight: bold;\n    padding: 8px;\n    text-shadow: none;\n}\n\ndiv.vimiumHUD .vimiumHUDSearchArea {\n  background-color: #282c34;\nfont-family: \"Recursive Sn Lnr St\";\n  color: #abb2bf;\n}\n\n/* Link Hints */\n\ndiv > .vimiumHintMarker {\n    background: #282c34;\n    border-color: #4b5263;\n    border-radius: 0;\n    border-style: solid;\n    border-width: 0 0 0 3px;\n    cursor: default;\n    padding: 4px;\n}\n\ndiv > .vimiumHintMarker span {\n    color: #abb2bf;\n    cursor: default;\n    font-family: \"Recursive Sn Lnr St\";\n    font-size: 12px;\n    font-weight: bold;\n    text-shadow: none;\n}\n\ndiv > .vimiumActiveHintMarker span {\nfont-family: \"Recursive Sn Lnr St\";\n    color: #61afef!important;\n}\n\n/* Vomnibar */\n\n#vomnibar {\nfont-family: \"Recursive Sn Lnr St\";\n    background: #282c34;\n    border-radius: 0;\n    box-shadow: none;\n}\n\n#vomnibar .vomnibarSearchArea {\nfont-family: \"Recursive Sn Lnr St\";\n    background-color: #282c34;\n    border: none;\n    border-color: #4b5263;\n    border-radius: 0;\n    border-style: solid;\n    border-width: 0 0 0 4px;\n}\n\n#vomnibar .vomnibarSearchArea > input {\n    background-color: #282c34;\n    border: none;\nfont-family: \"Recursive Sn Lnr St\";\n    color: #abb2bf;\n}\n\n#vomnibar ul {\nfont-family: \"Recursive Sn Lnr St\";\n    background-color: #282c34;\n    border-radius: 0;\n}\n\n#vomnibar li {\n    background-color: transparent;\n    border-color: #61AFEF;\n    border-style: solid;\nfont-family: \"Recursive Sn Lnr St\";\n    border-width: 0;\n    margin-top: 10px;\n    transition: background-color 0.1s ease;\n}\n\n#vomnibar li em,\n#vomnibar li .vomnibarTitle {\nfont-family: \"Recursive Sn Lnr St\";\n    color: #abb2bf;\n}\n\n#vomnibar li em .vomnibarMatch,\n#vomnibar li .vomnibarTitle .vomnibarMatch,\n#vomnibar li .vomnibarMatch {\nfont-family: \"Recursive Sn Lnr St\";\n    color: #c678dd;\n}\n\n#vomnibar li .vomnibarUrl {\nfont-family: \"Recursive Sn Lnr St\";\n    color: #61afef;\n}\n\n#vomnibar li.vomnibarSelected {\nfont-family: \"Recursive Sn Lnr St\";\n    background-color: #2d323b;\n}"
 }

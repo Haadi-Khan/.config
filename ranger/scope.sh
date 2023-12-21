@@ -159,7 +159,7 @@ handle_image() {
         #     ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
         #     exit 1;;
 
-        # PDF
+        ## PDF
          application/pdf)
              pdftoppm -f 1 -l 1 \
                       -scale-to-x "${DEFAULT_SIZE%x*}" \
