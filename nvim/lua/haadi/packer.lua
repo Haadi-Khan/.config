@@ -56,4 +56,8 @@ return require('packer').startup(function(use)
         }
       end
     }
+
+    use('sirver/ultisnips')
+    use('lervag/vimtex')
+    use('KeitaNakamura/tex-conceal.vim')
 end)

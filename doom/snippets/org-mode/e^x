@@ -1,5 +1,0 @@
-# key: ee
-# name: Example Snippet
-# condition: (and (eq major-mode 'org-mode) (save-excursion (let ((curr (point))) (and (search-backward "\\[" nil t) (search-forward "\\]" nil t) (> (point) curr) (not (eq (point) (point-max)))))))
-# --
-e^{$1}

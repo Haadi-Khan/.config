@@ -55,7 +55,9 @@
 (package! dashboard)
 (package! centaur-tabs)
 (package! org-autolist)
-(package! dap-mode)
+(package! elfeed-goodies)
 
-
+(package! real-auto-save)
 (package! cdlatex)
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))

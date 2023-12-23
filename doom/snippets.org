@@ -1,0 +1,2227 @@
+#+TITLE: LaTeX Snippets
+#+AUTHOR: Haadi Khan
+#+PROPERTY: header-args :tangle yes
+
+My snippets for LaTeX are all defined in this org document. In order to simplify the process, they are all exported to the snippets directory utilizing org-babel. The system works as follows:
+
+All Math snippets are numbered 1000-9999
+|------------------------+--------|
+| Topic                  | Number |
+|------------------------+--------|
+| Greek                  |   1000 |
+| Calculus               |   2000 |
+| Functions + Operations |   3000 |
+| Lin Alg                |   4000 |
+| Logic + Set Theory     |   5000 |
+| Physics                |   6000 |
+| Trig                   |   7000 |
+| Misc. Symbols          |   8000 |
+| Misc.                  |   9000 |
+|------------------------+--------|
+
+All other sections are numbered from 0-999
+|--------------+--------|
+| Topic        | Number |
+|--------------+--------|
+| Skeleton     |   000  |
+| Environments |   100  |
+| Sections     |   200  |
+| Fonts        |   300  |
+| References   |   400  |
+| Code         |   500  |
+| Graphics     |   600  |
+| Misc.        |   700  |
+|--------------+--------|
+
+* TABLE OF CONTENTS :toc:
+- [[#math-mode][Math Mode]]
+  - [[#greek][Greek]]
+  - [[#calculus][Calculus]]
+  - [[#functions--operations][Functions + Operations]]
+  - [[#lin-alg][Lin Alg]]
+  - [[#logic--set-theory][Logic + Set Theory]]
+  - [[#physics][Physics]]
+  - [[#trig][Trig]]
+  - [[#misc-symbols][Misc. Symbols]]
+  - [[#misc][Misc]]
+- [[#skeleton][Skeleton]]
+  - [[#article][article]]
+  - [[#basic-template][Basic template]]
+  - [[#basict][basict]]
+  - [[#beamer][beamer]]
+  - [[#letter][letter]]
+- [[#environments][Environments]]
+  - [[#align][align]]
+  - [[#alignstar][alignstar]]
+  - [[#array][array]]
+  - [[#begin][begin]]
+  - [[#block][block]]
+  - [[#desc][desc]]
+  - [[#enum][enum]]
+  - [[#eq][eq]]
+  - [[#eqs][eqs]]
+  - [[#fig][fig]]
+  - [[#frame][frame]]
+  - [[#href][href]]
+  - [[#it][it]]
+  - [[#itd][itd]]
+  - [[#item][item]]
+  - [[#minipage][minipage]]
+  - [[#subfig][subfig]]
+  - [[#table][table]]
+  - [[#tikz-plot][Tikz Plot]]
+  - [[#url][url]]
+  - [[#verb][verb]]
+- [[#sections][Sections]]
+  - [[#abstract][abstract]]
+  - [[#cha][cha]]
+  - [[#chastar][chastar]]
+  - [[#par][par]]
+  - [[#sec][sec]]
+  - [[#secstar][secstar]]
+  - [[#ssub][ssub]]
+  - [[#ssubstar][ssubstar]]
+  - [[#sub][sub]]
+  - [[#substar][substar]]
+- [[#font][Font]]
+  - [[#bold][bold]]
+  - [[#blackboard][blackboard]]
+  - [[#calig][calig]]
+  - [[#tt][tt]]
+  - [[#rm][rm]]
+- [[#references][References]]
+  - [[#cite][cite]]
+  - [[#label][label]]
+  - [[#ref][ref]]
+- [[#code][Code]]
+  - [[#code-1][code]]
+- [[#graphics][Graphics]]
+  - [[#graphics-1][Graphics]]
+  - [[#includegraphics][includegraphics]]
+  - [[#subfloat][subfloat]]
+- [[#misc-1][Misc.]]
+  - [[#bib][bib]]
+  - [[#doc][doc]]
+  - [[#gls][gls]]
+  - [[#listing][listing]]
+  - [[#use][use]]
+  - [[#columns][columns]]
+
+* Math Mode
+** Greek
+*** alpha
+#+begin_src yasnippet :tangle snippets/latex-mode/1000.yasnippet
+# -*- mode: snippet -*-
+# name: alpha
+# key: @a
+# group: math
+# condition: 'auto'
+# --
+\\alpha
+#+end_src
+*** Alpha
+#+begin_src yasnippet :tangle snippets/latex-mode/1001.yasnippet
+# -*- mode: snippet -*-
+# name: Alpha
+# key: @A
+# group: math
+# condition: 'auto'
+# --
+\\alpha
+#+end_src
+*** beta
+#+begin_src yasnippet :tangle snippets/latex-mode/1002.yasnippet
+# -*- mode: snippet -*-
+# name: beta
+# key: @b
+# group: math
+# condition: 'auto'
+# --
+\\beta
+#+end_src
+*** Beta
+#+begin_src yasnippet :tangle snippets/latex-mode/1003.yasnippet
+# -*- mode: snippet -*-
+# name: Beta
+# key: @B
+# group: math
+# condition: 'auto'
+# --
+\\beta
+#+end_src
+*** chi
+#+begin_src yasnippet :tangle snippets/latex-mode/1004.yasnippet
+# -*- mode: snippet -*-
+# name: chi
+# key: @c
+# group: math
+# condition: 'auto'
+# --
+\\chi
+#+end_src
+*** Chi
+#+begin_src yasnippet :tangle snippets/latex-mode/1005.yasnippet
+# -*- mode: snippet -*-
+# name: Chi
+# key: @C
+# group: math
+# condition: 'auto'
+# --
+\\chi
+#+end_src
+*** delta
+#+begin_src yasnippet :tangle snippets/latex-mode/1008.yasnippet
+# -*- mode: snippet -*-
+# name: delta
+# key: @d
+# group: math
+# condition: 'auto'
+# --
+\\delta
+#+end_src
+*** Delta
+#+begin_src yasnippet :tangle snippets/latex-mode/1009.yasnippet
+# -*- mode: snippet -*-
+# name: Delta
+# key: @D
+# group: math
+# condition: 'auto'
+# --
+\\Delta
+#+end_src
+*** epsilon
+#+begin_src yasnippet :tangle snippets/latex-mode/1010.yasnippet
+# -*- mode: snippet -*-
+# name: epsilon
+# key: @e
+# group: math
+# condition: 'auto'
+# --
+\\epsilon
+#+end_src
+*** Epsilon
+#+begin_src yasnippet :tangle snippets/latex-mode/1011.yasnippet
+# -*- mode: snippet -*-
+# name: Epsilon
+# key: @E
+# group: math
+# condition: 'auto'
+# --
+\\epsilon
+#+end_src
+*** gamma
+#+begin_src yasnippet :tangle snippets/latex-mode/1006.yasnippet
+# -*- mode: snippet -*-
+# name: gamma
+# key: @g
+# group: math
+# condition: 'auto'
+# --
+\\gamma
+#+end_src
+*** Gamma
+#+begin_src yasnippet :tangle snippets/latex-mode/1007.yasnippet
+# -*- mode: snippet -*-
+# name: Gamma
+# key: @G
+# group: math
+# condition: 'auto'
+# --
+\\Gamma
+#+end_src
+*** kappa
+#+begin_src yasnippet :tangle snippets/latex-mode/1018.yasnippet
+# -*- mode: snippet -*-
+# name: kappa
+# key: @k
+# group: math
+# condition: 'auto'
+# --
+\\kappa
+#+end_src
+*** Kappa
+#+begin_src yasnippet :tangle snippets/latex-mode/1019.yasnippet
+# -*- mode: snippet -*-
+# name: Kappa
+# key: @K
+# group: math
+# condition: 'auto'
+# --
+\\kappa
+#+end_src
+*** lambda
+#+begin_src yasnippet :tangle snippets/latex-mode/1020.yasnippet
+# -*- mode: snippet -*-
+# name: lambda
+# key: @l
+# group: math
+# condition: 'auto'
+# --
+\\lambda
+#+end_src
+*** Lambda
+#+begin_src yasnippet :tangle snippets/latex-mode/1021.yasnippet
+# -*- mode: snippet -*-
+# name: Lambda
+# key: @L
+# group: math
+# condition: 'auto'
+# --
+\\Lambda
+#+end_src
+*** mu
+#+begin_src yasnippet :tangle snippets/latex-mode/1022.yasnippet
+# -*- mode: snippet -*-
+# name: mu
+# key: @m
+# group: math
+# condition: 'auto'
+# --
+\\mu
+#+end_src
+*** Mu
+#+begin_src yasnippet :tangle snippets/latex-mode/1023.yasnippet
+# -*- mode: snippet -*-
+# name: Mu
+# key: @M
+# group: math
+# condition: 'auto'
+# --
+\\mu
+#+end_src
+*** omega
+#+begin_src yasnippet :tangle snippets/latex-mode/1028.yasnippet
+# -*- mode: snippet -*-
+# name: omega
+# key: @o
+# group: math
+# condition: 'auto'
+# --
+\\omega
+#+end_src
+*** Omega
+#+begin_src yasnippet :tangle snippets/latex-mode/1029.yasnippet
+# -*- mode: snippet -*-
+# name: Omega
+# key: @O
+# group: math
+# condition: 'auto'
+# --
+\\Omega
+#+end_src
+
+*** rho
+#+begin_src yasnippet :tangle snippets/latex-mode/1024.yasnippet
+# -*- mode: snippet -*-
+# name: rho
+# key: @r
+# group: math
+# condition: 'auto'
+# --
+\\rho
+#+end_src
+*** Rho
+#+begin_src yasnippet :tangle snippets/latex-mode/1025.yasnippet
+# -*- mode: snippet -*-
+# name: Rho
+# key: @R
+# group: math
+# condition: 'auto'
+# --
+\\rho
+#+end_src
+*** sigma
+#+begin_src yasnippet :tangle snippets/latex-mode/1026.yasnippet
+# -*- mode: snippet -*-
+# name: sigma
+# key: @s
+# group: math
+# condition: 'auto'
+# --
+\\sigma
+#+end_src
+*** Sigma
+#+begin_src yasnippet :tangle snippets/latex-mode/1027.yasnippet
+# -*- mode: snippet -*-
+# name: Sigma
+# key: @S
+# group: math
+# condition: 'auto'
+# --
+\\Sigma
+#+end_src
+*** theta
+#+begin_src yasnippet :tangle snippets/latex-mode/1016.yasnippet
+# -*- mode: snippet -*-
+# name: theta
+# key: @t
+# group: math
+# condition: 'auto'
+# --
+\\theta
+#+end_src
+*** Theta
+#+begin_src yasnippet :tangle snippets/latex-mode/1017.yasnippet
+# -*- mode: snippet -*-
+# name: Theta
+# key: @T
+# group: math
+# condition: 'auto'
+# --
+\\Theta
+#+end_src
+*** varepsilon
+#+begin_src yasnippet :tangle snippets/latex-mode/1012.yasnippet
+# -*- mode: snippet -*-
+# name: varepsilon
+# key: :e
+# group: math
+# condition: 'auto'
+# --
+\\varepsilon
+#+end_src
+*** Varepsilon
+#+begin_src yasnippet :tangle snippets/latex-mode/1013.yasnippet
+# -*- mode: snippet -*-
+# name: Varepsilon
+# key: :E
+# group: math
+# condition: 'auto'
+# --
+\\varepsilon
+#+end_src
+*** zeta
+#+begin_src yasnippet :tangle snippets/latex-mode/1014.yasnippet
+# -*- mode: snippet -*-
+# name: zeta
+# key: @z
+# group: math
+# condition: 'auto'
+# --
+\\zeta
+#+end_src
+*** Zeta
+#+begin_src yasnippet :tangle snippets/latex-mode/1015.yasnippet
+# -*- mode: snippet -*-
+# name: Zeta
+# key: @Z
+# group: math
+# condition: 'auto'
+# --
+\\zeta
+#+end_src
+** Calculus
+*** dot
+#+begin_src yasnippet :tangle snippets/latex-mode/2000.yasnippet
+# -*- mode: snippet -*-
+# name: dot
+# key: dot
+# condition: (and (texmathp) 'auto)
+# expand-env: ((argument (quote t)))
+# group: math
+# --
+`(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\dot{`(if argument (current-kill 0))`}$0
+#+end_src
+*** ddot
+#+begin_src yasnippet :tangle snippets/latex-mode/2001.yasnippet
+# -*- mode: snippet -*-
+# name: dot
+# key: ddot
+# condition: (and (texmathp) 'auto)
+# expand-env: ((argument (quote t)))
+# group: math
+# --
+`(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\ddot{`(if argument (current-kill 0))`}$0
+#+end_src
+*** d-by-dt
+#+begin_src yasnippet :tangle snippets/latex-mode/2002.yasnippet
+# -*- mode: snippet -*-
+# name: d-by-dt
+# key: ddt
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\frac{\\mathrm{d} $1}{\\mathrm{d} ${2:t}}$0
+#+end_src
+
+*** definite integral
+#+begin_src yasnippet :tangle snippets/latex-mode/2003.yasnippet
+# -*- mode: snippet -*-
+# name: definite integral
+# key: dint
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\int_{${1:-\\infty}}^{${2:\\infty}}$0
+#+end_src
+
+*** lim
+#+begin_src yasnippet :tangle snippets/latex-mode/2004.yasnippet
+# -*- mode: snippet -*-
+# contributor: François Garillot <francois@garillot.net>
+# key: limit
+# group: math
+# name: \lim_{n}
+# --
+\lim_{$1}$0
+#+end_src
+
+*** limit
+#+begin_src yasnippet :tangle snippets/latex-mode/2005.yasnippet
+# -*- mode: snippet -*-
+# name: limit
+# key: lim
+# conditon: (texmathp)
+# group: math
+# --
+\\lim_{${1:n} \\to ${2:\\infty}} $0
+#+end_src
+
+*** limsup
+#+begin_src yasnippet :tangle snippets/latex-mode/2006.yasnippet
+# -*- mode: snippet -*-
+# name: limsup
+# key: limsup
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\limsup_{${1:n} \\to ${2:\\infty}} $0
+#+end_src
+*** partial derivative
+#+begin_src yasnippet :tangle snippets/latex-mode/2007.yasnippet
+# -*- mode: snippet -*-
+# name: partial derivative
+# key: part
+# condition: (texmathp)
+# group: math
+# --
+\\frac{\\partial $1}{\\partial ${2:x}} $0
+#+end_src
+
+*** int
+#+begin_src yasnippet :tangle snippets/latex-mode/2008.yasnippet
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: int
+# group: math
+# condition: (and (texmathp) 'auto)
+# name: Indefinite integral (all)
+# --
+\\${1:$$(yas/choose-value '("int" "oint" "iint" "iiint" "iiiint" "idotsint"))}$0
+#+end_src
+
+** Functions + Operations
+*** ln
+#+begin_src yasnippet :tangle snippets/latex-mode/3000.yasnippet
+# -*- mode: snippet -*-
+# name: ln
+# key: ln
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\ln
+#+end_src
+
+*** log
+#+begin_src yasnippet :tangle snippets/latex-mode/3001.yasnippet
+# -*- mode: snippet -*-
+# name: log
+# key: log
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\log
+#+end_src
+
+*** ceiling function
+#+begin_src yasnippet :tangle snippets/latex-mode/3002.yasnippet
+# -*- mode: snippet -*-
+# name: ceiling function
+# key: ceil
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\left\\lceil $1 \\right\\rceil $0
+#+end_src
+
+*** complex conjugate
+#+begin_src yasnippet :tangle snippets/latex-mode/3003.yasnippet
+# -*- mode: snippet -*-
+# name: complex conjugate
+# key: conj
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(delete-backward-char 1)`^{\\star}$0
+#+end_src
+
+*** exp
+#+begin_src yasnippet :tangle snippets/latex-mode/3004.yasnippet
+# -*- mode: snippet -*-
+# name: exp
+# key: ee
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+e^{$1}
+#+end_src
+
+*** cdot
+#+begin_src yasnippet :tangle snippets/latex-mode/3005.yasnippet
+# -*- mode: snippet -*-
+# name: cdot
+# key: **
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\cdot
+#+end_src
+
+*** cube
+#+begin_src yasnippet :tangle snippets/latex-mode/3006.yasnippet
+# -*- mode: snippet -*-
+# name: ^3
+# key: cb
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(delete-backward-char 1)`^3$0
+#+end_src
+
+*** sum
+#+begin_src yasnippet :tangle snippets/latex-mode/3007.yasnippet
+# -*- mode: snippet -*-
+# contributor: song qiang <tsiangsung@gmail.com>
+# key: sum
+# group: math
+# name: \sum_{n}^{}
+# --
+\sum_{$1}^{$2}$0
+#+end_src
+
+*** norm
+#+begin_src yasnippet :tangle snippets/latex-mode/3008.yasnippet
+# -*- mode: snippet -*-
+# name: norm
+# key: norm
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\left\|$1\right\|$0
+#+end_src
+
+*** oplus
+#+begin_src yasnippet :tangle snippets/latex-mode/3009.yasnippet
+# key: o+
+# name: oplus
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\oplus
+#+end_src
+
+*** otimes
+#+begin_src yasnippet :tangle snippets/latex-mode/3010.yasnippet
+# -*- mode: snippet -*-
+# name: otimes
+# key: ox
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\otimes
+#+end_src
+
+*** times
+#+begin_src yasnippet :tangle snippets/latex-mode/3011.yasnippet
+# -*- mode: snippet -*-
+# name: times
+# key: xx
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\times
+#+end_src
+
+*** power
+#+begin_src yasnippet :tangle snippets/latex-mode/3012.yasnippet
+# -*- mode: snippet -*-
+# name: To the power
+# key: td
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(backward-delete-char 1)`^{$1}
+#+end_src
+
+*** floor function
+#+begin_src yasnippet :tangle snippets/latex-mode/3013.yasnippet
+# -*- mode: snippet -*-
+# name: floor function
+# key: floor
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\left\\lfloor $1 \\right\\rfloor $0
+#+end_src
+
+*** inverse
+#+begin_src yasnippet :tangle snippets/latex-mode/3014.yasnippet
+# -*- mode: snippet -*-
+# name: inverse
+# key: inv
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(delete-backward-char 1)`^{-1}
+#+end_src
+*** prod
+#+begin_src yasnippet :tangle snippets/latex-mode/3015.yasnippet
+# -*- mode: snippet -*-
+# contributor: François Garillot <francois@garillot.net>
+# key: prod
+# group: math
+# name: \prod_{n}^{}
+# --
+\prod_{$1}^{$2}$0
+
+#+end_src
+
+** Lin Alg
+*** bmatrix (2 x 2)
+#+begin_src yasnippet :tangle snippets/latex-mode/4000.yasnippet
+# key: mat2
+# name: bmatrix (2 x 2)
+# group: math
+# --
+\\begin{bmatrix}
+${1:A} & ${2:$1} \\\\
+${3:$1} & ${4:$1}
+ \\end{bmatrix}
+#+end_src
+
+*** bmatrix (3 x 3)
+#+begin_src yasnippet :tangle snippets/latex-mode/4001.yasnippet
+# key: mat3
+# name: bmatrix (3 x 3)
+# group: math
+# --
+\\begin{bmatrix}
+${1:A} & ${2:$1} & ${3:$1} \\\\
+${4:$1} & ${5:$1} & ${6:$1} \\\\
+${7:$1} & ${8:$1} & ${9:$1}
+\\end{bmatrix}
+#+end_src
+*** column vector
+#+begin_src yasnippet :tangle snippets/latex-mode/4002.yasnippet
+# -*- mode: snippet -*-
+# name: column vector
+# key: cvec
+# condition: 'auto
+# group: math
+# --
+\\begin{pmatrix} ${1:x}_{${2:1}}\\\\ ${3:\\vdots}\\\\ $1_{${4:n}} \\end{pmatrix}
+#+end_src
+
+*** row vector
+#+begin_src yasnippet :tangle snippets/latex-mode/4003.yasnippet
+# -*- mode: snippet -*-
+# name: row vector
+# key: rvec
+# condition: 'auto
+# group: math
+# --
+\\begin{pmatrix} ${1:x}_{${2:1}} & ${3:\\dots} & $1_{${4:n}} \\end{pmatrix}
+#+end_src
+
+*** 2-vector
+#+begin_src yasnippet :tangle snippets/latex-mode/4004.yasnippet
+# key: vec2
+# name: 2-vector
+# group: math
+# --
+\\begin{bmatrix} ${1:x}_{${2:1}} \\\\ ${3:$1}_{${4:2}} \\end{bmatrix}
+#+end_src
+
+*** adjoint
+#+begin_src yasnippet :tangle snippets/latex-mode/4005.yasnippet
+# -*- mode: snippet -*-
+# name: adjoint
+# key: adj
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+`(delete-backward-char 1)`^{\\dagger}$0
+#+end_src
+*** matrix
+#+begin_src yasnippet :tangle snippets/latex-mode/4006.yasnippet
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: mat
+# group: math
+# name: \begin{matrix} ... \end{}
+# --
+\begin{${1:$$(yas/choose-value '("pmatrix" "bmatrix" "Bmatrix" "vmatrix" "Vmatrix" "smallmatrix"))}} $0 \end{$1}
+#+end_src
+
+*** bmatrix
+#+begin_src yasnippet :tangle snippets/latex-mode/4007.yasnippet
+# -*- mode: snippet -*-
+# key: bmat
+# group: math
+# name: \begin{bmatrix} ... \end{}
+# --
+\begin{bmatrix}} $0 \end{bmatrix}
+#+end_src
+*** pmatrix
+#+begin_src yasnippet :tangle snippets/latex-mode/4008.yasnippet
+# -*- mode: snippet -*-
+# key: pmat
+# group: math
+# name: \begin{pmatrix} ... \end{}
+# --
+\begin{pmatrix}} $0 \end{pmatrix}
+#+end_src
+
+*** vmatrix
+#+begin_src yasnippet :tangle snippets/latex-mode/4009.yasnippet
+# -*- mode: snippet -*-
+# key: vmat
+# group: math
+# name: \begin{vmatrix} ... \end{}
+# --
+\begin{vmatrix}} $0 \end{vmatrix}
+#+end_src
+** Logic + Set Theory
+*** equiv
+#+begin_src yasnippet :tangle snippets/latex-mode/5000.yasnippet
+# -*- mode: snippet -*-
+# name: equiv
+# key: eqv
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\equiv$0
+#+end_src
+
+*** Exists
+#+begin_src yasnippet :tangle snippets/latex-mode/5001.yasnippet
+# -*- mode: snippet -*-
+# name: Exists
+# key: EE
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\exists
+#+end_src
+
+*** forall
+#+begin_src yasnippet :tangle snippets/latex-mode/5002.yasnippet
+# key: fal
+# name: forall
+# condition: (and (texmathp) (quote auto))
+# group: math
+# --
+\\forall$0
+#+end_src
+
+*** greater greater
+#+begin_src yasnippet :tangle snippets/latex-mode/5003.yasnippet
+# -*- mode: snippet -*-
+# name: greater greater
+# key: >>
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\gg
+#+end_src
+
+*** greater or equal
+#+begin_src yasnippet :tangle snippets/latex-mode/5004.yasnippet
+# -*- mode: snippet -*-
+# name: greater or equal
+# key: geq
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\ge
+#+end_src
+
+*** if and only if
+#+begin_src yasnippet :tangle snippets/latex-mode/5005.yasnippet
+# key: iff
+# name: if and only if
+# condition: (and (texmathp) (quote auto))
+# group: math
+# --
+\iff
+#+end_src
+
+*** implied by
+#+begin_src yasnippet :tangle snippets/latex-mode/5006.yasnippet
+# -*- mode: snippet -*-
+# name: implied by
+# key: <=
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\impliedby $0
+#+end_src
+
+*** implies
+#+begin_src yasnippet :tangle snippets/latex-mode/5007.yasnippet
+# key: =>
+# name: implies
+# condition: (and (texmathp) (quote auto))
+# group: math
+# --
+\implies$0
+#+end_src
+
+*** in
+#+begin_src yasnippet :tangle snippets/latex-mode/5008.yasnippet
+# -*- mode: snippet -*-
+# name: in
+# key: inn
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\in
+#+end_src
+*** to
+#+begin_src yasnippet :tangle snippets/latex-mode/5009.yasnippet
+# -*- mode: snippet -*-
+# name: to
+# key: ->
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\to
+#+end_src
+*** to
+#+begin_src yasnippet :tangle snippets/latex-mode/5010.yasnippet
+# -*- mode: snippet -*-
+# name: to
+# key: to
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\to
+#+end_src
+
+*** not equal
+#+begin_src yasnippet :tangle snippets/latex-mode/5011.yasnippet
+# -*- mode: snippet -*-
+# name: not equal
+# key: neq
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\ne
+#+end_src
+
+*** not in
+#+begin_src yasnippet :tangle snippets/latex-mode/5012.yasnippet
+# -*- mode: snippet -*-
+# name: not in
+# key: notin
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\not\\in
+#+end_src
+
+*** notexists
+#+begin_src yasnippet :tangle snippets/latex-mode/5013.yasnippet
+# key: nEE
+# name: notexists
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\nexists
+#+end_src
+
+*** therefore
+#+begin_src yasnippet :tangle snippets/latex-mode/5014.yasnippet
+# -*- mode: snippet -*-
+# name: therefore
+# key: thus
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\therefore
+#+end_src
+
+*** set
+#+begin_src yasnippet :tangle snippets/latex-mode/5015.yasnippet
+# -*- mode: snippet -*-
+# name: set
+# key: set
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\left\\{ $1 \\right\\}$0
+#+end_src
+
+*** similar
+#+begin_src yasnippet :tangle snippets/latex-mode/5016.yasnippet
+# -*- mode: snippet -*-
+# name: similar
+# key: ~~
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\sim
+#+end_src
+
+*** subset
+#+begin_src yasnippet :tangle snippets/latex-mode/5017.yasnippet
+# -*- mode: snippet -*-
+# name: subset
+# key: cc
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\subset
+#+end_src
+
+*** leftrightarrow
+#+begin_src yasnippet :tangle snippets/latex-mode/5018.yasnippet
+# -*- mode: snippet -*-
+# name: leftrightarrow
+# key: <->
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\leftrightarrow
+#+end_src
+
+*** less or equal
+#+begin_src yasnippet :tangle snippets/latex-mode/5019.yasnippet
+# -*- mode: snippet -*-
+# name: less or equal
+# key: leq
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\le$0
+#+end_src
+
+*** lesser lesser
+#+begin_src yasnippet :tangle snippets/latex-mode/5020.yasnippet
+# -*- mode: snippet -*-
+# name: lesser lesser
+# key: <<
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\ll
+#+end_src
+
+** Physics
+** Trig
+*** arccos
+#+begin_src yasnippet :tangle snippets/latex-mode/7000.yasnippet
+# -*- mode: snippet -*-
+# name: arccos
+# key: arccos
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arccos
+#+end_src
+
+*** arccot
+#+begin_src yasnippet :tangle snippets/latex-mode/7001.yasnippet
+# -*- mode: snippet -*-
+# name: arccot
+# key: arccot
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arccot
+#+end_src
+
+*** arccsc
+#+begin_src yasnippet :tangle snippets/latex-mode/7002.yasnippet
+# -*- mode: snippet -*-
+# name: arccsc
+# key: arccsc
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arccsc
+#+end_src
+
+*** arcsec
+#+begin_src yasnippet :tangle snippets/latex-mode/7003.yasnippet
+# -*- mode: snippet -*-
+# name: arcsec
+# key: arcsec
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arcsec
+#+end_src
+
+*** arcsin
+#+begin_src yasnippet :tangle snippets/latex-mode/7004.yasnippet
+# -*- mode: snippet -*-
+# name: arcsin
+# key: arcsin
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arcsin
+#+end_src
+
+*** arctan
+#+begin_src yasnippet :tangle snippets/latex-mode/7005.yasnippet
+# -*- mode: snippet -*-
+# name: arctan
+# key: arctan
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\arctan
+#+end_src
+*** cos
+#+begin_src yasnippet :tangle snippets/latex-mode/7006.yasnippet
+# -*- mode: snippet -*-
+# name: cos
+# key: cos
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\cos
+#+end_src
+
+*** cot
+#+begin_src yasnippet :tangle snippets/latex-mode/7007.yasnippet
+# -*- mode: snippet -*-
+# name: cot
+# key: cot
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\cot
+#+end_src
+
+*** csc
+#+begin_src yasnippet :tangle snippets/latex-mode/7008.yasnippet
+# -*- mode: snippet -*-
+# name: csc
+# key: csc
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\csc
+#+end_src
+
+*** sec
+#+begin_src yasnippet :tangle snippets/latex-mode/7009.yasnippet
+# -*- mode: snippet -*-
+# name: sec
+# key: sec
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\sec
+#+end_src
+
+*** sin
+#+begin_src yasnippet :tangle snippets/latex-mode/7010.yasnippet
+# -*- mode: snippet -*-
+# name: sin
+# key: sin
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\sin
+#+end_src
+*** tan
+#+begin_src yasnippet :tangle snippets/latex-mode/7011.yasnippet
+# -*- mode: snippet -*-
+# name: tan
+# key: tan
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\tan
+#+end_src
+
+** Misc. Symbols
+*** case
+#+begin_src yasnippet :tangle snippets/latex-mode/8000.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: case
+# group: math
+# name: \begin{cases} ... \end{cases}
+# --
+\begin{cases}
+$0 \\\\
+\end{cases}
+
+#+end_src
+
+*** cases
+#+begin_src yasnippet :tangle snippets/latex-mode/8001.yasnippet
+# -*- mode: snippet -*-
+# name: cases
+# key: case
+# condition: (texmathp)
+# group: math
+# --
+\\begin{cases}
+  $1
+\\end{cases}$0
+#+end_src
+
+*** dots
+#+begin_src yasnippet :tangle snippets/latex-mode/8002.yasnippet
+# -*- mode: snippet -*-
+# name: dots
+# key: ...
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\dots$0
+#+end_src
+*** ddots
+#+begin_src yasnippet :tangle snippets/latex-mode/8003.yasnippet
+# -*- mode: snippet -*-
+# name: ddots
+# key: ;/
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\ddots
+#+end_src
+*** big
+#+begin_src yasnippet :tangle snippets/latex-mode/8004.yasnippet
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: big
+# group: math
+# name: \bigl( ... \bigr)
+# --
+\\${1:$$(yas/choose-value '("big" "Big" "bigg" "Bigg"))}l( $0  \\$1r)
+#+end_src
+
+*** bigop
+#+begin_src yasnippet :tangle snippets/latex-mode/8005.yasnippet
+# -*- mode: snippet -*-
+# contributor: François Garillot <francois@garillot.net>
+# key: bigop
+# group: math
+# name: \bigop_{n}^{}
+# --
+\\big${1:$$(yas/choose-value '("oplus" "otimes" "odot" "cup" "cap" "uplus" "sqcup" "vee" "wedge"))}_{$2}^{$3}$0
+#+end_src
+
+*** frac
+#+begin_src yasnippet :tangle snippets/latex-mode/8006.yasnippet
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: frac
+# group: math
+# name: \frac{numerator}{denominator}
+# --
+\frac{${1:numerator}}{${2:denominator}}$0
+#+end_src
+
+*** Fraction auto
+#+begin_src yasnippet :tangle snippets/latex-mode/8007.yasnippet
+# key: //
+# name: Fraction auto
+# expand-env: ((numerator (quote t)))
+# condition: (and (texmathp) (quote auto))
+# group: math
+# --
+`(condition-case nil (save-excursion (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq numerator 'nil)))`\\frac{`(if numerator (current-kill 0))`}{$1}$0
+#+end_src
+
+*** Fraction slash
+#+begin_src yasnippet :tangle snippets/latex-mode/8008.yasnippet
+# -*- mode: snippet -*-
+# name: Fraction slash
+# key: /
+# expand-env: ((numerator 't))
+# condition: (texmathp)
+# group: math
+# --
+`(condition-case nil (save-excursion (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq numerator 'nil)))`\\frac{`(if numerator (yank))`}{$1}$0
+#+end_src
+
+*** bar
+#+begin_src yasnippet :tangle snippets/latex-mode/8009.yasnippet
+# -*- mode: snippet -*-
+# name: bar
+# key: bar
+# condition: (and (texmathp) 'auto)
+# expand-env: ((argument (quote t)))
+# group: math
+# --
+`(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\bar{`(if argument (current-kill 0))`}$0
+#+end_src
+
+*** hat
+#+begin_src yasnippet :tangle snippets/latex-mode/8010.yasnippet
+# -*- mode: snippet -*-
+# name: hat
+# key: hat
+# expand-env: ((argument (quote t)))
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\hat{`(if argument (current-kill 0))`}$0
+#+end_src
+*** perp
+#+begin_src yasnippet :tangle snippets/latex-mode/8011.yasnippet
+# -*- mode: snippet -*-
+# name: perp
+# key: perp
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\perp
+#+end_src
+
+*** quad
+#+begin_src yasnippet :tangle snippets/latex-mode/8012.yasnippet
+# key: qq
+# name: quad
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\quad
+#+end_src
+
+*** square
+#+begin_src yasnippet :tangle snippets/latex-mode/8013.yasnippet
+# -*- mode: snippet -*-
+# name: ^2
+# key: sr
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(delete-backward-char 1)`^2$0
+#+end_src
+
+*** stackrel
+#+begin_src yasnippet :tangle snippets/latex-mode/8014.yasnippet
+# -*- mode: snippet -*-
+# name: stackrel
+# key: stackrel
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\stackrel{$1}{$0}
+#+end_src
+*** star
+#+begin_src yasnippet :tangle snippets/latex-mode/8015.yasnippet
+# -*- mode: snippet -*-
+# name: star
+# key: star
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\star
+#+end_src
+*** vdots
+#+begin_src yasnippet :tangle snippets/latex-mode/8016.yasnippet
+# -*- mode: snippet -*-
+# name: vdots
+# key: ;.
+# group: math
+# condition: 'auto
+# --
+\\vdots
+#+end_src
+*** lr Paren
+#+begin_src yasnippet :tangle snippets/latex-mode/8017.yasnippet
+# -*- mode: snippet -*-
+# name: vdots
+# key: lr(
+# group: math
+# condition: 'auto
+# --
+\left( $1 \right)
+#+end_src
+*** lr Sq Brace
+#+begin_src yasnippet :tangle snippets/latex-mode/8018.yasnippet
+# -*- mode: snippet -*-
+# name: vdots
+# key: lr[
+# group: math
+# condition: 'auto
+# --
+\left[ $1 \right]
+#+end_src
+
+*** lr Brace
+#+begin_src yasnippet :tangle snippets/latex-mode/8019.yasnippet
+# -*- mode: snippet -*-
+# name: vdots
+# key: lr{
+# group: math
+# condition: 'auto
+# --
+\left{ $1 \right}
+#+end_src
+** Misc
+*** Inline Math
+#+begin_src yasnippet :tangle snippets/latex-mode/9000.yasnippet
+# key: mk
+# name: Inline Math
+# condition: (and (not (texmathp)) (quote auto))
+# group: math
+# --
+`(if (eq major-mode 'org-mode) "\\( " "$")`$0`(if (eq major-mode 'org-mode) " \\)" "$")`
+#+end_src
+
+*** Display Math
+#+begin_src yasnippet :tangle snippets/latex-mode/9001.yasnippet
+# key: dm
+# name: Display Math
+# condition: (and (not (texmathp)) (quote auto))
+# group: math
+# --
+\[
+`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0\]
+
+#+end_src
+
+*** newline
+#+begin_src yasnippet :tangle snippets/latex-mode/9002.yasnippet
+# -*- mode: snippet -*-
+# name: newline
+# key: ;;
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\\\
+`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0
+#+end_src
+
+*** binom
+#+begin_src yasnippet :tangle snippets/latex-mode/9003.yasnippet
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: binom
+# group: math
+# name: \binom{n}{k}
+# --
+\binom{${1:n}}{${2:k}}
+#+end_src
+*** column-separator
+#+begin_src yasnippet :tangle snippets/latex-mode/9004.yasnippet
+# -*- mode: snippet -*-
+# name: column-separator
+# key: ,,
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+& $0
+#+end_src
+
+*** Diagonal bmatrix
+#+begin_src yasnippet :tangle snippets/latex-mode/9005.yasnippet
+# -*- mode: snippet -*-
+# name: Diagonal bmatrix
+# key: diag3
+# group: math
+# --
+\\begin{bmatrix}
+${1:\\ddots}  &  & \\\\
+ & ${2:\\ddots}  & \\\\
+ &  & ${3:\\ddots}
+ \\end{bmatrix}
+#+end_src
+
+* Skeleton
+** article
+#+begin_src yasnippet :tangle snippets/latex-mode/0.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# contributor : Song Qiang <tsiangsung@gmail.com>
+# key: article
+# group: skeleton
+# name: \documentclass{article} ...
+# --
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,amsmath,amssymb,subfigure,url,xspace}
+\newcommand{\eg}{e.g.,\xspace}
+\newcommand{\bigeg}{E.g.,\xspace}
+\newcommand{\etal}{\textit{et~al.\xspace}}
+\newcommand{\etc}{etc.\@\xspace}
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\bigie}{I.e.,\xspace}
+
+\title{${1:title}}
+\author{${2:Author Name}}
+
+\begin{document}
+\maketitle
+
+
+\bibliographystyle{${3:plain}}
+\bibliography{${4:literature.bib}}
+
+\end{document}
+
+#+end_src
+
+** Basic template
+#+begin_src yasnippet :tangle snippets/latex-mode/1.yasnippet
+# key: template
+# name: Basic template
+# group: skeleton
+# --
+\input{`my-preamble-file`}
+% \usepackage{hyperref}
+% \hypersetup{
+%     colorlinks,
+%     citecolor=cyan,
+%     filecolor=black,
+%     linkcolor=blue,
+%     urlcolor=black}
+
+\author{`user-full-name`\vspace{-2ex}}
+\title{\vspace{-3.0cm}${1:Title$(capitalize yas-text)}\vspace{-2ex}}
+${2:\date{${3:\today}}}
+
+\begin{document}
+
+\begingroup
+\let\center\flushleft
+\let\endcenter\endflushleft
+\maketitle
+\endgroup
+
+% \tableofcontents
+
+$0
+\end{document}
+#+end_src
+
+** basict
+#+begin_src yasnippet :tangle snippets/latex-mode/2.yasnippet
+# key: basict
+# group: skeleton
+# name: \documentclass{article} ...
+# --
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,amsmath,amssymb,subfigure,url,xspace}
+
+\title{${1:title}}
+\author{${2:Author Name}}
+
+\begin{document}
+\maketitle
+
+$0
+
+\end{document}
+
+#+end_src
+** beamer
+#+begin_src yasnippet :tangle snippets/latex-mode/3.yasnippet
+# -*- mode: snippet -*-
+# contributor: Claudio Marforio <marforio@gmail.com>
+# key: beamer
+# group: skeleton
+# name: \documentclass{beamer} ...
+# --
+\documentclass[xcolor=dvipsnames]{beamer}
+
+\usepackage{graphicx,subfigure,url}
+
+% example themes
+\usetheme{Frankfurt}
+\usecolortheme{seahorse}
+\usecolortheme{rose}
+
+% put page numbers
+% \setbeamertemplate{footline}[frame number]{}
+% remove navigation symbols
+% \setbeamertemplate{navigation symbols}{}
+
+\title{${1:Presentation Title}}
+\author{${2:Author Name}}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+\begin{frame}[plain]{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{${3:Example Section}}
+\begin{frame}{${4:Frame Title}}
+
+\end{frame}
+
+\end{document}
+
+#+end_src
+
+** letter
+#+begin_src yasnippet :tangle snippets/latex-mode/4.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# contributor : Song Qiang <tsiangsung@gmail.com>
+# key: letter
+# group: skeleton
+# name: \documentclass{letter} ...
+# --
+\documentclass{letter}
+\signature{${1:Foo Bar}}
+\address{${2:Address line 1 \\\\
+Address line 2 \\\\
+Address line 3}}
+\begin{document}
+
+\begin{letter}
+{${3:Recipient's address}}
+
+\opening{Dear ${4:Sir}:}
+
+$0
+
+\closing{Yours Sincerely,}
+
+\end{letter}
+
+\end{document}
+
+
+#+end_src
+* Environments
+** align
+#+begin_src yasnippet :tangle snippets/latex-mode/100.yasnippet
+# -*- mode: snippet -*-
+# contributor : Rasmus Borgsmidt <rasmus@borgsmidt.dk>
+# key : align
+# group: environments
+# name : \begin{align} ... \end{align}
+# --
+\begin{align}
+  $0
+\end{align}
+#+end_src
+
+** alignstar
+#+begin_src yasnippet :tangle snippets/latex-mode/101.yasnippet
+# -*- mode: snippet -*-
+# contributor : Rasmus Borgsmidt <rasmus@borgsmidt.dk>
+# key : align*
+# group: environments
+# name : \begin{align*} ... \end{align*}
+# --
+\begin{align*}
+  $0
+\end{align*}
+#+end_src
+
+** array
+#+begin_src yasnippet :tangle snippets/latex-mode/102.yasnippet
+# -*- mode: snippet -*-
+# contributor : Peter Urbak <peter@dragonwasrobot.com>
+# key : arr
+# group: environments
+# name : \begin{array} ... \end{array}
+# --
+\begin{array}{$1}
+  $0
+\end{array}
+
+#+end_src
+** begin
+#+begin_src yasnippet :tangle snippets/latex-mode/103.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# contributor : Bjorn Reese <breese@users.sourceforge.net>
+# key: begin
+# group: environments
+# name: \begin{environment} ... \end{environment}
+# --
+\begin{${1:$$(yas/choose-value (mapcar 'car (LaTeX-environment-list)))}}
+$0
+\end{$1}
+#+end_src
+** block
+#+begin_src yasnippet :tangle snippets/latex-mode/104.yasnippet
+# -*- mode: snippet -*-
+# contributor: Claudio Marforio <marforio@gmail.com>
+# key: block
+# group: environments
+# name : \begin{*block} ... \end{*block}
+# --
+\begin{${1:$$(yas/choose-value '("block" "exampleblock" "alertblock"))}}{${2:Block Title}}
+
+\end{$1}
+
+#+end_src
+
+** desc
+#+begin_src yasnippet :tangle snippets/latex-mode/105.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : desc
+# group: environments
+# name : \begin{description} ... \end{description}
+# --
+\begin{description}
+\item[${1:label}] $0
+\end{description}
+
+#+end_src
+** enum
+#+begin_src yasnippet :tangle snippets/latex-mode/106.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: enum
+# group: environments
+# name : \begin{enumerate} ... \end{enumerate}
+# --
+\begin{enumerate}
+\item $0
+\end{enumerate}
+
+#+end_src
+
+** eq
+#+begin_src yasnippet :tangle snippets/latex-mode/107.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: eq
+# group: math
+# name: \begin{equation} ... \end{equation}
+# --
+\begin{equation}
+\label{${1:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+\end{equation}
+
+#+end_src
+
+** eqs
+#+begin_src yasnippet :tangle snippets/latex-mode/108.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: eqs
+# group: math
+# name: \begin{align} ... \end{align}
+# --
+\begin{${1:$$(yas/choose-value '("align" "align*" "multline" "gather" "subequations"))}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+\end{$1}
+
+#+end_src
+** fig
+#+begin_src yasnippet :tangle snippets/latex-mode/109.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : fig
+# group: environments
+# name : \begin{figure} ... \end{figure}
+# --
+\begin{figure}[htbp]
+  \centering
+  $0
+  \caption{${1:caption}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{figure}
+
+#+end_src
+
+** frame
+#+begin_src yasnippet :tangle snippets/latex-mode/110.yasnippet
+# -*- mode: snippet -*-
+# contributor: Claudio Marforio <marforio@gmail.com>
+# key: frame
+# group: environments
+# name : \begin{frame} ... \end{frame}
+# --
+\begin{frame}{${1:Frame Title$(capitalize yas-text)}}
+$0
+\end{frame}
+
+#+end_src
+** href
+#+begin_src yasnippet :tangle snippets/latex-mode/111.yasnippet
+# -*- mode: snippet -*-
+# key: href
+# group: environments
+# name: \href{url}{text}
+# --
+\href{${1:url}}{${2:text}}$0
+#+end_src
+
+** it
+#+begin_src yasnippet :tangle snippets/latex-mode/112.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: it
+# group: environments
+# name: \item
+# --
+\item $0
+#+end_src
+
+** itd
+#+begin_src yasnippet :tangle snippets/latex-mode/113.yasnippet
+# -*- mode: snippet -*-
+# contributor: Rasmus Borgsmidt <rasmus@borgsmidt.dk>
+# key: itd
+# group: environments
+# name: \item[] (description)
+# --
+\item[${1:label}] $0
+#+end_src
+
+** item
+#+begin_src yasnippet :tangle snippets/latex-mode/114.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : item
+# group: environments
+# name : \begin{itemize} ... \end{itemize}
+# --
+\begin{itemize}
+\item $0
+\end{itemize}
+
+#+end_src
+** minipage
+#+begin_src yasnippet :tangle snippets/latex-mode/115.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: minipage
+# group: environments
+# name: \begin{minipage}[position][width] ... \end{minipage}
+# --
+\begin{minipage}[${1:htbp}]{${2:1.0}${3:\linewidth}}
+  $0
+\end{minipage}
+#+end_src
+** subfig
+#+begin_src yasnippet :tangle snippets/latex-mode/116.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: subfig
+# group: environments
+# name : \subfigure
+# --
+\subfigure[${1:caption}]{
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+  $0
+}
+
+#+end_src
+** table
+#+begin_src yasnippet :tangle snippets/latex-mode/117.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: table
+# group: environments
+# name : \begin{table} ... \end{table}
+# --
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{${3:format}}
+    $0
+  \end{tabular}
+  \caption{${1:caption}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{table}
+
+#+end_src
+
+** Tikz Plot
+#+begin_src yasnippet :tangle snippets/latex-mode/118.yasnippet
+# -*- mode: snippet -*-
+# name: Tikz Plot
+# key: tikzplot
+# group: environments
+# --
+\begin{figure}[$1]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			xmin= ${2:-10}, xmax= ${3:10},
+			ymin= ${4:-10}, ymax = ${5:10},
+			axis lines = middle,
+		]
+			\addplot[domain=$2:$3, samples=${6:100}]{$7};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{$8}
+	\label{${9:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{figure}
+
+#+end_src
+
+** url
+#+begin_src yasnippet :tangle snippets/latex-mode/119.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: url
+# group: environments
+# name: \url
+# --
+\url{${1:$$(yas/choose-value '("http" "ftp"))}://${2:address}}$0
+#+end_src
+
+** verb
+#+begin_src yasnippet :tangle snippets/latex-mode/120.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# contributor : Bjorn Reese <breese@users.sourceforge.net>
+# contributor : Song Qiang <tsiangsung@gmail.com>
+# key: verb
+# group: environments
+# name: \begin{verbatim} ... \end{verbatim}
+# --
+\begin{verbatim}
+$0
+\end{verbatim}
+
+#+end_src
+
+* Sections
+** abstract
+#+begin_src yasnippet :tangle snippets/latex-mode/200.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : abstract
+# group: sections
+# name : \abstract
+# --
+\begin{abstract}
+$0
+\end{abstract}
+#+end_src
+
+** cha
+#+begin_src yasnippet :tangle snippets/latex-mode/201.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : cha
+# group: sections
+# name : \chapter
+# --
+\chapter{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+#+end_src
+
+** chastar
+#+begin_src yasnippet :tangle snippets/latex-mode/202.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : cha*
+# group: sections
+# name : \chapter*
+# --
+\chapter*{${1:name}}
+$0
+#+end_src
+
+** par
+#+begin_src yasnippet :tangle snippets/latex-mode/203.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: par
+# group: sections
+# name : \paragraph
+# --
+\paragraph{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+#+end_src
+** sec
+#+begin_src yasnippet :tangle snippets/latex-mode/204.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : sec
+# group: sections
+# name : \section
+# --
+\section{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+#+end_src
+
+** secstar
+#+begin_src yasnippet :tangle snippets/latex-mode/205.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : sec*
+# group: sections
+# name : \section*
+# --
+\section*{${1:name}}
+$0
+#+end_src
+
+** ssub
+#+begin_src yasnippet :tangle snippets/latex-mode/206.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: ssub
+# group: sections
+# name : \subsubsection
+# --
+\subsubsection{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+#+end_src
+
+** ssubstar
+#+begin_src yasnippet :tangle snippets/latex-mode/207.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: ssub*
+# group: sections
+# name : \subsubsection*
+# --
+\subsubsection*{${1:name}}
+$0
+#+end_src
+** sub
+#+begin_src yasnippet :tangle snippets/latex-mode/208.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: sub
+# group: sections
+# name : \subsection
+# --
+\subsection{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+$0
+#+end_src
+
+** substar
+#+begin_src yasnippet :tangle snippets/latex-mode/209.yasnippet
+# -*- mode: snippet -*-
+# contributor : mads d. kristensen <madsdk@gmail.com>
+# key: sub*
+# group: sections
+# name : \subsection*
+# --
+\subsection*{${1:name}}
+$0
+#+end_src
+
+* Font
+** bold
+#+begin_src yasnippet :tangle snippets/latex-mode/300.yasnippet
+# -*- mode: snippet -*-
+# key: bf
+# group: font
+# name: {\bf ... }
+# --
+{\bf $1}$0
+#+end_src
+** blackboard
+#+begin_src yasnippet :tangle snippets/latex-mode/301.yasnippet
+# -*- mode: snippet -*-
+# key: bb
+# group: font
+# name: {\bb ... }
+# --
+{\bb $1}$0
+#+end_src
+** calig
+#+begin_src yasnippet :tangle snippets/latex-mode/302.yasnippet
+# -*- mode: snippet -*-
+# key: mcal
+# group: font
+# name: {\mathcal ... }
+# --
+{\mathcal $1}$0
+#+end_src
+** tt
+#+begin_src yasnippet :tangle snippets/latex-mode/303.yasnippet
+# -*- mode: snippet -*-
+# contributor: Rasmus Borgsmidt <rasmus@borgsmidt.dk>
+# key: tt
+# group: font
+# name: {\tt ...}
+# --
+{\tt $1}$0
+#+end_src
+** rm
+#+begin_src yasnippet :tangle snippets/latex-mode/304.yasnippet
+# -*- mode: snippet -*-
+# contributor: Rasmus Borgsmidt <rasmus@borgsmidt.dk>
+# key: tt
+# group: font
+# name: {\tt ...}
+# --
+{\tt $1}$0
+#+end_src
+
+* References
+** cite
+#+begin_src yasnippet :tangle snippets/latex-mode/400.yasnippet
+# -*- mode: snippet -*-
+# contributor : Marcio M. Ribeiro <marcio.mr@gmail.com>
+# key: cite
+# group: references
+# name : \cite
+# --
+`(unless yas-modified-p (call-interactively 'citar-insert-citation))`
+#+end_src
+** label
+#+begin_src yasnippet :tangle snippets/latex-mode/401.yasnippet
+ -*- mode: snippet -*-
+# key: lab
+# group: references
+# name : \label
+# --
+\label{${1:label$(unless yas/modified-p (reftex-label nil 'dont-insert))}}$0
+
+#+end_src
+** ref
+#+begin_src yasnippet :tangle snippets/latex-mode/402.yasnippet
+ -*- mode: snippet -*-
+# key: ref
+# group: references
+# name : \ref
+# --
+`(unless yas/modified-p (consult-reftex-insert-reference nil 'dont-insert))`
+#+end_src
+
+* Code
+** code
+#+begin_src yasnippet :tangle snippets/latex-mode/500.yasnippet
+# -*- mode: snippet -*-
+# name: code
+# key: code
+# --
+\begin{lstlisting}${1:[language=${2:Matlab}]}
+$0
+\end{lstlisting}
+#+end_src
+
+* Graphics
+** Graphics
+#+begin_src yasnippet :tangle snippets/latex-mode/600.yasnippet
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : graphics
+# name : \includegraphics
+# --
+\includegraphics[width=${1:\linewidth}]{${2:file}}
+#+end_src
+** includegraphics
+#+begin_src yasnippet :tangle snippets/latex-mode/601.yasnippet
+# -*- mode: snippet -*-
+# name: includegraphics
+# key: ig
+# key : graphics
+# --
+\includegraphics${1:[$2]}{$0}
+#+end_src
+
+** subfloat
+#+begin_src yasnippet :tangle snippets/latex-mode/602.yasnippet
+# -*- mode: snippet -*-
+# name: subfloat
+# key: subfloat
+# group: graphics
+# --
+\begin{figure}[ht]
+  \centering
+  \subfloat[${6:caption}]{\includegraphics[$3]{figures/${1:path.png}}}${5:~}
+  \subfloat[${7:caption}]{\includegraphics[$4]{figures/${2:path.png}}}
+  \caption{\label{fig:${8:label}} $0}
+\end{figure}
+
+#+end_src
+
+* Misc.
+** bib
+#+begin_src yasnippet :tangle snippets/latex-mode/700.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: bib
+# group: misc
+# name: \bibliography
+# --
+\bibliographystyle{plain}
+\bibliography{$1}$0
+#+end_src
+
+** doc
+#+begin_src yasnippet :tangle snippets/latex-mode/701.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: doc
+# name: \documentclass
+# group: misc
+# --
+\documentclass[$2]{${1:$$(yas/choose-value '("article" "report" "book" "letter"))}}
+
+\begin{document}
+$0
+\end{document}
+#+end_src
+** gls
+#+begin_src yasnippet :tangle snippets/latex-mode/702.yasnippet
+# -*- mode: snippet -*-
+# contributor : Peter Urbak <peter@dragonwasrobot.com>
+# key : newgls
+# group: misc
+# name : \newglossaryentry{...}{...}
+# --
+\newglossaryentry{$1}{name={$1},
+  description={$2.}}
+
+#+end_src
+** listing
+#+begin_src yasnippet :tangle snippets/latex-mode/703.yasnippet
+# -*- mode: snippet -*-
+# name: listing
+# key: lst
+# group: misc
+# --
+\begin{lstlisting}[float,label=lst:${1:label},caption=nextHopInfo: ${2:caption}]
+$0
+\end{lstlisting}
+#+end_src
+** use
+#+begin_src yasnippet :tangle snippets/latex-mode/704.yasnippet
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# key: use
+# group: misc
+# name: \usepackage
+# --
+\usepackage[$2]{$1}$0
+#+end_src
+
+** columns
+#+begin_src yasnippet :tangle snippets/latex-mode/705.yasnippet
+# -*- mode: snippet -*-
+# name: columns
+# key: cols
+# group: misc
+# --
+\begin{columns}
+  \begin{column}{.${1:5}\textwidth}
+  $0
+  \end{column}
+
+  \begin{column}{.${2:5}\textwidth}
+
+  \end{column}
+\end{columns}
+#+end_src
