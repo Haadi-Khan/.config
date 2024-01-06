@@ -1,108 +1,16 @@
-#+title: Config
-#+author: Haadi Khan
-#+PROPERTY: tangle yes
-
-* Table of Contents :toc:
-- [[#packages][Packages]]
-- [[#theme][Theme]]
-  - [[#doom-specific][Doom Specific]]
-  - [[#quality-of-life][Quality of Life]]
-  - [[#ivy][Ivy]]
-- [[#keyboard][Keyboard]]
-  - [[#evil-rebinds][Evil Rebinds]]
-  - [[#config-files][Config Files]]
-  - [[#org][Org]]
-  - [[#buffers][Buffers]]
-- [[#org-1][Org]]
-  - [[#bullets][Bullets]]
-  - [[#fonts][Fonts]]
-  - [[#toc][TOC]]
-  - [[#todo][Todo]]
-  - [[#latex][LaTeX]]
-- [[#code][Code]]
-  - [[#base-lsp-config][Base LSP Config]]
-  - [[#dap-config][DAP Config]]
-  - [[#rust][Rust]]
-  - [[#python][Python]]
-  - [[#cc][C/C++]]
-- [[#latex-1][LaTeX]]
-  - [[#base-latex][Base LaTeX]]
-  - [[#preview][Preview]]
-  - [[#cd-latex][CD LaTeX]]
-  - [[#org-tables][Org Tables]]
-- [[#random][Random]]
-  - [[#typit][Typit]]
-
-* Packages
-Doom splits packages into their own file. Here's all the additional packages I load
-#+begin_src emacs-lisp :tangle packages.el
-;; (package! builtin-package :disable t)
-(package! atom-one-dark-theme)
-(package! org-superstar)
-(package! toc-org)
-(package! org-autolist)
-(package! real-auto-save)
-(package! cdlatex)
-(package! ivy-posframe)
-
-(package! dap-mode)
-
-(package! lsp-pyright)
-(package! ccls)
-(package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
-
-(package! typit)
-#+end_src
-
-* Theme
-** Doom Specific
-Removing title bar and customizing basic doom settings
-#+begin_src emacs-lisp :tangle config.el
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 (load-theme 'atom-one-dark t)
 (setq doom-font (font-spec :family "Recursive Monospace" :size 16 :weight 'regular) doom-variable-pitch-font (font-spec :family "Recursive" :size 16 :weight 'regular))
 (setq doom-symbol-font (font-spec :family "SF Pro" ))
 (setq fancy-splash-image "~/.config/doom/emacs-dash.png")
-#+end_src
 
-** Quality of Life
-#+begin_src emacs-lisp :tangle config.el
 (setq display-line-numbers-type 'visual)
 (setq-default line-spacing 0.12)
 (setq-default tab-width 4) ;; 4 width tabs
 (setq scroll-margin 8)
+(setq highlight-indent-guides-method 'column)
 (setq mode-require-final-newline nil) ;; Removes snippets adding a new line
-#+end_src
 
-Better zooming
-#+begin_src emacs-lisp :tangle config.el
-;; Zooming
-(global-set-key (kbd "s-=") 'text-scale-increase)
-(global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "<s-wheel-up>") 'text-scale-increase)
-(global-set-key (kbd "<s-wheel-down>") 'text-scale-decrease)
-#+end_src
-
-** Ivy
-This moves the ivy completion to the top of the screen like VSCode. The custom function makes it a fixed size
-#+begin_src emacs-lisp :tangle config.el
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
-
-(defun my-ivy-posframe-get-size ()
-"Set the ivy-posframe size according to the current frame."
-(let ((height (or ivy-posframe-height (or ivy-height 10)))
-        (width (min (or ivy-posframe-width 200) (round (* .75 (frame-width))))))
-    (list :height height :width width :min-height height :min-width width)))
-
-(setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
-(ivy-posframe-mode 1)
-#+end_src
-* Keyboard
-Adding some basic keybinds
-** Evil Rebinds
-#+begin_src emacs-lisp :tangle config.el
 (defun haadi/controlu ()
   (evil-scroll-up 0)
   (evil-scroll-line-to-center (line-number-at-pos))
@@ -125,33 +33,12 @@ Adding some basic keybinds
       :n "<C-u>" #'haadi/controlu
       :desc "Goto mark" :n "M" #'evil-goto-mark
       )
-#+end_src
-** Config Files
-I have a lot of config files I'd like to edit, so I made some maps
-#+begin_src emacs-lisp :tangle config.el
-(map! :map general-override-mode-map
-      :desc "Open Emacs Config" :leader "f x e" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-      :desc "Open Firefox Config" :leader "f x f" #'(lambda() (interactive) (find-file "~/Library/Application Support/Firefox/Profiles/kw89h3lk.default-release-1701650262876/chrome/userChrome.css"))
-      :desc "Open skhd Config" :leader "f x s" #'(lambda() (interactive) (find-file "~/.config/skhd/skhdrc"))
-      :desc "Open Yabai Config" :leader "f x y" #'(lambda() (interactive) (find-file "~/.config/yabai/yabairc"))
-      :desc "Open zsh Config" :leader "f x z" #'(lambda() (interactive) (find-file "~/.zshrc"))
-      )
 
-#+end_src
-** Org
-#+begin_src emacs-lisp :tangle config.el
 (map! :map org-mode-map :leader :desc "Babel Tangle" :n "m k" #'org-babel-tangle)
 (map! :map org-mode-map :leader :desc "Babel Tangle File" :n "m K" #'org-babel-tangle-file)
-#+end_src
-** Buffers
-#+begin_src emacs-lisp :tangle config.el
-(map! :leader :desc "List Buffers" :n "b l" #'list-buffers)
-#+end_src
 
-* Org
-** Bullets
-Makes the bullets fun
-#+begin_src emacs-lisp :tangle config.el
+(map! :leader :desc "List Buffers" :n "b l" #'list-buffers)
+
 (setq org-directory "~/org/")
 
 (use-package! org-superstar ; "prettier" bullets
@@ -167,10 +54,7 @@ Makes the bullets fun
           ("DONE" . 9745)
           ("[X]"  . 9745)))
   )
-#+end_src
-** Fonts
-Make the fonts bettter sized
-#+begin_src emacs-lisp :tangle config.el
+
 (use-package! evil-org
   :config
   (custom-set-faces
@@ -185,11 +69,7 @@ Make the fonts bettter sized
   ;; (add-hook 'org-mode-hook 'org-fragtog-mode)
   )
 (setq org-hide-emphasis-markers t) ;; Removes ** around bolded text etc.
-#+end_src
 
-** TOC
-Add automatic table of contents
-#+begin_src emacs-lisp :tangle config.el
 ;; Automatic bulleting
 (use-package toc-org
   :commands toc-org-enable
@@ -199,10 +79,7 @@ Add automatic table of contents
           (lambda () (org-autolist-mode)))
 
 ;;(add-hook 'org-mode org-cdlatex-mode)
-#+end_src
-** Todo
-Settings for Todo
-#+begin_src emacs-lisp :tangle config.el
+
 (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
       '((sequence
          "TODO(t)"
@@ -234,11 +111,7 @@ Settings for Todo
                               ("CANCELLED" . (:foreground "#4b5263" :weight bold))
                               ("PROG" . "#e5c07b")
                               ))
-#+end_src
 
-** LaTeX
-For some reason (even on emacs-plus) LaTeX embeds look like utter garbage on Mac (and Linux too for that matter). So, we do some elisp magic to make them look great! We render them at 3x the size, and then scale them down
-#+begin_src emacs-lisp :tangle config.el
 (setq org-latex-create-formula-image-program 'dvisvgm)
 (plist-put org-format-latex-options :scale 3)
 (defun my/image-scale-advice (image)
@@ -257,70 +130,40 @@ For some reason (even on emacs-plus) LaTeX embeds look like utter garbage on Mac
         (overlays-at beg)))
 (advice-add 'org--make-preview-overlay :after #'my/overlay-scale-advice)
 
-(setq company-global-modes '(not org-mode)) ;; No more laggy company completion
-
-
-(with-eval-after-load 'org
-  (cl-pushnew '(org-element-cache . "Invalid search bound (wrong side of point)")
-              warning-suppress-types
-              :test 'equal))
-(with-eval-after-load 'warnings
-  (cl-pushnew '(yasnippet backquote-change) warning-suppress-types
-              :test 'equal))
-
-
-#+end_src
-* Code
-** Base LSP Config
-Some basic config stuff. I added way too much ram for garbage collection, but I have the RAM so I may as well use it to make sure that my editing isn't slow lol
-#+begin_src emacs-lisp :tangle config.el
-(setq gc-cons-threshold 500000000) ;; 400mb
+(setq gc-cons-threshold 400000000) ;; 400mb
 (setq read-process-output-max (* 8192 1024)) ;; 4mb
 (setq company-minimum-prefix-length 1)
 (setq lsp-idle-delay 0.1)
 (setq lsp-log-io nil) ; if set to true can cause a performance hit
 (setq lsp-completion-show-kind t)
 (setq company-idle-delay 0.01)
-#+end_src
 
-Auto save when working on programming
-#+begin_src emacs-lisp :tangle config.el
 (add-hook 'prog-mode-hook 'real-auto-save-mode)
-(setq real-auto-save-interval 5) ;; in seconds
-#+end_src
+(setq real-auto-save-interval 3) ;; in seconds
 
-** DAP Config
-Config for DAP. Still a WIP
-#+begin_src emacs-lisp :tangle config.el
+;; (use-package dap-mode
+;;   :ensure
+;;   :config
+;;   (dap-mode 1)
 
-;; (use-package dap-mode)
-(use-package dap-mode
-  :ensure
-  :config
-  (dap-mode 1)
+;;   ;; installs .extension/vscode
+;;   (dap-register-debug-template "Rust::CppTools Run Configuration"
+;;                                (list :type "cppdbg"
+;;                                      :request "launch"
+;;                                      :name "Rust::Run"
+;;                                      :MIMode "gdb"
+;;                                      :miDebuggerPath "rust-gdb"
+;;                                      :environment []
+;;                                      :program "${workspaceFolder}/target/debug/REPLACETHIS"
+;;                                      :cwd "${workspaceFolder}"
+;;                                      :console "external"
+;;                                      :dap-compilation "cargo build"
+;;                                      :dap-compilation-dir "${workspaceFolder}")))
 
-  ;; installs .extension/vscode
-  (dap-register-debug-template "Rust::CppTools Run Configuration"
-                               (list :type "cppdbg"
-                                     :request "launch"
-                                     :name "Rust::Run"
-                                     :MIMode "gdb"
-                                     :miDebuggerPath "rust-gdb"
-                                     :environment []
-                                     :program "${workspaceFolder}/target/debug/REPLACETHIS"
-                                     :cwd "${workspaceFolder}"
-                                     :console "external"
-                                     :dap-compilation "cargo build"
-                                     :dap-compilation-dir "${workspaceFolder}")))
+;; (with-eval-after-load 'dap-mode
+;;   (setq dap-default-terminal-kind "integrated") ;; Make sure that terminal programs open a term for I/O in an Emacs buffer
+;;   (dap-auto-configure-mode +1))
 
-(with-eval-after-load 'dap-mode
-  (setq dap-default-terminal-kind "integrated") ;; Make sure that terminal programs open a term for I/O in an Emacs buffer
-  (dap-auto-configure-mode +1))
-#+end_src
-
-** Rust
-Rust!
-#+begin_src emacs-lisp :tangle config.el
 (after! rustic
   (setq rustic-format-on-save nil))
 
@@ -336,27 +179,17 @@ Rust!
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 (map! :leader :desc "Toggle copilot" :n "c g" #'copilot-mode)
-#+end_src
-** Python
-#+begin_src emacs-lisp :tangle config.el
+
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
-#+end_src
-** C/C++
-#+begin_src emacs-lisp :tangle config.el
+
 (require 'ccls)
 (setq ccls-executable "/opt/homebrew/bin/ccls")
-#+end_src
-* LaTeX
-Inspired by Gilles Castel blog post (RIP).
 
-Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of regex snippets).
-
-** Base LaTeX
-#+begin_src emacs-lisp :tangle config.el
+(map! :leader :desc "Toggle TeX Preview" :n "m j" #'org-latex-preview)
 ;; AucTeX settings - almost no changes
 (use-package latex
   :ensure auctex
@@ -382,9 +215,7 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
                                     calc-language latex
                                     calc-prefer-frac t
                                     calc-angle-mode rad))))))))
-#+end_src
-** Preview
-#+begin_src emacs-lisp :tangle config.el
+
 (use-package preview
   :after latex
   :hook ((LaTeX-mode . preview-larger-previews))
@@ -394,9 +225,7 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
           (lambda () (* 1.25
                         (funcall (preview-scale-from-face)))))))
 
-#+end_src
-** CD LaTeX
-#+begin_src emacs-lisp :tangle config.el
+;; CDLatex settings
 (use-package cdlatex
   :ensure t
   :hook (LaTeX-mode . turn-on-cdlatex)
@@ -463,10 +292,6 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
           (cdlatex-tab)
         (yas-next-field-or-maybe-expand)))))
 
-#+end_src
-
-** Org Tables
-#+begin_src emacs-lisp :tangle config.el
 ;; Array/tabular input with org-tables and cdlatex
 (use-package org-table
   :after cdlatex
@@ -549,11 +374,5 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
     (if (bound-and-true-p cdlatex-mode)
         (cdlatex-tab)
       (org-table-next-field))))
-#+end_src
 
-* Random
-** Typit
-Sometimes when I'm bored I open monkeytype to do a typing test. You can do it in emacs!
-#+begin_src emacs-lisp :tangle config.el
-(setq typit-test-time 15)
-#+end_src
+(remove-hook 'org-mode-hook #'company-mode)

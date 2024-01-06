@@ -22,7 +22,7 @@ yabai -m config external_bar               all:40:0     \
                 window_opacity             on           \
                 window_opacity_duration    0.15         \
                 active_window_opacity      1.0          \
-                normal_window_opacity      1.0         \
+                normal_window_opacity      0.95         \
                 window_border_blur         off          \
                 window_border_width        2            \
                 window_border_hidpi        off          \
