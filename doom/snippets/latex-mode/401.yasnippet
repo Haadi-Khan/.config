@@ -1,6 +1,7 @@
- -*- mode: snippet -*-
-# key: lab
-# group: references
-# name : \label
 # --
-\label{${1:label$(unless yas/modified-p (reftex-label nil 'dont-insert))}}$0
+`(unless yas/modified-p (consult-reftex-insert-reference nil 'dont-insert))`
+#+end_src
+
+* Code
+** code
+#+begin_src yasnippet :tangle snippets/latex-

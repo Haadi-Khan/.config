@@ -1,8 +1,29 @@
+#+end_src
+*** exponent
+#+begin_src yasnippet :tangle snippets/latex-mode/8021.yasnippet
 # -*- mode: snippet -*-
-# name: vec
-# key: vec
-# expand-env: ((argument (quote t)))
-# condition: (and (texmathp) 'auto)
+# name: exponent
+# key: rd
 # group: math
+# condition: (and (texmathp) 'auto)
 # --
-`(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\vec{`(if argument (current-kill 0))`}$0
+^{$1}
+#+end_src
+*** subscript
+#+begin_src yasnippet :tangle snippets/latex-mode/8022.yasnippet
+# -*- mode: s
+
+#+end_src
+*** exponent
+#+begin_src yasnippet :tangle snippets/latex-mode/8021.yasnippet
+# -*- mode: snippet -*-
+# name: exponent
+# key: rd
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+^{$1}
+#+end_src
+*** subscript
+#+begin_src yasnippet :tangle snippets/latex-mode/8022.yasnippet
+# -*- mode: s

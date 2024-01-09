@@ -1,9 +1,10 @@
+tangle snippets/latex-mode/105.yasnippet
 # -*- mode: snippet -*-
-# contributor: Claudio Marforio <marforio@gmail.com>
-# key: block
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key : desc
 # group: environments
-# name : \begin{*block} ... \end{*block}
+# name : \begin{description} ... \end{description}
 # --
-\begin{${1:$$(yas/choose-value '("block" "exampleblock" "alertblock"))}}{${2:Block Title}}
-
-\end{$1}
+\begin{description}
+\item[${1:label}] $0
+\end{desc

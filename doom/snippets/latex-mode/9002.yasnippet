@@ -1,8 +1,9 @@
-# -*- mode: snippet -*-
-# name: newline
-# key: ;;
-# condition: (and (texmathp) 'auto)
+ributor: Song Qiang <tsiangsung@gmail.com>
+# key: binom
 # group: math
+# name: \binom{n}{k}
 # --
-\\\\
-`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0
+\binom{${1:n}}{${2:k}}
+#+end_src
+*** column-separator
+#+begin_src yasnippet :tangle snippe

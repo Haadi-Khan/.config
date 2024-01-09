@@ -1,9 +1,9 @@
+angle snippets/latex-mode/204.yasnippet
 # -*- mode: snippet -*-
 # contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key: par
+# key : sec
 # group: sections
-# name : \paragraph
+# name : \section
 # --
-\paragraph{${1:name}}
-\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
-$0
+\section{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (

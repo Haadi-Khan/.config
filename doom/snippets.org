@@ -117,7 +117,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\alpha
+\\alpha 
 #+end_src
 *** Alpha
 #+begin_src yasnippet :tangle snippets/latex-mode/1001.yasnippet
@@ -127,7 +127,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\alpha
+\\alpha 
 #+end_src
 *** beta
 #+begin_src yasnippet :tangle snippets/latex-mode/1002.yasnippet
@@ -137,7 +137,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\beta
+\\beta 
 #+end_src
 *** Beta
 #+begin_src yasnippet :tangle snippets/latex-mode/1003.yasnippet
@@ -147,7 +147,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\beta
+\\beta 
 #+end_src
 *** chi
 #+begin_src yasnippet :tangle snippets/latex-mode/1004.yasnippet
@@ -157,7 +157,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\chi
+\\chi 
 #+end_src
 *** Chi
 #+begin_src yasnippet :tangle snippets/latex-mode/1005.yasnippet
@@ -167,7 +167,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\chi
+\\chi 
 #+end_src
 *** delta
 #+begin_src yasnippet :tangle snippets/latex-mode/1008.yasnippet
@@ -177,7 +177,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\delta
+\\delta 
 #+end_src
 *** Delta
 #+begin_src yasnippet :tangle snippets/latex-mode/1009.yasnippet
@@ -187,7 +187,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Delta
+\\Delta 
 #+end_src
 *** epsilon
 #+begin_src yasnippet :tangle snippets/latex-mode/1010.yasnippet
@@ -197,7 +197,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\epsilon
+\\epsilon 
 #+end_src
 *** Epsilon
 #+begin_src yasnippet :tangle snippets/latex-mode/1011.yasnippet
@@ -207,7 +207,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\epsilon
+\\epsilon 
 #+end_src
 *** gamma
 #+begin_src yasnippet :tangle snippets/latex-mode/1006.yasnippet
@@ -217,7 +217,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\gamma
+\\gamma 
 #+end_src
 *** Gamma
 #+begin_src yasnippet :tangle snippets/latex-mode/1007.yasnippet
@@ -227,7 +227,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Gamma
+\\Gamma 
 #+end_src
 *** kappa
 #+begin_src yasnippet :tangle snippets/latex-mode/1018.yasnippet
@@ -237,7 +237,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\kappa
+\\kappa 
 #+end_src
 *** Kappa
 #+begin_src yasnippet :tangle snippets/latex-mode/1019.yasnippet
@@ -247,7 +247,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\kappa
+\\kappa 
 #+end_src
 *** lambda
 #+begin_src yasnippet :tangle snippets/latex-mode/1020.yasnippet
@@ -257,7 +257,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\lambda
+\\lambda 
 #+end_src
 *** Lambda
 #+begin_src yasnippet :tangle snippets/latex-mode/1021.yasnippet
@@ -267,7 +267,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Lambda
+\\Lambda 
 #+end_src
 *** mu
 #+begin_src yasnippet :tangle snippets/latex-mode/1022.yasnippet
@@ -277,7 +277,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\mu
+\\mu 
 #+end_src
 *** Mu
 #+begin_src yasnippet :tangle snippets/latex-mode/1023.yasnippet
@@ -287,7 +287,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\mu
+\\mu 
 #+end_src
 *** omega
 #+begin_src yasnippet :tangle snippets/latex-mode/1028.yasnippet
@@ -297,7 +297,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\omega
+\\omega 
 #+end_src
 *** Omega
 #+begin_src yasnippet :tangle snippets/latex-mode/1029.yasnippet
@@ -307,7 +307,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Omega
+\\Omega 
 #+end_src
 
 *** rho
@@ -318,7 +318,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\rho
+\\rho 
 #+end_src
 *** Rho
 #+begin_src yasnippet :tangle snippets/latex-mode/1025.yasnippet
@@ -328,7 +328,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\rho
+\\rho 
 #+end_src
 *** sigma
 #+begin_src yasnippet :tangle snippets/latex-mode/1026.yasnippet
@@ -338,7 +338,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\sigma
+\\sigma 
 #+end_src
 *** Sigma
 #+begin_src yasnippet :tangle snippets/latex-mode/1027.yasnippet
@@ -348,7 +348,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Sigma
+\\Sigma 
 #+end_src
 *** theta
 #+begin_src yasnippet :tangle snippets/latex-mode/1016.yasnippet
@@ -358,7 +358,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\theta
+\\theta 
 #+end_src
 *** Theta
 #+begin_src yasnippet :tangle snippets/latex-mode/1017.yasnippet
@@ -368,7 +368,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\Theta
+\\Theta 
 #+end_src
 *** varepsilon
 #+begin_src yasnippet :tangle snippets/latex-mode/1012.yasnippet
@@ -378,7 +378,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\varepsilon
+\\varepsilon 
 #+end_src
 *** Varepsilon
 #+begin_src yasnippet :tangle snippets/latex-mode/1013.yasnippet
@@ -388,7 +388,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\varepsilon
+\\varepsilon 
 #+end_src
 *** zeta
 #+begin_src yasnippet :tangle snippets/latex-mode/1014.yasnippet
@@ -398,7 +398,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\zeta
+\\zeta 
 #+end_src
 *** Zeta
 #+begin_src yasnippet :tangle snippets/latex-mode/1015.yasnippet
@@ -408,7 +408,58 @@ All other sections are numbered from 0-999
 # group: math
 # condition: 'auto'
 # --
-\\zeta
+\\zeta 
+#+end_src
+
+*** phi
+#+begin_src yasnippet :tangle snippets/latex-mode/1016.yasnippet
+# -*- mode: snippet -*-
+# name: phi
+# key: phi
+# group: math
+# condition: 'auto'
+# --
+\\phi 
+#+end_src
+*** Phi
+#+begin_src yasnippet :tangle snippets/latex-mode/1017.yasnippet
+# -*- mode: snippet -*-
+# name: Phi
+# key: Phi
+# group: math
+# condition: 'auto'
+# --
+\\Phi 
+#+end_src
+*** varphi
+#+begin_src yasnippet :tangle snippets/latex-mode/1018.yasnippet
+# -*- mode: snippet -*-
+# name: Varphi
+# key: :phi
+# group: math
+# condition: 'auto'
+# --
+\\varphi 
+#+end_src
+*** pi
+#+begin_src yasnippet :tangle snippets/latex-mode/1019.yasnippet
+# -*- mode: snippet -*-
+# name: pi
+# key: pi
+# group: math
+# condition: 'auto'
+# --
+\\pi 
+#+end_src
+*** Pi
+#+begin_src yasnippet :tangle snippets/latex-mode/1020.yasnippet
+# -*- mode: snippet -*-
+# name: Pi
+# key: Pi
+# group: math
+# condition: 'auto'
+# --
+\\Pi
 #+end_src
 ** Calculus
 *** dot
@@ -458,7 +509,6 @@ All other sections are numbered from 0-999
 *** lim
 #+begin_src yasnippet :tangle snippets/latex-mode/2004.yasnippet
 # -*- mode: snippet -*-
-# contributor: François Garillot <francois@garillot.net>
 # key: limit
 # group: math
 # name: \lim_{n}
@@ -507,7 +557,7 @@ All other sections are numbered from 0-999
 # condition: (and (texmathp) 'auto)
 # name: Indefinite integral (all)
 # --
-\\${1:$$(yas/choose-value '("int" "oint" "iint" "iiint" "iiiint" "idotsint"))}$0
+\\${1:$$(yas/choose-value '("int" "oint" "iint" "oiint" "iiint" "oiiint" "iiiint" "idotsint"))}$0 
 #+end_src
 
 ** Functions + Operations
@@ -519,7 +569,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: (and (texmathp) 'auto)
 # --
-\\ln
+\\ln 
 #+end_src
 
 *** log
@@ -530,7 +580,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: (and (texmathp) 'auto)
 # --
-\\log
+\\log 
 #+end_src
 
 *** ceiling function
@@ -541,7 +591,7 @@ All other sections are numbered from 0-999
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\\left\\lceil $1 \\right\\rceil $0
+\\left\\lceil $1 \\right\\rceil $0 
 #+end_src
 
 *** complex conjugate
@@ -552,7 +602,7 @@ All other sections are numbered from 0-999
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-`(delete-backward-char 1)`^{\\star}$0
+^{\\star}$0 
 #+end_src
 
 *** exp
@@ -563,7 +613,7 @@ All other sections are numbered from 0-999
 # group: math
 # condition: (and (texmathp) 'auto)
 # --
-e^{$1}
+e^{$1} 
 #+end_src
 
 *** cdot
@@ -574,7 +624,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\\cdot
+\\cdot 
 #+end_src
 
 *** cube
@@ -585,7 +635,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-`(delete-backward-char 1)`^3$0
+^3$0 
 #+end_src
 
 *** sum
@@ -596,7 +646,7 @@ e^{$1}
 # group: math
 # name: \sum_{n}^{}
 # --
-\sum_{$1}^{$2}$0
+\sum_{$1}^{$2}$0 
 #+end_src
 
 *** norm
@@ -607,7 +657,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\left\|$1\right\|$0
+\left\|$1\right\|$0 
 #+end_src
 
 *** oplus
@@ -617,7 +667,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\oplus
+\oplus 
 #+end_src
 
 *** otimes
@@ -628,7 +678,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\otimes
+\otimes 
 #+end_src
 
 *** times
@@ -639,18 +689,7 @@ e^{$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\\times
-#+end_src
-
-*** power
-#+begin_src yasnippet :tangle snippets/latex-mode/3012.yasnippet
-# -*- mode: snippet -*-
-# name: To the power
-# key: td
-# condition: (and (texmathp) 'auto)
-# group: math
-# --
-`(backward-delete-char 1)`^{$1}
+\\times 
 #+end_src
 
 *** floor function
@@ -683,7 +722,6 @@ e^{$1}
 # name: \prod_{n}^{}
 # --
 \prod_{$1}^{$2}$0
-
 #+end_src
 
 ** Lin Alg
@@ -755,7 +793,6 @@ ${7:$1} & ${8:$1} & ${9:$1}
 *** matrix
 #+begin_src yasnippet :tangle snippets/latex-mode/4006.yasnippet
 # -*- mode: snippet -*-
-# contributor: Song Qiang <tsiangsung@gmail.com>
 # key: mat
 # group: math
 # name: \begin{matrix} ... \end{}
@@ -869,6 +906,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 
 *** implies
 #+begin_src yasnippet :tangle snippets/latex-mode/5007.yasnippet
+# -*- mode: snippet -*-
 # key: =>
 # name: implies
 # condition: (and (texmathp) (quote auto))
@@ -1016,6 +1054,27 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # --
 \\ll
 #+end_src
+*** Proof Square
+#+begin_src yasnippet :tangle snippets/latex-mode/5021.yasnippet
+# -*- mode: snippet -*-
+# name: Proof Square
+# key: Sq
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\square
+#+end_src
+*** approx
+#+begin_src yasnippet :tangle snippets/latex-mode/5022.yasnippet
+# -*- mode: snippet -*-
+# name: approx
+# key: \sim~
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\\approx
+#+end_src
+
 
 ** Physics
 ** Trig
@@ -1231,26 +1290,25 @@ $0 \\\\
 #+end_src
 
 *** Fraction auto
-#+begin_src yasnippet :tangle snippets/latex-mode/8007.yasnippet
+disabling this for now
++begin_src yasnippet :tangle snippets/latex-mode/8007.yasnippet
 # key: //
 # name: Fraction auto
-# expand-env: ((numerator (quote t)))
-# condition: (and (texmathp) (quote auto))
+# condition: (and (texmathp) 'auto)
 # group: math
 # --
 `(condition-case nil (save-excursion (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq numerator 'nil)))`\\frac{`(if numerator (current-kill 0))`}{$1}$0
-#+end_src
++end_src
 
 *** Fraction slash
 #+begin_src yasnippet :tangle snippets/latex-mode/8008.yasnippet
 # -*- mode: snippet -*-
 # name: Fraction slash
 # key: /
-# expand-env: ((numerator 't))
-# condition: (texmathp)
+# condition: (and (texmathp) 'auto)
 # group: math
 # --
-`(condition-case nil (save-excursion (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq numerator 'nil)))`\\frac{`(if numerator (yank))`}{$1}$0
+\frac{$1}{$2}$0
 #+end_src
 
 *** bar
@@ -1289,6 +1347,7 @@ $0 \\\\
 
 *** quad
 #+begin_src yasnippet :tangle snippets/latex-mode/8012.yasnippet
+# -*- mode: snippet -*-
 # key: qq
 # name: quad
 # condition: (and (texmathp) 'auto)
@@ -1305,7 +1364,7 @@ $0 \\\\
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-`(delete-backward-char 1)`^2$0
+^2$0
 #+end_src
 
 *** stackrel
@@ -1341,7 +1400,7 @@ $0 \\\\
 *** lr Paren
 #+begin_src yasnippet :tangle snippets/latex-mode/8017.yasnippet
 # -*- mode: snippet -*-
-# name: vdots
+# name: lr(
 # key: lr(
 # group: math
 # condition: 'auto
@@ -1351,7 +1410,7 @@ $0 \\\\
 *** lr Sq Brace
 #+begin_src yasnippet :tangle snippets/latex-mode/8018.yasnippet
 # -*- mode: snippet -*-
-# name: vdots
+# name: lr[
 # key: lr[
 # group: math
 # condition: 'auto
@@ -1362,7 +1421,7 @@ $0 \\\\
 *** lr Brace
 #+begin_src yasnippet :tangle snippets/latex-mode/8019.yasnippet
 # -*- mode: snippet -*-
-# name: vdots
+# name: lr{
 # key: lr{
 # group: math
 # condition: 'auto
@@ -1379,6 +1438,72 @@ $0 \\\\
 # group: math
 # --
 `(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\vec{`(if argument (current-kill 0))`}$0
+#+end_#+begin_src
+
+#+end_src
+*** exponent
+#+begin_src yasnippet :tangle snippets/latex-mode/8021.yasnippet
+# -*- mode: snippet -*-
+# name: exponent
+# key: rd
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+^{$1}
+#+end_src
+*** subscript
+#+begin_src yasnippet :tangle snippets/latex-mode/8022.yasnippet
+# -*- mode: snippet -*-
+# name: subscript
+# key: _
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+_{$1}
+#+end_src
+
+*** Reals
+#+begin_src yasnippet :tangle snippets/latex-mode/8023.yasnippet
+# -*- mode: snippet -*-
+# name: Reals
+# key: RR
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\mathbb{R}
+#+end_src
+
+*** Naturals
+#+begin_src yasnippet :tangle snippets/latex-mode/8024.yasnippet
+# -*- mode: snippet -*-
+# name: Naturals
+# key: NN
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\mathbb{N}
+#+end_src
+
+*** Lagrangians
+#+begin_src yasnippet :tangle snippets/latex-mode/8025.yasnippet
+# -*- mode: snippet -*-
+# name: Lagrangian
+# key: LL
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\mathcal{L}
+#+end_src
+
+*** Text Subscript
+#+begin_src yasnippet :tangle snippets/latex-mode/8026.yasnippet
+# -*- mode: snippet -*-
+# name: Text Subscript
+# key: sts
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+_{\text{$1}}
 #+end_src
 ** Misc
 *** Inline Math
@@ -2038,7 +2163,7 @@ $0
 # group: font
 # name: {\bf ... }
 # --
-{\bf $1}$0
+\mathbf {$1}
 #+end_src
 ** blackboard
 #+begin_src yasnippet :tangle snippets/latex-mode/301.yasnippet
@@ -2047,7 +2172,7 @@ $0
 # group: font
 # name: {\bb ... }
 # --
-{\bb $1}$0
+\mathbb {$1}
 #+end_src
 ** calig
 #+begin_src yasnippet :tangle snippets/latex-mode/302.yasnippet
@@ -2056,27 +2181,25 @@ $0
 # group: font
 # name: {\mathcal ... }
 # --
-{\mathcal $1}$0
+\mathcal {$1}
 #+end_src
 ** tt
 #+begin_src yasnippet :tangle snippets/latex-mode/303.yasnippet
 # -*- mode: snippet -*-
-# contributor: Rasmus Borgsmidt <rasmus@borgsmidt.dk>
 # key: tt
 # group: font
 # name: {\tt ...}
 # --
-{\tt $1}$0
+\tt {$1}
 #+end_src
 ** rm
 #+begin_src yasnippet :tangle snippets/latex-mode/304.yasnippet
 # -*- mode: snippet -*-
-# contributor: Rasmus Borgsmidt <rasmus@borgsmidt.dk>
-# key: tt
+# key: rm
 # group: font
-# name: {\tt ...}
+# name: {\rm ...}
 # --
-{\tt $1}$0
+\mathrm { $1}
 #+end_src
 
 * References

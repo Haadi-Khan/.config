@@ -1,7 +1,10 @@
-# -*- mode: snippet -*-
-# contributor : Marcio M. Ribeiro <marcio.mr@gmail.com>
-# key: cite
+t -*-
+# key: lab
 # group: references
-# name : \cite
+# name : \label
 # --
-`(unless yas-modified-p (call-interactively 'citar-insert-citation))`
+\label{${1:label$(unless yas/modified-p (reftex-label nil 'dont-insert))}}$0
+
+#+end_src
+** ref
+#+begin_src yasnippet :tangle snippets/latex-mode

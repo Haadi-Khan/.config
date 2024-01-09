@@ -1,6 +1,6 @@
 #+title: Config
 #+author: Haadi Khan
-#+PROPERTY: tangle yes
+#+property: tangle yes
 
 * Table of Contents :toc:
 - [[#packages][Packages]]
@@ -13,12 +13,14 @@
   - [[#config-files][Config Files]]
   - [[#org][Org]]
   - [[#buffers][Buffers]]
+  - [[#programming][Programming]]
 - [[#org-1][Org]]
-  - [[#bullets][Bullets]]
+  - [[#modern-org-mode][Modern Org Mode]]
   - [[#fonts][Fonts]]
   - [[#toc][TOC]]
   - [[#todo][Todo]]
   - [[#latex][LaTeX]]
+  - [[#deft][Deft]]
 - [[#code][Code]]
   - [[#base-lsp-config][Base LSP Config]]
   - [[#dap-config][DAP Config]]
@@ -30,6 +32,7 @@
   - [[#preview][Preview]]
   - [[#cd-latex][CD LaTeX]]
   - [[#org-tables][Org Tables]]
+  - [[#snippets][Snippets]]
 - [[#random][Random]]
   - [[#typit][Typit]]
 
@@ -38,15 +41,16 @@ Doom splits packages into their own file. Here's all the additional packages I l
 #+begin_src emacs-lisp :tangle packages.el
 ;; (package! builtin-package :disable t)
 (package! atom-one-dark-theme)
-(package! org-superstar)
+(package! org-modern)
 (package! toc-org)
+(package! ivy-posframe)
+(package! dirvish)
+
 (package! org-autolist)
 (package! real-auto-save)
 (package! cdlatex)
-(package! ivy-posframe)
 
 (package! dap-mode)
-
 (package! lsp-pyright)
 (package! ccls)
 (package! copilot
@@ -60,7 +64,8 @@ Doom splits packages into their own file. Here's all the additional packages I l
 Removing title bar and customizing basic doom settings
 #+begin_src emacs-lisp :tangle config.el
 (add-to-list 'default-frame-alist '(undecorated-round . t))
-(load-theme 'atom-one-dark t)
+;; (load-theme 'atom-one-dark t)
+(load-theme 'doom-one t)
 (setq doom-font (font-spec :family "Recursive Monospace" :size 16 :weight 'regular) doom-variable-pitch-font (font-spec :family "Recursive" :size 16 :weight 'regular))
 (setq doom-symbol-font (font-spec :family "SF Pro" ))
 (setq fancy-splash-image "~/.config/doom/emacs-dash.png")
@@ -82,6 +87,11 @@ Better zooming
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "<s-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<s-wheel-down>") 'text-scale-decrease)
+#+end_src
+
+Modern looking Dired
+#+begin_src emacs-lsip :tangle config.el
+(dirvish-override-dired-mode)
 #+end_src
 
 ** Ivy
@@ -147,26 +157,43 @@ I have a lot of config files I'd like to edit, so I made some maps
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader :desc "List Buffers" :n "b l" #'list-buffers)
 #+end_src
+** Programming
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader :desc "Format Buffer" :n "c f" #'lsp-format-buffer)
+(map! :leader :desc "Docs Glance" :n "c h" #'lsp-ui-doc-toggle)
+#+end_src
 
 * Org
-** Bullets
-Makes the bullets fun
+** Modern Org Mode
+Makes Org Mode look better
 #+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
 
-(use-package! org-superstar ; "prettier" bullets
-  :hook (org-mode . org-superstar-mode)
-  :config
-  ;; Make leading stars truly invisible, by rendering them as spaces!
-  (setq org-superstar-leading-bullet ?\s
-        org-superstar-leading-fallback ?\s
-        org-hide-leading-stars nil
-        org-superstar-todo-bullet-alist
-        '(("TODO" . 9744)
-          ("[ ]"  . 9744)
-          ("DONE" . 9745)
-          ("[X]"  . 9745)))
-  )
+(setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-fold-catch-invisible-edits 'show-and-error
+ org-special-ctrl-a/e t
+ org-insert-heading-respect-content t
+
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-ellipsis "…"
+
+ ;; Agenda styling
+ org-agenda-tags-column 0
+ org-agenda-block-separator ?─
+ org-agenda-time-grid
+ '((daily today require-timed)
+   (800 1000 1200 1400 1600 1800 2000)
+   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+ org-agenda-current-time-string
+ "◀── now ─────────────────────────────────────────────────")
+
+(add-hook 'org-mode-hook #'org-modern-mode)
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 #+end_src
 ** Fonts
 Make the fonts bettter sized
@@ -182,7 +209,6 @@ Make the fonts bettter sized
    '(org-level-4 ((t (:inherit outline-4 :height 1.075))))
    '(org-level-5 ((t (:inherit outline-5 :height 1.05))))
    )
-  ;; (add-hook 'org-mode-hook 'org-fragtog-mode)
   )
 (setq org-hide-emphasis-markers t) ;; Removes ** around bolded text etc.
 #+end_src
@@ -198,7 +224,7 @@ Add automatic table of contents
 (add-hook 'org-mode-hook
           (lambda () (org-autolist-mode)))
 
-;;(add-hook 'org-mode org-cdlatex-mode)
+(add-hook 'org-mode org-cdlatex-mode)
 #+end_src
 ** Todo
 Settings for Todo
@@ -239,7 +265,7 @@ Settings for Todo
 ** LaTeX
 For some reason (even on emacs-plus) LaTeX embeds look like utter garbage on Mac (and Linux too for that matter). So, we do some elisp magic to make them look great! We render them at 3x the size, and then scale them down
 #+begin_src emacs-lisp :tangle config.el
-(setq org-latex-create-formula-image-program 'dvisvgm)
+(setq org-preview-latex-default-process 'dvisvgm)
 (plist-put org-format-latex-options :scale 3)
 (defun my/image-scale-advice (image)
   (let* ((factor (image-property image :scale))
@@ -268,14 +294,28 @@ For some reason (even on emacs-plus) LaTeX embeds look like utter garbage on Mac
   (cl-pushnew '(yasnippet backquote-change) warning-suppress-types
               :test 'equal))
 
-
 #+end_src
+** Deft
+Better searching through my org files. Will add a function so I can search through a list of premade tags
+#+begin_src  emacs-lisp :tangle config.el
+    (setq deft-directory "~/org")
+    (setq deft-default-extension "org")
+    (setq deft-extensions '("org"))
+    (setq deft-recursive t)
+    (setq deft-use-filename-as-title nil)
+    (setq deft-use-filter-string-for-filename t)
+    (setq deft-file-naming-rules '((noslash . "-")
+                                   (nospace . "-")
+                                   (case-fn . downcase)))
+    (setq deft-text-mode 'org-mode)
+#+end_src
+
 * Code
 ** Base LSP Config
 Some basic config stuff. I added way too much ram for garbage collection, but I have the RAM so I may as well use it to make sure that my editing isn't slow lol
 #+begin_src emacs-lisp :tangle config.el
 (setq gc-cons-threshold 500000000) ;; 400mb
-(setq read-process-output-max (* 8192 1024)) ;; 4mb
+(setq read-process-output-max (* 8192 1024)) ;; 8mb
 (setq company-minimum-prefix-length 1)
 (setq lsp-idle-delay 0.1)
 (setq lsp-log-io nil) ; if set to true can cause a performance hit
@@ -283,10 +323,25 @@ Some basic config stuff. I added way too much ram for garbage collection, but I 
 (setq company-idle-delay 0.01)
 #+end_src
 
+Show previews for documentation in line and not in the minibuffer
+#+begin_src emacs-lisp :tangle config.el
+(setq lsp-ui-doc-enable t)
+#+end_src
+
 Auto save when working on programming
 #+begin_src emacs-lisp :tangle config.el
 (add-hook 'prog-mode-hook 'real-auto-save-mode)
-(setq real-auto-save-interval 5) ;; in seconds
+(setq real-auto-save-interval 1) ;; in seconds
+#+end_src
+
+Remove the format on save hook with LSP. I'd rather format from a keybind
+#+begin_src emacs-lisp :tangle config.el
+;; (with-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook
+     (lambda ()
+        (remove-hook 'before-save-hook #'lsp-format-buffer t)
+        (remove-hook 'before-save-hook #'lsp-organize-imports t))
+) ;;)
 #+end_src
 
 ** DAP Config
@@ -398,14 +453,12 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
 ** CD LaTeX
 #+begin_src emacs-lisp :tangle config.el
 (use-package cdlatex
-  :ensure t
   :hook (LaTeX-mode . turn-on-cdlatex)
   :bind (:map cdlatex-mode-map
               ("<tab>" . cdlatex-tab)))
 
 ;; Yasnippet settings
 (use-package yasnippet
-  :ensure t
   :hook ((LaTeX-mode . yas-minor-mode)
          (post-self-insert . my/yas-try-expanding-auto-snippets))
   :config
@@ -455,14 +508,13 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
             (goto-char minp) t))))
 
     (defun yas-next-field-or-cdlatex nil
-      (interactive)
       "Jump to the next Yas field correctly with cdlatex active."
+      (interactive)
       (if
           (or (bound-and-true-p cdlatex-mode)
               (bound-and-true-p org-cdlatex-mode))
           (cdlatex-tab)
         (yas-next-field-or-maybe-expand)))))
-
 #+end_src
 
 ** Org Tables
@@ -537,7 +589,7 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
 
   (defun lazytab-cdlatex-or-orgtbl-next-field ()
     (when (and (bound-and-true-p orgtbl-mode)
-               (org-table-p)
+               (org-at-table-p)
                (looking-at "[[:space:]]*\\(?:|\\|$\\)")
                (let ((s (thing-at-point 'sexp)))
                  (not (and s (assoc s cdlatex-command-alist-comb)))))
@@ -551,6 +603,17 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
       (org-table-next-field))))
 #+end_src
 
+** Snippets
+#+begin_src emacs-lisp :tangle config.el
+(defun ndk/zap-newline-at-eob ()
+  (let ((make-backup-files nil))
+     (goto-char (point-max))
+     (when (equal (char-before) ?\n)
+       (delete-char -1)
+       (save-buffer))))
+
+  (add-hook 'org-babel-post-tangle-hook #'ndk/zap-newline-at-eob)
+#+end_src
 * Random
 ** Typit
 Sometimes when I'm bored I open monkeytype to do a typing test. You can do it in emacs!

@@ -1,8 +1,11 @@
-# -*- mode: snippet -*-
-# contributor : Peter Urbak <peter@dragonwasrobot.com>
-# key : newgls
+snippet -*-
+# name: listing
+# key: lst
 # group: misc
-# name : \newglossaryentry{...}{...}
 # --
-\newglossaryentry{$1}{name={$1},
-  description={$2.}}
+\begin{lstlisting}[float,label=lst:${1:label},caption=nextHopInfo: ${2:caption}]
+$0
+\end{lstlisting}
+#+end_src
+** use
+#+begin_src yasnippet :tangle

@@ -1,8 +1,10 @@
-# -*- mode: snippet -*-
-# name: listing
-# key: lst
+stensen <madsdk@gmail.com>
+# key: use
 # group: misc
+# name: \usepackage
 # --
-\begin{lstlisting}[float,label=lst:${1:label},caption=nextHopInfo: ${2:caption}]
-$0
-\end{lstlisting}
+\usepackage[$2]{$1}$0
+#+end_src
+
+** columns
+#+begin_src yasnippet :tangle snippets/latex-mode/

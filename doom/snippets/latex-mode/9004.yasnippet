@@ -1,7 +1,9 @@
-# -*- mode: snippet -*-
-# name: column-separator
-# key: ,,
-# condition: (and (texmathp) 'auto)
-# group: math
-# --
-& $0
+in{bmatrix}
+${1:\\ddots}  &  & \\\\
+ & ${2:\\ddots}  & \\\\
+ &  & ${3:\\ddots}
+ \\end{bmatrix}
+#+end_src
+
+* Skeleton
+**

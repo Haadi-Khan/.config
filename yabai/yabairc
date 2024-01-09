@@ -69,9 +69,14 @@ yabai -m rule --add label="Orion" app="^Orion$" title="^(General|(Tab|Password|W
 yabai -m rule --add label="GIMP" app="GIMP" title="GIMP" manage=off
 
 # Get emacs to work with lsp mode (took way too long to figure out lmao
-yabai -m rule --add app="Emacs" title!="^(  —|posframe)" manage=on
+# yabai -m rule --add app="Emacs" title!="^(  —|posframe)" manage=on
+# yabai -m rule --add app="Emacs" title="^  —" manage=off
+# yabai -m rule --add app="Emacs" title="^posframe" manage=off
+
+yabai -m rule --add app="Emacs" title!="^(  —|posframe|$)" manage=on
 yabai -m rule --add app="Emacs" title="^  —" manage=off
 yabai -m rule --add app="Emacs" title="^posframe" manage=off
+yabai -m rule --add app="Emacs" title="^$" manage=off
 
 yabai -m rule --add label="Spark" app="^Spark$" title="^(General|(Account|Team|Service|Notfication|Signature|Template|Shorcut|Folder)s|Calendar|Scheduling)$" manage=off
 

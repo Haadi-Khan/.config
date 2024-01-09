@@ -1,7 +1,11 @@
-# key: dm
-# name: Display Math
-# condition: (and (not (texmathp)) (quote auto))
+ewline
+# key: ;;
+# condition: (and (texmathp) 'auto)
 # group: math
 # --
-\[
-`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0\]
+\\\\
+`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0
+#+end_src
+
+*** binom
+#+begin

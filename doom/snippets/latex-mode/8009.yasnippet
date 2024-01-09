@@ -6,3 +6,17 @@
 # group: math
 # --
 `(condition-case nil (progn (backward-sexp) (kill-sexp) (delete-char 1)) (error (setq argument 'nil)))`\\bar{`(if argument (current-kill 0))`}$0
+
+0))`}$0
+#+end_src
+
+*** hat
+#+begin_src yasnippet :tangle snippets/latex-mode/8010.yasnippet
+# -*- mode: snippet -*-
+# name: hat
+# key: hat
+# expand-env: ((argument (quote t)))
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+`(condition-case nil (progn (backward-sexp) (kill-sex
