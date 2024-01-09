@@ -1,4 +1,12 @@
-{\eg}{e.g.,\xspace}
+# -*- mode: snippet -*-
+# key: article
+# group: skeleton
+# name: \documentclass{article} ...
+# --
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,amsmath,amssymb,subfigure,url,xspace}
+\newcommand{\eg}{e.g.,\xspace}
 \newcommand{\bigeg}{E.g.,\xspace}
 \newcommand{\etal}{\textit{et~al.\xspace}}
 \newcommand{\etc}{etc.\@\xspace}
@@ -16,19 +24,3 @@
 \bibliography{${4:literature.bib}}
 
 \end{document}
-
-#+end_src
-
-** Basic template
-#+begin_src yasnippet :tangle snippets/latex-mode/1.yasnippet
-# key: template
-# name: Basic template
-# group: skeleton
-# --
-\input{`my-preamble-file`}
-% \usepackage{hyperref}
-% \hypersetup{
-%     colorlinks,
-%     citecolor=cyan,
-%     filecolor=black,
-%     linkcolor=blue

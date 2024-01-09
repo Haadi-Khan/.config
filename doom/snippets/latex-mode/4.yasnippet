@@ -1,4 +1,13 @@
-dress line 3}}
+# -*- mode: snippet -*-
+# key: letter
+# group: skeleton
+# name: \documentclass{letter} ...
+# --
+\documentclass{letter}
+\signature{${1:Foo Bar}}
+\address{${2:Address line 1 \\\\
+Address line 2 \\\\
+Address line 3}}
 \begin{document}
 
 \begin{letter}
@@ -13,21 +22,3 @@ $0
 \end{letter}
 
 \end{document}
-
-
-#+end_src
-* Environments
-** align
-#+begin_src yasnippet :tangle snippets/latex-mode/100.yasnippet
-# -*- mode: snippet -*-
-# contributor : Rasmus Borgsmidt <rasmus@borgsmidt.dk>
-# key : align
-# group: environments
-# name : \begin{align} ... \end{align}
-# --
-\begin{align}
-  $0
-\end{align}
-#+end_src
-
-**

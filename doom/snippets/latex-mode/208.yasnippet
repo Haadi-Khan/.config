@@ -1,29 +1,8 @@
-ppet :tangle snippets/latex-mode/209.yasnippet
 # -*- mode: snippet -*-
-# contributor : mads d. kristensen <madsdk@gmail.com>
-# key: sub*
+# key: sub
 # group: sections
-# name : \subsection*
+# name : \subsection
 # --
-\subsection*{${1:name}}
+\subsection{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
 $0
-#+end_src
-
-* Font
-** bold
-#+begin_src yasnippet :tangl
-
-ppet :tangle snippets/latex-mode/209.yasnippet
-# -*- mode: snippet -*-
-# contributor : mads d. kristensen <madsdk@gmail.com>
-# key: sub*
-# group: sections
-# name : \subsection*
-# --
-\subsection*{${1:name}}
-$0
-#+end_src
-
-* Font
-** bold
-#+begin_src yasnippet :tangl

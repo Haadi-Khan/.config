@@ -1,18 +1,13 @@
-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
-\end{table}
-
-#+end_src
-
-** Tikz Plot
-#+begin_src yasnippet :tangle snippets/latex-mode/118.yasnippet
 # -*- mode: snippet -*-
-# name: Tikz Plot
-# key: tikzplot
+# key: table
 # group: environments
+# name : \begin{table} ... \end{table}
 # --
-\begin{figure}[$1]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			xmin= ${2:-10}, xmax= ${3:10},
-			ymin= ${4:-10}, ymax = $
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{${3:format}}
+    $0
+  \end{tabular}
+  \caption{${1:caption}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{table}

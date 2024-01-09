@@ -1,8 +1,6 @@
-asnippet
 # -*- mode: snippet -*-
-# contributor: François Garillot <francois@garillot.net>
-# key: bigop
+# key: big
 # group: math
-# name: \bigop_{n}^{}
+# name: \bigl( ... \bigr)
 # --
-\\big${1:$$(yas/choose-value '("oplus" "otimes" "odot"
+\\${1:$$(yas/choose-value '("big" "Big" "bigg" "Bigg"))}l( $0  \\$1r)

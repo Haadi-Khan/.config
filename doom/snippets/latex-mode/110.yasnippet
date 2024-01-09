@@ -1,25 +1,8 @@
-ippet
 # -*- mode: snippet -*-
-# key: href
+# key: frame
 # group: environments
-# name: \href{url}{text}
+# name : \begin{frame} ... \end{frame}
 # --
-\href{${1:url}}{${2:text}}$0
-#+end_src
-
-** it
-#+begin_src yasnippet :tangle snippets/latex-mode/112.yasnippet
-# -*- mode: snippet -*
-
-ippet
-# -*- mode: snippet -*-
-# key: href
-# group: environments
-# name: \href{url}{text}
-# --
-\href{${1:url}}{${2:text}}$0
-#+end_src
-
-** it
-#+begin_src yasnippet :tangle snippets/latex-mode/112.yasnippet
-# -*- mode: snippet -*
+\begin{frame}{${1:Frame Title$(capitalize yas-text)}}
+$0
+\end{frame}

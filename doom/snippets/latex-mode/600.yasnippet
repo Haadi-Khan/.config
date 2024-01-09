@@ -1,10 +1,5 @@
-includegraphics
-# key: ig
+# -*- mode: snippet -*-
 # key : graphics
+# name : \includegraphics
 # --
-\includegraphics${1:[$2]}{$0}
-#+end_src
-
-** subfloat
-#+begin_src yasnippet :tangle snippets/latex-mode/602.yasnippet
-# -*- mode:
+\includegraphics[width=${1:\linewidth}]{${2:file}}

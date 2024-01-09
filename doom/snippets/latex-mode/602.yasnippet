@@ -1,39 +1,11 @@
-{figure}
-
-#+end_src
-
-* Misc.
-** bib
-#+begin_src yasnippet :tangle snippets/latex-mode/700.yasnippet
 # -*- mode: snippet -*-
-# contributor: Mads D. Kristensen <madsdk@gmail.com>
-# key: bib
-# group: misc
-# name: \bibliography
+# name: subfloat
+# key: subfloat
+# group: graphics
 # --
-\bibliographystyle{plain}
-\bibliography{$1}$0
-#+end_src
-
-** doc
-#+begin_src yasnipp
-
-{figure}
-
-#+end_src
-
-* Misc.
-** bib
-#+begin_src yasnippet :tangle snippets/latex-mode/700.yasnippet
-# -*- mode: snippet -*-
-# contributor: Mads D. Kristensen <madsdk@gmail.com>
-# key: bib
-# group: misc
-# name: \bibliography
-# --
-\bibliographystyle{plain}
-\bibliography{$1}$0
-#+end_src
-
-** doc
-#+begin_src yasnipp
+\begin{figure}[ht]
+  \centering
+  \subfloat[${6:caption}]{\includegraphics[$3]{figures/${1:path.png}}}${5:~}
+  \subfloat[${7:caption}]{\includegraphics[$4]{figures/${2:path.png}}}
+  \caption{\label{fig:${8:label}} $0}
+\end{figure}

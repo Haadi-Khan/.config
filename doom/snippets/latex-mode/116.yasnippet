@@ -1,10 +1,9 @@
-gin_src yasnippet :tangle snippets/latex-mode/117.yasnippet
 # -*- mode: snippet -*-
-# contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key: table
+# key: subfig
 # group: environments
-# name : \begin{table} ... \end{table}
+# name : \subfigure
 # --
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{${3:format}
+\subfigure[${1:caption}]{
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+  $0
+}

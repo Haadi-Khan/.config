@@ -1,27 +1,8 @@
-:tangle snippets/latex-mode/202.yasnippet
 # -*- mode: snippet -*-
-# contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key : cha*
+# key : cha
 # group: sections
-# name : \chapter*
+# name : \chapter
 # --
-\chapter*{${1:name}}
+\chapter{${1:name}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
 $0
-#+end_src
-
-** par
-#+begin_src yasnippet :tangle snippets/la
-
-:tangle snippets/latex-mode/202.yasnippet
-# -*- mode: snippet -*-
-# contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key : cha*
-# group: sections
-# name : \chapter*
-# --
-\chapter*{${1:name}}
-$0
-#+end_src
-
-** par
-#+begin_src yasnippet :tangle snippets/la

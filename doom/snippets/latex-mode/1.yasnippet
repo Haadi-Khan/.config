@@ -1,4 +1,18 @@
-itle$(capitalize yas-text)}\vspace{-2ex}}
+# key: template
+# name: Basic template
+# group: skeleton
+# --
+\input{`my-preamble-file`}
+% \usepackage{hyperref}
+% \hypersetup{
+%     colorlinks,
+%     citecolor=cyan,
+%     filecolor=black,
+%     linkcolor=blue,
+%     urlcolor=black}
+
+\author{`user-full-name`\vspace{-2ex}}
+\title{\vspace{-3.0cm}${1:Title$(capitalize yas-text)}\vspace{-2ex}}
 ${2:\date{${3:\today}}}
 
 \begin{document}
@@ -13,19 +27,3 @@ ${2:\date{${3:\today}}}
 
 $0
 \end{document}
-#+end_src
-
-** basict
-#+begin_src yasnippet :tangle snippets/latex-mode/2.yasnippet
-# key: basict
-# group: skeleton
-# name: \documentclass{article} ...
-# --
-\documentclass[11pt]{article}
-
-\usepackage{graphicx,amsmath,amssymb,subfigure,url,xspace}
-
-\title{${1:title}}
-\author{${2:Author Name}}
-
-\begin{do

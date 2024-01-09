@@ -1,9 +1,6 @@
-rc yasnippet :tangle snippets/latex-mode/8006.yasnippet
 # -*- mode: snippet -*-
-# contributor: Song Qiang <tsiangsung@gmail.com>
-# key: frac
+# key: bigop
 # group: math
-# name: \frac{numerator}{denominator}
+# name: \bigop_{n}^{}
 # --
-\frac{${1:numerator}}{${2:denominator}}$0
-#+end_s
+\\big${1:$$(yas/choose-value '("oplus" "otimes" "odot" "cup" "cap" "uplus" "sqcup" "vee" "wedge"))}_{$2}^{$3}$0

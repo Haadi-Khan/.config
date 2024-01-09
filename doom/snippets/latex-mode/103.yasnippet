@@ -1,11 +1,8 @@
-\end{$1}
-#+end_src
-** block
-#+begin_src yasnippet :tangle snippets/latex-mode/104.yasnippet
 # -*- mode: snippet -*-
-# contributor: Claudio Marforio <marforio@gmail.com>
-# key: block
+# key: begin
 # group: environments
-# name : \begin{*block} ... \end{*block}
+# name: \begin{environment} ... \end{environment}
 # --
-\begin{${1:$$(yas/choose-value '("block" "exampleblock" "aler
+\begin{${1:$$(yas/choose-value (mapcar 'car (LaTeX-environment-list)))}}
+$0
+\end{$1}

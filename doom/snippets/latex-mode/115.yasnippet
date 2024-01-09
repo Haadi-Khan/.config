@@ -1,9 +1,8 @@
-e snippets/latex-mode/116.yasnippet
 # -*- mode: snippet -*-
-# contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key: subfig
+# key: minipage
 # group: environments
-# name : \subfigure
+# name: \begin{minipage}[position][width] ... \end{minipage}
 # --
-\subfigure[${1:caption}]{
-  \label{${2:"waiting for reftex-label call..."$(unle
+\begin{minipage}[${1:htbp}]{${2:1.0}${3:\linewidth}}
+  $0
+\end{minipage}

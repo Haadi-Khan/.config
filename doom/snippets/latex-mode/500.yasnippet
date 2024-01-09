@@ -1,6 +1,7 @@
-: graphics
-# name : \includegraphics
+# -*- mode: snippet -*-
+# name: code
+# key: code
 # --
-\includegraphics[width=${1:\linewidth}]{${2:file}}
-#+end_src
-** includegraphic
+\begin{lstlisting}${1:[language=${2:Matlab}]}
+$0
+\end{lstlisting}

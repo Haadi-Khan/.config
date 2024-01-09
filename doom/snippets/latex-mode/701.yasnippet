@@ -1,25 +1,10 @@
-ets/latex-mode/702.yasnippet
 # -*- mode: snippet -*-
-# contributor : Peter Urbak <peter@dragonwasrobot.com>
-# key : newgls
+# key: doc
+# name: \documentclass
 # group: misc
-# name : \newglossaryentry{...}{...}
 # --
-\newglossaryentry{$1}{name={$1},
-  description={$2.}}
+\documentclass[$2]{${1:$$(yas/choose-value '("article" "report" "book" "letter"))}}
 
-#+end_src
-** lis
-
-ets/latex-mode/702.yasnippet
-# -*- mode: snippet -*-
-# contributor : Peter Urbak <peter@dragonwasrobot.com>
-# key : newgls
-# group: misc
-# name : \newglossaryentry{...}{...}
-# --
-\newglossaryentry{$1}{name={$1},
-  description={$2.}}
-
-#+end_src
-** lis
+\begin{document}
+$0
+\end{document}

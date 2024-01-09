@@ -1,21 +1,6 @@
-ngle snippets/latex-mode/4007.yasnippet
 # -*- mode: snippet -*-
-# key: bmat
+# key: mat
 # group: math
-# name: \begin{bmatrix} ... \end{}
+# name: \begin{matrix} ... \end{}
 # --
-\begin{bmatrix}} $0 \end{bmatrix}
-#+end_src
-*** pmatrix
-#+begin_src yas
-
-ngle snippets/latex-mode/4007.yasnippet
-# -*- mode: snippet -*-
-# key: bmat
-# group: math
-# name: \begin{bmatrix} ... \end{}
-# --
-\begin{bmatrix}} $0 \end{bmatrix}
-#+end_src
-*** pmatrix
-#+begin_src yas
+\begin{${1:$$(yas/choose-value '("pmatrix" "bmatrix" "Bmatrix" "vmatrix" "Vmatrix" "smallmatrix"))}} $0 \end{$1}
