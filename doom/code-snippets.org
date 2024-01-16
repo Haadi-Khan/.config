@@ -1,0 +1,89 @@
+#+title: Code Snippets
+#+AUTHOR: Haadi Khan
+#+PROPERTY: header-args :tangle yes
+
+All my snippets for programming. No numbering system here because there's very few snippets anyways
+
+* Typescript
+** Paragraph
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/paragraph.yasnippet
+# -*- mode: snippet -*-
+# name: paragraph
+# uuid:
+# key: <p>
+# condition: t
+# --
+<p> $1 </p>
+#+end_src
+** span
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/span.yasnippet
+# -*- mode: snippet -*-
+# name: span
+# uuid:
+# key: <span>
+# condition: t
+# --
+<span> $1 </span>
+#+end_src
+** div
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/div.yasnippet
+# -*- mode: snippet -*-
+# name: div
+# uuid:
+# key: <div>
+# condition: t
+# --
+<div> $1 </div>
+#+end_src
+** h1
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/h1.yasnippet
+# -*- mode: snippet -*-
+# name: h1
+# uuid:
+# key: <h1>
+# condition: t
+# --
+<h1> $1 </h1>
+#+end_src
+** h2
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/h2.yasnippet
+# -*- mode: snippet -*-
+# name: h2
+# uuid:
+# key: <h2>
+# condition: t
+# --
+<h2> $1 </h2>
+#+end_src
+** h3
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/h3.yasnippet
+# -*- mode: snippet -*-
+# name: h3
+# uuid:
+# key: <h3>
+# condition: t
+# --
+<h3> $1 </h3>
+#+end_src
+** h4
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/h4.yasnippet
+# -*- mode: snippet -*-
+# name: h4
+# uuid:
+# key: <h4>
+# condition: t
+# --
+<h4> $1 </h4>
+#+end_src
+** h5
+#+begin_src yasnippet :tangle snippets/tsx-ts-mode/h5.yasnippet
+# -*- mode: snippet -*-
+# name: h5
+# uuid:
+# key: <h5>
+# condition: t
+# --
+<h5> $1 </h5>
+#+end_src
+* Rust
+* Python

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: paragraph
+# uuid:
+# key: <p>
+# condition: t
+# --
+<p> $1 </p>

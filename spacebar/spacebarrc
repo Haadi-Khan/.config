@@ -1,0 +1,56 @@
+#!/usr/bin/env sh
+
+LIGHTBLUE=0xff61afef
+BLUE=0xff56b6c2
+EVENLIGHTERBLUE=0xff61afef
+ORANGE=0xffd19a66
+RED=0xffe06c75
+YELLOW=0xffe5c07b
+PURPLE=0xffc678dd
+GREEN=0xff98c379
+BG=0xff282c34
+FG=0xffabb2bf
+
+spacebar -m config title                       off
+
+spacebar -m config text_font                   "Recursive:Regular:16.0"
+spacebar -m config icon_font                   "FontAwesome:Regular:16.0"
+
+spacebar -m config spaces                      on
+spacebar -m config spaces_for_all_displays     on
+spacebar -m config space_icon                   #•
+spacebar -m config space_icon_color            $LIGHTBLUE #5E81AC
+spacebar -m config space_icon_color_secondary  $BLUE #81A1C1
+spacebar -m config space_icon_color_tertiary   0xfffff9b0 #fff9b0
+
+spacebar -m config clock                       on
+spacebar -m config clock_icon                  
+spacebar -m config clock_icon_color            $EVENLIGHTERBLUE #88C0D0
+spacebar -m config clock_format                "%h %d %H:%M %p"
+
+spacebar -m config power                       on
+spacebar -m config power_icon_strip             
+spacebar -m config power_icon_color            $ORANGE #D08770
+spacebar -m config battery_icon_color          $RED #BF616A
+
+spacebar -m config right_shell                 on
+spacebar -m config right_shell_icon            
+spacebar -m config right_shell_icon_color      $GREEN #EBCB8B
+spacebar -m config right_shell_command         "~/.config/spacebar/util/song.sh"
+
+spacebar -m config dnd_icon                    
+spacebar -m config dnd_icon_color              $PURPLE #B48EAD
+
+spacebar -m config position                    top
+spacebar -m config display                     all
+
+spacebar -m config height                      40
+spacebar -m config padding_left                30
+spacebar -m config padding_right               30
+spacebar -m config spacing_left                25
+spacebar -m config spacing_right               25
+
+spacebar -m config background_color            $BG #2E3440da
+spacebar -m config foreground_color            $FG #E5E9F0aa
+
+echo "spacebar configuration loaded"
