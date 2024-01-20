@@ -1,57 +1,56 @@
 # Navigation
 ## Space Navigation
-fn - s : yabai -m space --focus 1
-fn - d : yabai -m space --focus 2
-fn - f : yabai -m space --focus 3
-fn - g : yabai -m space --focus 4
-fn - w : yabai -m space --focus 5
-fn - e : yabai -m space --focus 6
-fn - r : yabai -m space --focus 7
-fn - t : yabai -m space --focus 8
-fn - x : yabai -m space --focus 9
-fn - c : yabai -m space --focus 10
-fn - 1 : yabai -m space --focus 11
+lcmd + lalt + lctrl - s : yabai -m space --focus 1
+lcmd + lalt + lctrl - d : yabai -m space --focus 2
+lcmd + lalt + lctrl - f : yabai -m space --focus 3
+lcmd + lalt + lctrl - g : yabai -m space --focus 4
+lcmd + lalt + lctrl - w : yabai -m space --focus 5
+lcmd + lalt + lctrl - e : yabai -m space --focus 6
+lcmd + lalt + lctrl - r : yabai -m space --focus 7
+lcmd + lalt + lctrl - t : yabai -m space --focus 8
+lcmd + lalt + lctrl - x : yabai -m space --focus 9
+lcmd + lalt + lctrl - c : yabai -m space --focus 10
+lcmd + lalt + lctrl - 1 : yabai -m space --focus 11
 
 ## Move Window to a Space
-shift + fn - s : yabai -m window --space 1
-shift + fn - d : yabai -m window --space 2
-shift + fn - f : yabai -m window --space 3
-shift + fn - g : yabai -m window --space 4
-shift + fn - w : yabai -m window --space 5
-shift + fn - e : yabai -m window --space 6
-shift + fn - r : yabai -m window --space 7
-shift + fn - t : yabai -m window --space 8
-shift + fn - x : yabai -m window --space 9
-shift + fn - c : yabai -m window --space 10
+shift + lcmd + lalt + lctrl - s : yabai -m window --space 1
+shift + lcmd + lalt + lctrl - d : yabai -m window --space 2
+shift + lcmd + lalt + lctrl - f : yabai -m window --space 3
+shift + lcmd + lalt + lctrl - g : yabai -m window --space 4
+shift + lcmd + lalt + lctrl - w : yabai -m window --space 5
+shift + lcmd + lalt + lctrl - e : yabai -m window --space 6
+shift + lcmd + lalt + lctrl - r : yabai -m window --space 7
+shift + lcmd + lalt + lctrl - t : yabai -m window --space 8
+shift + lcmd + lalt + lctrl - x : yabai -m window --space 9
+shift + lcmd + lalt + lctrl - c : yabai -m window --space 10
 
 
-## Window Movement (shift + lalt - ...)
-# Moving windows in spaces: shift + lalt - {j, k, l, ö}
-shift + fn - h : yabai -m window --warp west || $(yabai -m window --display west && sketchybar --trigger windows_on_spaces && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
-shift + fn - j : yabai -m window --warp south || $(yabai -m window --display south && sketchybar --trigger windows_on_spaces && yabai -m display --focus south) || yabai -m window --move rel:0:10
-shift + fn - k : yabai -m window --warp north || $(yabai -m window --display north && sketchybar --trigger windows_on_spaces && yabai -m display --focus north) || yabai -m window --move rel:0:-10
-shift + fn - l : yabai -m window --warp east || $(yabai -m window --display east && sketchybar --trigger windows_on_spaces && yabai -m display --focus east && yabai -m window --warp first) || yabai -m window --move rel:10:0
+# Moving windows in spaces: shift + lalt - {h, j, k, l}
+shift + lcmd + lalt + lctrl - h : yabai -m window --warp west || $(yabai -m window --display west && sketchybar --trigger windows_on_spaces && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
+shift + lcmd + lalt + lctrl - j : yabai -m window --warp south || $(yabai -m window --display south && sketchybar --trigger windows_on_spaces && yabai -m display --focus south) || yabai -m window --move rel:0:10
+shift + lcmd + lalt + lctrl - k : yabai -m window --warp north || $(yabai -m window --display north && sketchybar --trigger windows_on_spaces && yabai -m display --focus north) || yabai -m window --move rel:0:-10
+shift + lcmd + lalt + lctrl - l : yabai -m window --warp east || $(yabai -m window --display east && sketchybar --trigger windows_on_spaces && yabai -m display --focus east && yabai -m window --warp first) || yabai -m window --move rel:10:0
 
 ## Window Navigation: h,j,k,l
-fn - h    : yabai -m window --focus west  || yabai -m display --focus west
-fn - j   : yabai -m window --focus south || yabai -m display --focus south
-fn - k    : yabai -m window --focus north || yabai -m display --focus north
-fn - l : yabai -m window --focus east  || yabai -m display --focus east
+lcmd + lalt + lctrl - h    : yabai -m window --focus west  || yabai -m display --focus west
+lcmd + lalt + lctrl - j   : yabai -m window --focus south || yabai -m display --focus south
+lcmd + lalt + lctrl - k    : yabai -m window --focus north || yabai -m display --focus north
+lcmd + lalt + lctrl - l : yabai -m window --focus east  || yabai -m display --focus east
 
 # Float / Unfloat window: lalt - space
-fn - space : yabai -m window --toggle float; sketchybar --trigger window_focus
+lcmd + lalt + lctrl - space : yabai -m window --toggle float; sketchybar --trigger window_focus
 
 # Make window zoom to fullscreen: shift + lalt - f
-fn - p : yabai -m window --toggle zoom-fullscreen; sketchybar --trigger window_focus
+lcmd + lalt + lctrl - p : yabai -m window --toggle zoom-fullscreen; sketchybar --trigger window_focus
 
 ## Split Hor/Ver
-fn - b : yabai -m window --insert south
-fn - v : yabai -m window --insert east
+lcmd + lalt + lctrl - b : yabai -m window --insert south
+lcmd + lalt + lctrl - v : yabai -m window --insert east
 
 
 # Stacks (shift + ctrl - ...)
 ## Stack mode
-fn - a : yabai -m window --insert stack
+# lcmd + lalt + lctrl - a : yabai -m window --insert stack
 
 ## Add the active window to the window or stack to the {direction}: shift + ctrl - {j, k, l, ;}
   shift + ctrl - j    : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id'); sketchybar --trigger window_focus
@@ -66,11 +65,11 @@ fn - a : yabai -m window --insert stack
 
 # Resize (ctrl + lalt - ...)
 ## Resize windows: ctrl + lalt - {j, k, l, ö}
-fn - y    : yabai -m window --resize right:-100:0 || yabai -m window --resize left:-100:0
-fn - u    : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
-fn - i    : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
-fn - o    : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
-fn - p    : yabai -m window --toggle zoom-fullscreen
+lcmd + lalt + lctrl - y    : yabai -m window --resize right:-100:0 || yabai -m window --resize left:-100:0
+lcmd + lalt + lctrl - u    : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
+lcmd + lalt + lctrl - i    : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
+lcmd + lalt + lctrl - o    : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
+lcmd + lalt + lctrl - p    : yabai -m window --toggle zoom-fullscreen
 
 # Enable / Disable gaps in current workspace: ctrl + lalt - g
 ctrl + lalt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
@@ -81,15 +80,16 @@ ctrl + lalt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # Insertion (shift + ctrl + lalt - ...)
 ## Program Hotkeys
-lctrl + lalt - return : open -na kitty
-lctrl + lalt - m : open -na firefox
-lctrl + lalt - 0x2F : emacsclient -c -a \"Emacs\"
-lctrl + lalt - 0x2B : open -na Finder && osascript -e 'tell application "System Events" to keystroke "n" using {command down}'
-lctrl + lalt - n : open -na Obsidian
+lcmd + lctrl + lalt - return : open -na kitty
+lcmd + lctrl + lalt - m : open -na firefox
+lcmd + lctrl + lalt - 0x2F : emacsclient -c -a \"Emacs\"
+lcmd + lctrl + lalt - 0x2F : emacsclient -c -a \"Emacs\"
+lcmd + lctrl + lalt - 0x2B : open -na Finder && osascript -e 'tell application "System Events" to keystroke "n" using {command down}'
+lcmd + lctrl + lalt - n : open -na Obsidian
 
 # Toggle sketchybar
 #
-shift + fn - 1 : killall sketchybar
+#shift + lcmd + lalt + lctrl - 1 : killall sketchybar
 
 #shift + lalt - space : sketchybar --bar hidden=toggle
 # Restart yabai: launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai" 

@@ -26,7 +26,7 @@ spacebar -m config space_icon_color_tertiary   0xfffff9b0 #fff9b0
 spacebar -m config clock                       on
 spacebar -m config clock_icon                  
 spacebar -m config clock_icon_color            $EVENLIGHTERBLUE #88C0D0
-spacebar -m config clock_format                "%h %d %H:%M %p"
+spacebar -m config clock_format                "%h %d %l:%M %p"
 
 spacebar -m config power                       on
 spacebar -m config power_icon_strip             

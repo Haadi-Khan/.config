@@ -147,8 +147,9 @@ I have a lot of config files I'd like to edit, so I made some maps
 (map! :map general-override-mode-map
       :desc "Open Emacs Config" :leader "f x e" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
       :desc "Open Firefox Config" :leader "f x f" #'(lambda() (interactive) (find-file "~/Library/Application Support/Firefox/Profiles/kw89h3lk.default-release-1701650262876/chrome/userChrome.css"))
-      :desc "Open skhd Config" :leader "f x s" #'(lambda() (interactive) (find-file "~/.config/skhd/skhdrc"))
-      :desc "Open Yabai Config" :leader "f x y" #'(lambda() (interactive) (find-file "~/.config/yabai/yabairc"))
+      :desc "Open spacebar Config" :leader "f x s" #'(lambda() (interactive) (find-file "~/.config/spacebar/spacebarrc"))
+      :desc "Open skhd Config" :leader "f x S" #'(lambda() (interactive) (find-file "~/.config/skhd/skhdrc"))
+      :desc "Open yabai Config" :leader "f x a" #'(lambda() (interactive) (find-file "~/.config/yabai/yabairc"))
       :desc "Open zsh Config" :leader "f x z" #'(lambda() (interactive) (find-file "~/.zshrc"))
       )
 
@@ -157,6 +158,14 @@ I have a lot of config files I'd like to edit, so I made some maps
 #+begin_src emacs-lisp :tangle config.el
 (map! :map org-mode-map :leader :desc "Babel Tangle" :n "m k" #'org-babel-tangle)
 (map! :map org-mode-map :leader :desc "Babel Tangle File" :n "m K" #'org-babel-tangle-file)
+#+end_src
+
+Better markup commands
+#+begin_src emacs-lisp :tangle config.el
+(map! :map org-mode-map "s-b" #'(lambda () (interactive) (er/mark-word) (org-emphasize ?\*)))
+(map! :map org-mode-map "s-i" #'(lambda () (interactive) (er/mark-word) (org-emphasize ?\/)))
+(map! :map org-mode-map "s-l" #'(lambda () (interactive) (er/mark-word) (org-emphasize ?\=)))
+(map! :map org-mode-map "s-u" #'(lambda () (interactive) (er/mark-word) (org-emphasize ?\_)))
 #+end_src
 ** Buffers
 #+begin_src emacs-lisp :tangle config.el
