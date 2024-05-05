@@ -9,7 +9,7 @@ battery_details=(
 )
 
 sketchybar -m --add item    battery right 		                               \
-              --set battery update_freq=1 			                             \
+              --set battery update_freq=10 			                             \
                             script="$PLUGIN_DIR/battery/scripts/battery.sh"  \
               --subscribe   battery           mouse.entered                  \
                                               mouse.exited                   \

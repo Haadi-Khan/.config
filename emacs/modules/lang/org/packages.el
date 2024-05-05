@@ -31,30 +31,30 @@
                          (format "(defun org-git-version (&rest _) \"%s-??-%s\")\n"
                                  version (cdr (doom-call-process "git" "rev-parse" "--short" "HEAD")))
                          "(provide 'org-version)\n")))))
-  :pin "57b94f3447b9046dac2f9238e24ad902510056cc")
+  :pin "5bdfc02c6fa1b9ad4f075ac1ad1e4086ead310db")
 (package! org-contrib
   :recipe (:host github
            :repo "emacsmirror/org-contrib")
-  :pin "79286861ae3f4a47fbc66ce97cd527196f60c4a8")
+  :pin "d4056ce5d5611e1c971c151f182a2d407226fdb1")
 
 (package! avy)
-(package! htmlize :pin "dd27bc3f26efd728f2b1f01f9e4ac4f61f2ffbf9")
+(package! htmlize :pin "09d43dfa44899f194095bb3500a45ec5b34d59c6")
 (package! org-yt
   :recipe (:host github :repo "TobiasZawada/org-yt")
   :pin "56166f48e04d83668f70ed84706b7a4d8b1e5438")
-(package! ox-clip :pin "ff117cf3c619eef12eccc0ccbfa3f11adb73ea68")
+(package! ox-clip :pin "a549cc8e1747beb6b7e567ffac27e31ba45cb8e8")
 (package! toc-org :pin "6d3ae0fc47ce79b1ea06cabe21a3c596395409cd")
 (package! org-cliplink :pin "13e0940b65d22bec34e2de4bc8cba1412a7abfbc")
 
 ;; TODO Adjust when this is added to GNU ELPA
 (when (modulep! +contacts)
   (package! org-contacts
-    :pin "7f03eafaad2e5746949c0bebb98353e939c51ade"
+    :pin "6660db078f7687af3bc31f702e3e957d4d7654bd"
     :recipe (:host nil
              :type git
              :repo "https://repo.or.cz/org-contacts.git")))
 
-(when (and IS-MAC
+(when (and (featurep :system 'macos)
            (modulep! :os macos))
   (package! org-mac-link :pin "e30171a6e98db90787ab8a23b3a7dc4fd13b10f9"))
 
@@ -71,9 +71,9 @@
 (when (modulep! :tools pdf)
   (package! org-pdftools :pin "4e420233a153a9c4ab3d1a7e1d7d3211c836f0ac"))
 (when (modulep! :tools magit)
-  (package! orgit :pin "b60efabc4a1b15d7eacaabc5bdfe6f3c20fee161")
+  (package! orgit :pin "a57beefa24712430fe6b5016b9273129931a8287")
   (when (modulep! :tools magit +forge)
-    (package! orgit-forge :pin "f595a30aa75af55522b1203cd29198fb9aa3a0a5")))
+    (package! orgit-forge :pin "f2ff9e5ad68b3e860379a1d368ad6d8a9696b719")))
 (when (modulep! +brain)
   (package! org-brain :pin "2bad7732aae1a3051e2a14de2e30f970bbe43c25"))
 (when (modulep! +dragndrop)
@@ -84,11 +84,11 @@
 (when (modulep! +ipython) ; DEPRECATED
   (package! ob-ipython :pin "7147455230841744fb5b95dcbe03320313a77124"))
 (when (modulep! +jupyter)
-  (package! jupyter :pin "0a92c0c978ab12bd31a50a7e8b1295f5d1767e20"))
+  (package! jupyter :pin "2059d79b2fecf6d25a6c796b69ab954645ec37d1"))
 (when (modulep! +journal)
-  (package! org-journal :pin "a306f76ee2b0292946a20530bd9114aefc85a263"))
+  (package! org-journal :pin "17b34ce8df9649a73b715c13698220bde1628668"))
 (when (modulep! +noter)
-  (package! org-noter :pin "a4296d8338d46b5c863d3d339b50e201172f218c"))
+  (package! org-noter :pin "9e4f57957b8f54db20a4e13bf8d6b32e004ab3e8"))
 (when (modulep! +pomodoro)
   (package! org-pomodoro :pin "3f5bcfb80d61556d35fc29e5ddb09750df962cc6"))
 (when (modulep! +pretty)
@@ -100,11 +100,11 @@
     :recipe (:host github :repo "anler/centered-window-mode")
     :pin "80965f6c6afe8d918481433984b493de72af5399")
   (package! org-tree-slide :pin "e2599a106a26ce5511095e23df4ea04be6687a8a")
-  (package! org-re-reveal :pin "e7895dae9807df38b6e17b6c24e1e824caad6c46")
+  (package! org-re-reveal :pin "1944ac53d4cdd0fb250cc575447d5e6320fd5f81")
   (package! revealjs
     :recipe (:host github :repo "hakimel/reveal.js"
              :files ("css" "dist" "js" "plugin"))
-    :pin "d5896c968b2406126ca0beafecdffe219230b6b4"))
+    :pin "6410c756ea91ded3fa5f6b40a872523e7b8fe723"))
 (cond
  ((modulep! +roam)
   (package! org-roam
@@ -115,7 +115,7 @@
     ;; FIXME A :recipe isn't strictly necessary, but without it, our package
     ;;       bumper fails to distinguish between org-roam v1 and v2.
     :recipe (:host github :repo "org-roam/org-roam")
-    :pin "5c06471c3a11348342719fd9011486455adeb701")))
+    :pin "8667e441876cd2583fbf7282a65796ea149f0e5f")))
 
 ;;; Babel
 (package! ob-async :pin "9aac486073f5c356ada20e716571be33a350a982")
@@ -152,16 +152,16 @@
     :recipe (:host github :repo "DEADB17/ob-racket")
     :pin "d8fd51bddb019b0eb68755255f88fc800cfe03cb"))
 (when (modulep! :lang rest)
-  (package! ob-restclient :pin "1a127eb0165f10bb9d33606aa8529051118805e7"))
+  (package! ob-restclient :pin "8183f8af08838854cf145ca4855b373f3e7c44b0"))
 (when (modulep! :lang scala)
   (package! ob-ammonite :pin "39937dff395e70aff76a4224fa49cf2ec6c57cca"))
 
 ;;; Export
 (when (modulep! +pandoc)
-  (package! ox-pandoc :pin "0f758517f512e375825679541b5d905be40342eb"))
+  (package! ox-pandoc :pin "399d787b6e2124bd782615338b845c3724a47718"))
 (when (modulep! +hugo)
   (package! ox-hugo
     :recipe (:host github :repo "kaushalmodi/ox-hugo" :nonrecursive t)
-    :pin "cb1b6cfd7b080e889352150416c1725f11ba937a"))
+    :pin "c4156d9d383bf97853ba9e16271b7c4d5e697f49"))
 (when (modulep! :lang rst)
   (package! ox-rst :pin "99fa790da55b57a3f2e9aa187493ba434a64250e"))

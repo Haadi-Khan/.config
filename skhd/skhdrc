@@ -50,7 +50,7 @@ lcmd + lalt + lctrl - v : yabai -m window --insert east
 
 # Stacks (shift + ctrl - ...)
 ## Stack mode
-# lcmd + lalt + lctrl - a : yabai -m window --insert stack
+lcmd + lalt + lctrl - a : yabai -m window --insert stack
 
 ## Add the active window to the window or stack to the {direction}: shift + ctrl - {j, k, l, ;}
   shift + ctrl - j    : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id'); sketchybar --trigger window_focus
@@ -81,15 +81,14 @@ ctrl + lalt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 # Insertion (shift + ctrl + lalt - ...)
 ## Program Hotkeys
 lcmd + lctrl + lalt - return : open -na kitty
-lcmd + lctrl + lalt - m : open -na firefox
+lcmd + lctrl + lalt - m : open -a Arc
 lcmd + lctrl + lalt - 0x2F : emacsclient -c -a \"Emacs\"
 lcmd + lctrl + lalt - 0x2F : emacsclient -c -a \"Emacs\"
 lcmd + lctrl + lalt - 0x2B : open -na Finder && osascript -e 'tell application "System Events" to keystroke "n" using {command down}'
 lcmd + lctrl + lalt - n : open -na Obsidian
 
 # Toggle sketchybar
-#
-#shift + lcmd + lalt + lctrl - 1 : killall sketchybar
+lcmd + lctrl + lalt - 2 : killall sketchybar
 
 #shift + lalt - space : sketchybar --bar hidden=toggle
 # Restart yabai: launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai" 

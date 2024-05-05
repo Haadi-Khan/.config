@@ -26,6 +26,9 @@ return require('packer').startup(function(use)
     use('nvim-tree/nvim-tree.lua')
     use('nvim-tree/nvim-web-devicons')
 
+    -- DAP Support
+    use('mfussenegger/nvim-dap')
+
     -- LSP
     use {
     'VonHeikemen/lsp-zero.nvim',
@@ -36,6 +39,7 @@ return require('packer').startup(function(use)
 
         -- LSP Support
         {'neovim/nvim-lspconfig'},
+
 
         -- Autocompletion
         {'hrsh7th/nvim-cmp'},

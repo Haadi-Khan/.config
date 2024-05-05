@@ -64,8 +64,10 @@ yabai -m rule --add label="Zoom" app="Zoom" title="Zoom" space=10
 yabai -m rule --add app="^(LuLu|Vimac|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Raycast|Activity Monitor)$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Box" app="^Box$" manage=off
+yabai -m rule --add label="FaceTime" app="^FaceTime$" manage=off
 yabai -m rule --add label="Bitwarden" manage=off
 yabai -m rule --add label="Orion" app="^Orion$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advanced)$" manage=off
+yabai -m rule --add label="Arc" app="^Arc$" title="^(temp|General|(Tab|Password|Website|Extension)s|Link|Max|Shortcuts|Icon|AutoFill|Se(arch|curity)|Pr(ofiles|ivacy)|Advanced)$" manage=off
 yabai -m rule --add label="GIMP" app="GIMP" title="GIMP" manage=off
 
 # Get emacs to work with lsp mode (took way too long to figure out lmao
@@ -87,4 +89,5 @@ yabai -m rule --add label="Autodesk Fusion 360" app="^Autodesk Fusion 360$" titl
 yabai -m rule --add label="Proton VPN" app="Proton VPN" title="Proton VPN" manage=off
 
 # Load emacs daemon
-emacs --daemon &
+# emacs --daemon &
+launchctl load -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist
