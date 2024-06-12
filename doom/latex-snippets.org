@@ -452,14 +452,34 @@ All other sections are numbered from 0-999
 \\pi
 #+end_src
 *** Pi
-#+begin_src yasnippet :tangle snippets/latex-mode/1050.yasnippet
+#+begin_src yasnippet :tangle snippets/latex-mode/1059.yasnippet
 # -*- mode: snippet -*-
 # name: Pi
 # key: Pi
 # group: math
 # condition: (and (texmathp) 'auto)
 # --
-\\Pi
+\Pi
+#+end_src
+*** psi
+#+begin_src yasnippet :tangle snippets/latex-mode/1061.yasnippet
+# -*- mode: snippet -*-
+# name: psi
+# key: psi
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\psi
+#+end_src
+*** Psi
+#+begin_src yasnippet :tangle snippets/latex-mode/1060.yasnippet
+# -*- mode: snippet -*-
+# name: Psi
+# key: Psi
+# group: math
+# condition: (and (texmathp) 'auto)
+# --
+\\Psi
 #+end_src
 ** Calculus
 *** dot

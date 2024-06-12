@@ -13,7 +13,7 @@ yabai -m signal --add event=display_removed action="sleep 1 && $HOME/.config/yab
 #yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
 
 # Configure Yabai
-yabai -m config external_bar               all:40:0     \
+yabai -m config external_bar               all:0:0     \
                 window_border              on           \
                 window_zoom_persist        off          \
                 window_placement           second_child \
@@ -69,6 +69,7 @@ yabai -m rule --add label="Bitwarden" manage=off
 yabai -m rule --add label="Orion" app="^Orion$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advanced)$" manage=off
 yabai -m rule --add label="Arc" app="^Arc$" title="^(temp|General|(Tab|Password|Website|Extension)s|Link|Max|Shortcuts|Icon|AutoFill|Se(arch|curity)|Pr(ofiles|ivacy)|Advanced)$" manage=off
 yabai -m rule --add label="GIMP" app="GIMP" title="GIMP" manage=off
+yabai -m rule --add label="Ice" app="Ice" manage=off
 
 # Get emacs to work with lsp mode (took way too long to figure out lmao
 # yabai -m rule --add app="Emacs" title!="^(  —|posframe)" manage=on
