@@ -452,7 +452,7 @@ All other sections are numbered from 0-999
 \\pi
 #+end_src
 *** Pi
-#+begin_src yasnippet :tangle snippets/latex-mode/1059.yasnippet
+#+begin_src yasnippet :tangle snippets/latex-mode/1069.yasnippet
 # -*- mode: snippet -*-
 # name: Pi
 # key: Pi
@@ -819,7 +819,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # group: math
 # name: \begin{bmatrix} ... \end{}
 # --
-\begin{bmatrix}} $0 \end{bmatrix}
+\begin{bmatrix} $0 \end{bmatrix}
 #+end_src
 *** pmatrix
 #+begin_src yasnippet :tangle snippets/latex-mode/4008.yasnippet
@@ -828,7 +828,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # group: math
 # name: \begin{pmatrix} ... \end{}
 # --
-\begin{pmatrix}} $0 \end{pmatrix}
+\begin{pmatrix} $0 \end{pmatrix}
 #+end_src
 
 *** vmatrix
@@ -838,7 +838,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # group: math
 # name: \begin{vmatrix} ... \end{}
 # --
-\begin{vmatrix}} $0 \end{vmatrix}
+\begin{vmatrix} $0 \end{vmatrix}
 #+end_src
 ** Logic + Set Theory
 *** equiv
@@ -1096,7 +1096,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\\bra
+\\bra {$0}
 #+end_src
 *** ket
 #+begin_src yasnippet :tangle snippets/latex-mode/6002.yasnippet
@@ -1106,7 +1106,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # condition: (and (texmathp) 'auto)
 # group: math
 # --
-\\ket
+\\ket {$0}
 #+end_src
 *** braket
 #+begin_src yasnippet :tangle snippets/latex-mode/6003.yasnippet

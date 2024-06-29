@@ -38,7 +38,6 @@
 - [[#random][Random]]
   - [[#typit][Typit]]
   - [[#elfeed-1][Elfeed]]
-  - [[#elcord][Elcord]]
 - [[#argumentative][Argumentative]]
 - [[#code][Code]]
   - [[#base-config][Base Config]]
@@ -48,6 +47,7 @@
   - [[#copilot][Copilot]]
   - [[#lookup-providers][Lookup Providers]]
   - [[#snippets-1][Snippets]]
+  - [[#projectile-errors][Projectile Errors]]
   - [[#languages][Languages]]
 
 * Packages
@@ -59,6 +59,7 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! toc-org)
 (package! ivy-posframe)
 (package! dirvish)
+(package! ox-reveal)
 
 (package! org-autolist)
 (package! real-auto-save)
@@ -69,6 +70,7 @@ Doom splits packages into their own file. Here's all the additional packages I l
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 (package! treesit-auto)
 (package! eldoc-box)
+(package! flycheck-projectile)
 
 (package! eglot)
 (package! lsp-booster :recipe (:host github :repo "blahgeek/emacs-lsp-booster"))
@@ -78,7 +80,6 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! code-cells)
 
 (package! typit)
-(package! elcord)
 
 (package! org-excalidraw
   :recipe (:type git :host github :repo "wdavew/org-excalidraw")
@@ -257,7 +258,15 @@ Better markup commands
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader :desc "Format Buffer" :n "c f" #'eglot-format)
 (map! :leader :desc "Docs Glance" :n "c h" #'eldoc-box-hover-at-point-mode)
+(map! :leader :desc "Show Project Errors" :n "c X" #'flycheck-projectile-list-errors)
 #+end_src
+
+Projectile Errors
+#+begin_src emacs-lisp :tangle config.el
+(map! :map flycheck-projectile-error-list-mode-map :n "j" #'evil-next-line)
+(map! :map flycheck-projectile-error-list-mode-map :n "k" #'evil-previous-line)
+#+end_src
+
 *** Jupyter Notebook
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader :desc "Begin Jupyter Notebok" :n "j B" #'ein:run)
@@ -305,57 +314,90 @@ Better markup commands
 #+end_src
 ** Colemak
 I've been learning colemak-dh, so I want to create toggle-able minor mode so I can learn how to use it with emacs effectively
-
 #+begin_src emacs-lisp :tangle config.el
 ;; Define the minor mode
 (define-minor-mode colemak-mode
   "Mode to enable Colemak-DH rebinds"
   :lighter " ColemakMode"
   :keymap (let ((map (make-sparse-keymap)))
+            ;; Normal state bindings
+            (evil-define-key 'normal map
+              "m" 'evil-backward-char
+              "M" 'evil-beginning-of-line
+              "n" 'evil-next-line
+              "N" 'evil-search-next
+              "e" 'evil-previous-line
+              "E" 'evil-search-previous
+              "i" 'evil-forward-char
+              "I" 'evil-window-top
+              "j" 'evil-lookup
+              "l" 'evil-insert
+              "L" 'evil-insert-line
+              "k" 'evil-forward-word-end
+              "K" 'evil-forward-word-end
+              "h" 'evil-backward-char
+              "H" 'evil-beginning-of-line)
+
+            ;; Insert state bindings
+            (evil-define-key 'insert map
+              (kbd "C-e") (kbd "C-k"))
+
+            ;; Visual state bindings
+            (evil-define-key 'visual map
+              "m" 'evil-backward-char
+              "M" 'evil-beginning-of-line
+              "n" 'evil-next-line
+              "N" 'evil-search-next
+              "e" 'evil-previous-line
+              "E" 'evil-search-previous
+              "i" 'evil-forward-char
+              "I" 'evil-window-top
+              "j" 'evil-lookup
+              "l" 'evil-insert
+              "L" 'evil-insert-line
+              "k" 'evil-forward-word-end
+              "K" 'evil-forward-word-end
+              "h" 'evil-backward-char
+              "H" 'evil-beginning-of-line
+              (kbd "C-e") (kbd "C-k"))
+
+            ;; Operator state bindings
+            (evil-define-key 'operator map
+              (kbd "C-e") (kbd "C-k"))
+
+            ;; Motion state bindings
+            (evil-define-key 'motion map
+              (kbd "C-e") (kbd "C-k"))
+
+            ;; Replace state bindings
+            (evil-define-key 'replace map
+              (kbd "C-e") (kbd "C-k"))
+
             map))
 
 ;; Define a global version of the minor mode
 (define-globalized-minor-mode global-colemak-mode colemak-mode
   (lambda ()
     (colemak-mode 1)))
-#+end_src
 
-#+begin_src emacs-lisp :tangle config.el
-(defun my/colemak-mode-toggle ()
-  "Enable or disable Colemak-DH rebinds."
-  (if colemak-mode
-      (progn
-        (message "Colemak mode enabled")
-        (evil-define-key 'normal colemak-mode-map
-        "m" 'evil-backward-char
-        "M" 'evil-beginning-of-line
-        "n" 'evil-next-line
-        "N" 'evil-search-next
-        "e" 'evil-previous-line
-        "E" 'evil-search-previous
-        "i" 'evil-forward-char
-        "I" 'evil-window-top
-        "j" 'evil-lookup
-        "l" 'evil-insert
-        "L" 'evil-insert-line
-        "k" 'evil-forward-word-end
-        "K" 'evil-forward-word-end
-        "h" 'evil-backward-char
-        "H" 'evil-beginning-of-line)
-    (message "Colemak mode disabled"))))
+(global-colemak-mode 1)
 
-(define-minor-mode colemak-mode
-  "Mode to enable Colemak-DH rebinds"
-  :lighter " ColemakMode"
-  :keymap (let ((map (make-sparse-keymap)))
-            (my/colemak-mode-toggle)
-            map)
-  (my/colemak-mode-toggle))
+(defun colemak-elfeed-bindings ()
+  "Set Colemak bindings for elfeed-search-mode."
+  (evil-define-key 'normal elfeed-search-mode-map
+    "n" 'evil-next-line
+    "e" 'evil-previous-line))
 
-;; Define a global version of the minor mode
-(define-globalized-minor-mode global-colemak-mode colemak-mode
-  (lambda ()
-    (colemak-mode 1)))
+(add-hook 'colemak-mode-hook
+          (lambda ()
+            (if colemak-mode
+                (colemak-elfeed-bindings)
+              (progn
+                ;; Unset the bindings when disabling Colemak mode
+                (evil-define-key 'normal elfeed-search-mode-map
+                  "n" nil
+                  "e" nil)))))
+
 #+end_src
 ** Magit
 #+begin_src emacs-lisp :tangle config.el
@@ -743,10 +785,6 @@ Sometimes when I'm bored I open monkeytype to do a typing test. You can do it in
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
 (setq elfeed-search-filter "@1-month-ago +unread")
 #+end_src
-** Elcord
-#+begin_src emacs-lisp :tangle config.el
-(elcord-mode)
-#+end_src
 * Argumentative
 #+begin_src emacs-lisp :tangle config.el
 (require 'evil)
@@ -915,7 +953,7 @@ Some basic config stuff. I added way too much ram for garbage collection, but I 
 
 (global-corfu-mode)
 (setq corfu-auto-prefix 1)
-(setq corfu-auto-delay 0.05)
+(setq corfu-auto-delay 0.01)
 #+end_src
 
 Makes EGlot stupid fast
@@ -1071,6 +1109,13 @@ Great tool called lookup which enables searching for code issues straight from e
 
 (provide 'js-react-redux-yasnippets)
 ;;; js-react-redux-yasnippets.el ends here
+#+end_src
+** Projectile Errors
+#+begin_src emacs-lisp :tangle config.el
+  (add-to-list 'popwin:special-display-config
+               `(,flycheck-projectile-error-list-buffer
+                 :regexp nil :dedicated t :position bottom :stick t
+                 :noselect nil))
 #+end_src
 ** Languages
 *** Rust

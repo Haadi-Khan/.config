@@ -3,9 +3,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ein:output-area-inlined-images t t)
+ '(ein:output-area-inlined-images t)
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
- '(package-selected-packages '(elcord pyenv-mode org-download irony treesit-auto)))
+ '(package-selected-packages
+   '(ox-reveal flycheck-projectile elcord pyenv-mode org-download irony treesit-auto)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
