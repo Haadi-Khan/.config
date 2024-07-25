@@ -5,9 +5,10 @@ lsp.preset('recommended')
 require('mason').setup()
 require('mason-lspconfig').setup()
 require('lsp-zero').extend_lspconfig()
-require("mason-lspconfig").setup {ensure_installed = { "lua_ls","clangd", "rust_analyzer"},}
+require("mason-lspconfig").setup {ensure_installed = { "lua_ls","clangd", "rust_analyzer", "pyright"},}
 require("lspconfig").lua_ls.setup {}
 require("lspconfig").clangd.setup {}
+require("lspconfig").pyright.setup {}
 
 
 require'lspconfig'.rust_analyzer.setup{

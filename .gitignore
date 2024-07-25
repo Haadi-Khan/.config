@@ -9,5 +9,6 @@ fontforge/
 gtk-2.0/
 gtk-3.0/
 mgba/
+github-copilot/
 doom/config.el
 doom/packages.el

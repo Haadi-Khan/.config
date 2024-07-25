@@ -9,6 +9,9 @@
   - [[#quality-of-life][Quality of Life]]
   - [[#ivy][Ivy]]
   - [[#indent-guides][Indent Guides]]
+  - [[#company][Company]]
+  - [[#corfu][Corfu]]
+  - [[#theming][Theming]]
 - [[#keyboard][Keyboard]]
   - [[#evil-rebinds][Evil Rebinds]]
   - [[#config-files][Config Files]]
@@ -105,33 +108,23 @@ Removing title bar and customizing basic doom settings
 
 fixing vterm colors
 #+begin_src  emacs-lisp :tangle config.el
-(defconst dracula-background "#282a36")
-(defconst dracula-curren-line "#44475a")
-(defconst dracula-selection "#44475a")
-(defconst dracula-foreground "#f8f8f2")
-(defconst dracula-comment "#6272a4")
-(defconst dracula-white "#bfbfbf")
-(defconst dracula-black "#000000")
-(defconst dracula-cyan "#8be9fd")
-(defconst dracula-blue "#caa9fa")
-(defconst dracula-green "#50fa7b")
-(defconst dracula-orange "#ffb86c")
-(defconst dracula-pink "#ff79c6")
-(defconst dracula-purple "#bd93f9")
-(defconst dracula-red "#ff5555")
-(defconst dracula-yellow "#f1fa8c")
-(defconst dracula-magenta "#ff79c6")
-
-(setq vterm-default-fg 'dracula-foreground
-      vterm-default-bg 'dracula-background
-      vterm-black-fg 'dracula-black
-      vterm-red-fg 'dracula-red
-      vterm-green-fg 'dracula-green
-      vterm-yellow-fg 'dracula-yellow
-      vterm-blue-fg 'dracula-blue
-      vterm-magenta-fg 'dracula-magenta
-      vterm-cyan-fg 'dracula-cyan
-      vterm-white-fg 'dracula-white)
+(custom-set-faces
+ '(vterm-color-black ((t (:foreground "#282c34" :background "#282c34"))))
+ '(vterm-color-red ((t (:foreground "#be5046" :background "#be5046"))))
+ '(vterm-color-green ((t (:foreground "#98c379" :background "#98c379"))))
+ '(vterm-color-yellow ((t (:foreground "#d19a66" :background "#d19a66"))))
+ '(vterm-color-blue ((t (:foreground "#61afef" :background "#61afef"))))
+ '(vterm-color-magenta ((t (:foreground "#c678dd" :background "#c678dd"))))
+ '(vterm-color-cyan ((t (:foreground "#56b6c2" :background "#56b6c2"))))
+ '(vterm-color-white ((t (:foreground "#abb2bf" :background "#abb2bf"))))
+ '(vterm-color-bright-black ((t (:foreground "#4b5263" :background "#4b5263"))))
+ '(vterm-color-bright-red ((t (:foreground "#e06c75" :background "#e06c75"))))
+ '(vterm-color-bright-green ((t (:foreground "#98c379" :background "#98c379"))))
+ '(vterm-color-bright-yellow ((t (:foreground "#e5c07b" :background "#e5c07b"))))
+ '(vterm-color-bright-blue ((t (:foreground "#61afef" :background "#61afef"))))
+ '(vterm-color-bright-magenta ((t (:foreground "#c678dd" :background "#c678dd"))))
+ '(vterm-color-bright-cyan ((t (:foreground "#56b6c2" :background "#56b6c2"))))
+ '(vterm-color-bright-white ((t (:foreground "#abb2bf" :background "#abb2bf")))))
 #+end_src
 
 ** Quality of Life
@@ -196,6 +189,44 @@ Make sure that your font support U+2502! If not, try patching it from JetBrains 
 ;;         )
 ;; )
 #+end_src
+** Company
+#+begin_src emacs-lisp :tangle config.el
+(let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     `(popup-tip-face ((t (:background ,(color-darken-name bg 20)))))
+     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+     `(company-tooltip-common ((t (:background ,(color-lighten-name bg 10)) )))
+     `(company-tooltip-annotation ((t (:background ,(color-lighten-name bg 0)) )))
+     `(company-tooltip-quick-access ((t (:background ,(color-lighten-name bg 0)) )))
+))
+#+end_src
+** Corfu
+#+begin_src emacs-lisp :tangle config.el
+(let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(corfu-default ((t (:inherit default :background ,(color-darken-name bg 10)))))
+     `(corfu-current ((t (:inherit font-lock-function-name-face :background ,(color-darken-name bg 20)))))
+     `(corfu-popupinfo ((t (:background ,(color-lighten-name bg 0)) )))
+))
+#+end_src
+** Theming
+#+begin_src emacs-lisp :tangle config.el
+(progn
+  ;; Set the face for numbers to Dark Yellow
+  (set-face-foreground 'font-lock-number-face "#d19a66")
+
+  ;; Set the face for operators to Magenta (Purple)
+  (set-face-foreground 'font-lock-operator-face "#c678dd")
+
+  ;; Set the face for punctuation to Dark Yellow
+  (set-face-foreground 'font-lock-punctuation-face "#d19a66")
+
+  ;; Set the face for doc to Comment Gray
+  (set-face-foreground 'font-lock-doc-face "#5c6370"))
+#+end_src
 * Keyboard
 Adding some basic keybinds
 ** Evil Rebinds
@@ -232,7 +263,7 @@ I have a lot of config files I'd like to edit, so I made some maps
       :desc "Open Firefox Config" :leader "f x f" #'(lambda() (interactive) (find-file "~/Library/Application Support/Firefox/Profiles/kw89h3lk.default-release-1701650262876/chrome/userChrome.css"))
       :desc "Open spacebar Config" :leader "f x s" #'(lambda() (interactive) (find-file "~/.config/sketchybar/sketchybarrc"))
       :desc "Open skhd Config" :leader "f x S" #'(lambda() (interactive) (find-file "~/.config/skhd/skhdrc"))
-      :desc "Open yabai Config" :leader "f x a" #'(lambda() (interactive) (find-file "~/.config/yabai/yabairc"))
+      :desc "Open yabai Config" :leader "f x a" #'(lambda() (interactive) (find-file "~/.config/aerospace/aerospace.toml"))
       :desc "Open zsh Config" :leader "f x z" #'(lambda() (interactive) (find-file "~/.zshrc"))
       )
 
@@ -313,12 +344,12 @@ Projectile Errors
 (map! :map dired-mode-map :desc "Into directory" :n "l" #'dired-find-file)
 #+end_src
 ** Colemak
-I've been learning colemak-dh, so I want to create toggle-able minor mode so I can learn how to use it with emacs effectively
+Minor mode for my dactyl keyboard which uses colemak dh
 #+begin_src emacs-lisp :tangle config.el
 ;; Define the minor mode
-(define-minor-mode colemak-mode
-  "Mode to enable Colemak-DH rebinds"
-  :lighter " ColemakMode"
+(define-minor-mode dactyl-mode
+  "Mode to enabe Dactyl rebinds"
+  :lighter " DactylMode"
   :keymap (let ((map (make-sparse-keymap)))
             ;; Normal state bindings
             (evil-define-key 'normal map
@@ -338,10 +369,6 @@ I've been learning colemak-dh, so I want to create toggle-able minor mode so I c
               "h" 'evil-backward-char
               "H" 'evil-beginning-of-line)
 
-            ;; Insert state bindings
-            (evil-define-key 'insert map
-              (kbd "C-e") (kbd "C-k"))
-
             ;; Visual state bindings
             (evil-define-key 'visual map
               "m" 'evil-backward-char
@@ -359,41 +386,35 @@ I've been learning colemak-dh, so I want to create toggle-able minor mode so I c
               "K" 'evil-forward-word-end
               "h" 'evil-backward-char
               "H" 'evil-beginning-of-line
-              (kbd "C-e") (kbd "C-k"))
-
-            ;; Operator state bindings
-            (evil-define-key 'operator map
-              (kbd "C-e") (kbd "C-k"))
-
-            ;; Motion state bindings
-            (evil-define-key 'motion map
-              (kbd "C-e") (kbd "C-k"))
-
-            ;; Replace state bindings
-            (evil-define-key 'replace map
-              (kbd "C-e") (kbd "C-k"))
+              )
 
             map))
 
 ;; Define a global version of the minor mode
-(define-globalized-minor-mode global-colemak-mode colemak-mode
+(define-globalized-minor-mode global-dactyl-mode dactyl-mode
   (lambda ()
-    (colemak-mode 1)))
+    (dactyl-mode 1)))
 
-(global-colemak-mode 1)
+(global-dactyl-mode 1)
 
-(defun colemak-elfeed-bindings ()
+(defun dactyl-elfeed-bindings ()
   "Set Colemak bindings for elfeed-search-mode."
   (evil-define-key 'normal elfeed-search-mode-map
     "n" 'evil-next-line
     "e" 'evil-previous-line))
 
-(add-hook 'colemak-mode-hook
+(defun dactyl-space-bindings ()
+  "Set Dactyl bindings for window management."
+
+
+  )
+
+(add-hook 'dactyl-mode-hook
           (lambda ()
-            (if colemak-mode
-                (colemak-elfeed-bindings)
+            (if dactyl-mode
+                (dactyl-elfeed-bindings)
               (progn
-                ;; Unset the bindings when disabling Colemak mode
+                ;; Unset the bindings when disabling Dactyl mode
                 (evil-define-key 'normal elfeed-search-mode-map
                   "n" nil
                   "e" nil)))))
@@ -470,7 +491,7 @@ Add automatic table of contents
 
 ** Writing
 #+begin_src emacs-lisp :tangle config.el
-(add-hook 'org-mode-hook (lambda () (corfu-mode -1)))
+;; (add-hook 'org-mode-hook (lambda () (corfu-mode -1)))
 #+end_src
 ** Todo
 Settings for Todo
@@ -533,7 +554,7 @@ For some reason (even on emacs-plus) LaTeX embeds look like utter garbage on Mac
 (setq global-corfu-mode '(not org-mode))
 (add-hook 'org-mode 'org-cdlatex-mode)
 (with-eval-after-load 'org
-    (add-to-list 'org-latex-packages-alist '("" "physics" t)))
+    (add-to-list 'org-latex-packages-alist '("" "braket" t)))
 #+end_src
 
 ** Deft
@@ -952,8 +973,13 @@ Some basic config stuff. I added way too much ram for garbage collection, but I 
 (setq read-process-output-max (* 8192 1024)) ;; 8mb
 
 (global-corfu-mode)
+(corfu-history-mode)
 (setq corfu-auto-prefix 1)
 (setq corfu-auto-delay 0.01)
+(advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+;; (global-company-mode)
+;; (setq company-minimum-prefix-length 1)
+;; (setq company-idle-delay 0.01)
 #+end_src
 
 Makes EGlot stupid fast
@@ -1112,10 +1138,10 @@ Great tool called lookup which enables searching for code issues straight from e
 #+end_src
 ** Projectile Errors
 #+begin_src emacs-lisp :tangle config.el
-  (add-to-list 'popwin:special-display-config
-               `(,flycheck-projectile-error-list-buffer
-                 :regexp nil :dedicated t :position bottom :stick t
-                 :noselect nil))
+  ;; (add-to-list 'popwin:special-display-config
+  ;;              `(,flycheck-projectile-error-list-buffer
+  ;;                :regexp nil :dedicated t :position bottom :stick t
+  ;;                :noselect nil))
 #+end_src
 ** Languages
 *** Rust
@@ -1136,9 +1162,24 @@ Great tool called lookup which enables searching for code issues straight from e
 (add-hook! '(python-mode-hook python-ts-mode-hook) #'eglot-ensure)
 #+end_src
 *** C/C++
+LSP Config
 #+begin_src emacs-lisp :tangle config.el
 (set-eglot-client! 'c-ts-mode '("clangd" "-j=3" "--clang-tidy"))
 (add-hook! '(c-mode-hook c-ts-mode-hook c++-mode-hook c++-ts-mode-hook) #'eglot-ensure)
+
+(use-package cpp-mode
+  :mode (("\\.cpp\\'" . cpp-mode)
+         ("\\.hpp\\'" . cpp-mode)))
+
+(rassq-delete-all 'c++-ts-mode auto-mode-alist)
+#+end_src
+
+Tab width of 2 for C++
+#+begin_src emacs-lisp :tangle config.el
+(defun my-c++-mode-hook ()
+  (setq c-basic-offset 2)
+  (setq tab-width 2))
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
 #+end_src
 *** Typescript
 #+begin_src emacs-lisp :tangle config.el
