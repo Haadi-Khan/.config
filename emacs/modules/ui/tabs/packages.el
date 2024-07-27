@@ -1,4 +1,4 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; ui/tabs/packages.el
 
-(package! centaur-tabs :pin "0bb1aa18d475319df85f192dce3327802866c3c3")
+(package! centaur-tabs :pin "d6009c295a4363930247ae9a4d1125aea4d3fd74")

@@ -65,7 +65,7 @@ default/fallback account."
       ;; as otherwise you can accumulate empty workspaces
       (progn
         (unless (+workspace-buffer-list)
-          (+workspace-delete (+workspace-current-name)))
+          (+workspace-kill (+workspace-current-name)))
         (+workspace-switch +mu4e-workspace-name t))
     (setq +mu4e--old-wconf (current-window-configuration))
     (delete-other-windows)
@@ -365,7 +365,7 @@ When otherwise called, open a dired buffer and enable `dired-mu4e-attach-ctrl-c-
   ;; (prolusion-mail-hide)
   (cond
    ((and (modulep! :ui workspaces) (+workspace-exists-p +mu4e-workspace-name))
-    (+workspace/delete +mu4e-workspace-name))
+    (+workspace/kill +mu4e-workspace-name))
 
    (+mu4e--old-wconf
     (set-window-configuration +mu4e--old-wconf)

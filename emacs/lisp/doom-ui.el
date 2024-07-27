@@ -212,7 +212,8 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
     (cond ((eq buf (doom-fallback-buffer))
            (message "Can't kill the fallback buffer.")
            t)
-          ((doom-real-buffer-p buf)
+          ((and (doom-real-buffer-p buf)
+                (run-hook-with-args-until-failure 'kill-buffer-query-functions))
            (let ((visible-p (delq (selected-window) (get-buffer-window-list buf nil t))))
              (unless visible-p
                (when (and (buffer-modified-p buf)
@@ -221,11 +222,13 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
                                         buf))))
                  (user-error "Aborted")))
              (let ((inhibit-redisplay t)
-                   buffer-list-update-hook)
-               (when (or ;; if there aren't more real buffers than visible buffers,
+                   buffer-list-update-hook
+                   kill-buffer-query-functions)
+               (when (or
+                      ;; if there aren't more real buffers than visible buffers,
                       ;; then there are no real, non-visible buffers left.
                       (not (cl-set-difference (doom-real-buffer-list)
-                                              (doom-visible-buffers)))
+                                              (doom-visible-buffers nil t)))
                       ;; if we end up back where we start (or previous-buffer
                       ;; returns nil), we have nowhere left to go
                       (memq (switch-to-prev-buffer nil t) (list buf 'nil)))
@@ -242,7 +245,7 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
 ;;; Fringes
 
 ;; Reduce the clutter in the fringes; we'd like to reserve that space for more
-;; useful information, like git-gutter and flycheck.
+;; useful information, like diff-hl and flycheck.
 (setq indicate-buffer-boundaries nil
       indicate-empty-lines nil)
 
@@ -302,6 +305,10 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
     (setq use-short-answers t)
   ;; DEPRECATED: Remove when we drop 27.x support
   (advice-add #'yes-or-no-p :override #'y-or-n-p))
+;; HACK: By default, SPC = yes when `y-or-n-p' prompts you (and
+;;   `y-or-n-p-use-read-key' is off). This seems too easy to hit by accident,
+;;   especially with SPC as our default leader key.
+(define-key y-or-n-p-map " " nil)
 
 ;; Try to keep the cursor out of the read-only portions of the minibuffer.
 (setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))

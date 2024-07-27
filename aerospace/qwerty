@@ -1,0 +1,90 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+start-at-login = true
+
+after-startup-command = [
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget borders'
+]
+
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+# cmd-ctrl-alt is hyper
+
+[gaps]
+inner.horizontal = 5
+inner.vertical =   5
+outer.left =       5
+outer.bottom =     5
+outer.top =        5
+outer.right =      5
+
+[mode.main.binding]
+cmd-ctrl-alt-enter = 'exec-and-forget open -na kitty'
+cmd-ctrl-alt-m = 'exec-and-forget open -na Firefox'
+cmd-ctrl-alt-period = 'exec-and-forget emacsclient -c -a \"Emacs\"'
+
+ctrl-alt-cmd-h = 'focus left'
+ctrl-alt-cmd-j = 'focus down'
+ctrl-alt-cmd-k = 'focus up'
+ctrl-alt-cmd-l = 'focus right'
+
+ctrl-alt-cmd-shift-h = 'move left'
+ctrl-alt-cmd-shift-j = 'move down'
+ctrl-alt-cmd-shift-k = 'move up'
+ctrl-alt-cmd-shift-l = 'move right'
+
+# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
+ctrl-alt-cmd-b = 'split horizontal'
+ctrl-alt-cmd-v = 'split vertical'
+
+ctrl-alt-cmd-p = 'fullscreen'
+
+ctrl-alt-cmd-q = 'layout v_accordion' # 'layout stacking' in i3
+ctrl-alt-cmd-a = 'layout h_accordion' # 'layout tabbed' in i3
+ctrl-alt-cmd-z = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+
+ctrl-alt-cmd-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+
+# Not supported, because this command is redundant in AeroSpace mental model.
+# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
+#ctrl-alt-cmd-space = 'focus toggle_tiling_floating'
+
+# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
+# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
+# ctrl-alt-cmd-a = 'focus parent'
+
+ctrl-alt-cmd-s = 'workspace 1'
+ctrl-alt-cmd-d = 'workspace 2'
+ctrl-alt-cmd-f = 'workspace 3'
+ctrl-alt-cmd-g = 'workspace 4'
+ctrl-alt-cmd-w = 'workspace 5'
+ctrl-alt-cmd-e = 'workspace 6'
+ctrl-alt-cmd-r = 'workspace 7'
+ctrl-alt-cmd-t = 'workspace 8'
+ctrl-alt-cmd-x = 'workspace 9'
+ctrl-alt-cmd-c = 'workspace 10'
+
+ctrl-alt-cmd-shift-s = 'move-node-to-workspace 1'
+ctrl-alt-cmd-shift-d = 'move-node-to-workspace 2'
+ctrl-alt-cmd-shift-f = 'move-node-to-workspace 3'
+ctrl-alt-cmd-shift-g = 'move-node-to-workspace 4'
+ctrl-alt-cmd-shift-w = 'move-node-to-workspace 5'
+ctrl-alt-cmd-shift-e = 'move-node-to-workspace 6'
+ctrl-alt-cmd-shift-r = 'move-node-to-workspace 7'
+ctrl-alt-cmd-shift-t = 'move-node-to-workspace 8'
+ctrl-alt-cmd-shift-x = 'move-node-to-workspace 9'
+ctrl-alt-cmd-shift-c = 'move-node-to-workspace 10'
+
+ctrl-alt-cmd-shift-1 = 'reload-config'
+
+ctrl-alt-cmd-o = 'mode resize'
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'

@@ -316,16 +316,14 @@ exist, and `org-link' otherwise."
 (defun +org-image-file-data-fn (protocol link _description)
   "Intepret LINK as an image file path and return its data."
   (setq
-   link (expand-file-name
-         link (pcase protocol
-                ("download"
-                 (or (if (require 'org-download nil t) org-download-image-dir)
-                     (if (require 'org-attach)         org-attach-id-dir)
-                     default-directory))
-                ("attachment"
-                 (require 'org-attach)
-                 org-attach-id-dir)
-                (_ default-directory))))
+   link (pcase protocol
+          ("download"
+           (expand-file-name link (or (if (require 'org-download nil t) org-download-image-dir)
+               default-directory)))
+          ("attachment"
+           (require 'org-attach)
+           (org-attach-expand link))
+          (_ (expand-file-name link default-directory))))
   (when (and (file-exists-p link)
              (image-type-from-file-name link))
     (with-temp-buffer
@@ -412,6 +410,15 @@ exist, and `org-link' otherwise."
                    (org-link-unescape (match-string-no-properties 1)))))
       (delete-region (match-beginning 0) (match-end 0))
       (insert label))))
+
+;;;###autoload
+(defun +org/yank-link ()
+  "Copy the url at point to the clipboard.
+If on top of an Org link, will only copy the link component."
+  (interactive)
+  (let ((url (thing-at-point 'url)))
+    (kill-new (or url (user-error "No URL at point")))
+    (message "Copied link: %s" url)))
 
 ;;;###autoload
 (defun +org/play-gif-at-point ()

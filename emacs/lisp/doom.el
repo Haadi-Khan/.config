@@ -79,7 +79,7 @@
   (when (< emacs-major-version 27)
     (user-error
      (concat
-      "Detected Emacs " emacs-version ", but Doom requires 27.1 or newer (28.1 is\n\n"
+      "Detected Emacs " emacs-version ", but Doom requires 27.1 or newer (29.4 is\n\n"
       "recommended). The current Emacs executable in use is:\n\n  " (car command-line-args)
       "\n\nA guide for installing a newer version of Emacs can be found at:\n\n  "
       (format "https://docs.doomemacs.org/-/install/%s"
@@ -201,7 +201,7 @@
   "Current version of Doom Emacs core.")
 
 ;; DEPRECATED: Remove these when the modules are moved out of core.
-(defconst doom-modules-version "24.04.0-pre"
+(defconst doom-modules-version "24.08.0-pre"
   "Current version of Doom Emacs.")
 
 (defvar doom-init-time nil
@@ -487,12 +487,13 @@ users).")
     ;;   later (see `startup--load-user-init-file@undo-hacks').
     (advice-add #'tool-bar-setup :override #'ignore)
 
-    ;; PERF,UX: site-lisp files are often obnoxiously noisy (emitting load
-    ;;   messages or other output to *Messages* or stdout). These queue
-    ;;   unnecessary redraws at startup which impact startup time depending on
-    ;;   window system. It also pollutes the logs. By suppressing it now, I can
-    ;;   load it myself, later, in a more controlled way (see
-    ;;   `startup--load-user-init-file@undo-hacks').
+    ;; PERF,UX: site-lisp files are often obnoxiously noisy (emitting output
+    ;;   that isn't useful to end-users, like load messages, deprecation
+    ;;   notices, and linter warnings. Displaying these in the minibuffer causes
+    ;;   unnecessary redraws at startup which can impact startup time
+    ;;   drastically and cause flashes of white. It also pollutes the logs. By
+    ;;   suppressing it here, I load it myself, later, in a more controlled way
+    ;;   (see `startup--load-user-init-file@undo-hacks').
     (put 'site-run-file 'initial-value site-run-file)
     (setq site-run-file nil)
 

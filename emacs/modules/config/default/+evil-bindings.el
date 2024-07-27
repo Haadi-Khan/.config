@@ -38,38 +38,67 @@
 ;;; Global keybindings
 
 ;; Smart tab, these will only work in GUI Emacs
-(map! :i [tab] (cmds! (and (modulep! :editor snippets)
-                           (yas-maybe-expand-abbrev-key-filter 'yas-expand))
-                      #'yas-expand
-                      (and (bound-and-true-p company-mode)
-                           (modulep! :completion company +tng))
-                      #'company-indent-or-complete-common
-                      (and (bound-and-true-p corfu-mode)
-                           (modulep! :completion corfu))
-                      #'completion-at-point)
-      :m [tab] (cmds! (and (modulep! :editor snippets)
-                           (evil-visual-state-p)
-                           (or (eq evil-visual-selection 'line)
-                               (not (memq (char-after) (list ?\( ?\[ ?\{ ?\} ?\] ?\))))))
-                      #'yas-insert-snippet
-                      (and (modulep! :editor fold)
-                           (save-excursion (end-of-line) (invisible-p (point))))
-                      #'+fold/toggle
-                      ;; Fixes #4548: without this, this tab keybind overrides
-                      ;; mode-local ones for modes that don't have an evil
-                      ;; keybinding scheme or users who don't have :editor (evil
-                      ;; +everywhere) enabled.
-                      (or (doom-lookup-key
-                           [tab]
-                           (list (evil-get-auxiliary-keymap (current-local-map) evil-state)
-                                 (current-local-map)))
-                          (doom-lookup-key
-                           (kbd "TAB")
-                           (list (evil-get-auxiliary-keymap (current-local-map) evil-state)))
-                          (doom-lookup-key (kbd "TAB") (list (current-local-map))))
-                      it
-                      (fboundp 'evil-jump-item)
-                      #'evil-jump-item)
+(map! :i [tab]
+      `(menu-item "Evil insert smart tab" nil :filter
+        (lambda (cmd)
+          (cond
+           ((or (doom-lookup-key [tab] overriding-terminal-local-map)
+                (doom-lookup-key (kbd "TAB") overriding-terminal-local-map))
+            cmd)
+           ,@(when (modulep! :editor snippets)
+               '(((memq (bound-and-true-p yas--active-field-overlay)
+                        (overlays-in (1- (point)) (1+ (point))))
+                  #'yas-next-field-or-maybe-expand)
+                 ((yas-maybe-expand-abbrev-key-filter 'yas-expand)
+                  #'yas-expand)))
+           ,@(when (modulep! :completion company +tng)
+               '(((bound-and-true-p company-mode)
+                  #'company-indent-or-complete-common)))
+           ,@(when (modulep! :completion corfu)
+               '(((bound-and-true-p corfu-mode)
+                  (if (derived-mode-p 'eshell-mode 'comint-mode)
+                      #'completion-at-point
+                    #'indent-for-tab-command)))))))
+      :m [tab]
+      `(menu-item "Evil motion smart tab" nil :filter
+        (lambda (cmd)
+          (cond
+           ((or (doom-lookup-key [tab] overriding-terminal-local-map)
+                (doom-lookup-key (kbd "TAB") overriding-terminal-local-map))
+            cmd)
+           ,@(when (modulep! :editor snippets)
+               '(((and (evil-visual-state-p)
+                       (or (eq evil-visual-selection 'line)
+                           (not (memq (char-after)
+                                      (list ?\( ?\[ ?\{ ?\} ?\] ?\))))))
+                  #'yas-insert-snippet)))
+           ,@(when (modulep! :editor fold)
+               '(((save-excursion (end-of-line) (invisible-p (point)))
+                  #'+fold/toggle)))
+           ;; Fixes #4548: without this, this tab keybind overrides
+           ;; mode-local ones for modes that don't have an evil
+           ;; keybinding scheme or users who don't have :editor (evil
+           ;; +everywhere) enabled.
+           ((or (doom-lookup-key
+                 [tab]
+                 (list (evil-get-auxiliary-keymap (current-local-map)
+                                                  evil-state)
+                       (current-local-map)))
+                (doom-lookup-key
+                 (kbd "TAB")
+                 (list (evil-get-auxiliary-keymap (current-local-map)
+                                                  evil-state)))
+                (doom-lookup-key (kbd "TAB") (list (current-local-map))))
+            cmd)
+           ((fboundp 'evil-jump-item)
+            #'evil-jump-item))))
+      ;; Extend smart tab for specific modes. This way, we process the entire
+      ;; smart tab logic and only fall back to these commands at the end.
+      (:when (modulep! :lang org)
+       (:after org :map org-mode-map
+        [remap indent-for-tab-command]
+        `(menu-item "Go to the next field" org-table-next-field
+          :filter ,(lambda (cmd) (when (org-at-table-p) cmd)))))
 
       (:after help :map help-mode-map
        :n "o"       #'link-hint-open-link)
@@ -90,9 +119,9 @@
        :n "o"    #'link-hint-open-link)
 
       (:unless (modulep! :input layout +bepo)
-        (:after (evil-org evil-easymotion)
-         :map evil-org-mode-map
-         :m "gsh" #'+org/goto-visible))
+       (:after (evil-org evil-easymotion)
+        :map evil-org-mode-map
+        :m "gsh" #'+org/goto-visible))
 
       (:when (modulep! :editor multiple-cursors)
        :prefix "gz"
@@ -351,8 +380,8 @@
         :desc "New named workspace"       "N"   #'+workspace/new-named
         :desc "Load workspace from file"  "l"   #'+workspace/load
         :desc "Save workspace to file"    "s"   #'+workspace/save
-        :desc "Delete session"            "x"   #'+workspace/kill-session
-        :desc "Delete this workspace"     "d"   #'+workspace/delete
+        :desc "Kill session"              "x"   #'+workspace/kill-session
+        :desc "Kill this workspace"       "d"   #'+workspace/kill
         :desc "Rename workspace"          "r"   #'+workspace/rename
         :desc "Restore last session"      "R"   #'+workspace/restore-last-session
         :desc "Next workspace"            "]"   #'+workspace/switch-right
@@ -456,6 +485,8 @@
        :desc "Browse emacs.d"              "E"   #'doom/browse-in-emacsd
        :desc "Find file"                   "f"   #'find-file
        :desc "Find file from here"         "F"   #'+default/find-file-under-here
+       (:when (modulep! :config literate)
+         :desc "Open heading in literate config" "h" #'+literate/find-heading)
        :desc "Locate file"                 "l"   #'locate
        :desc "Find file in private config" "p"   #'doom/find-file-in-private-config
        :desc "Browse private config"       "P"   #'doom/open-private-config
@@ -494,7 +525,7 @@
         :desc "Magit fetch"               "F"   #'magit-fetch
         :desc "Magit buffer log"          "L"   #'magit-log-buffer-file
         :desc "Git stage this file"       "S"   #'magit-stage-buffer-file
-        :desc "Git unstage this file"     "U"   #'magit-unstage-file
+        :desc "Git unstage this file"     "U"   #'magit-unstage-buffer-file
         (:prefix ("f" . "find")
          :desc "Find file"                 "f"   #'magit-find-file
          :desc "Find gitconfig file"       "g"   #'magit-find-git-config-file

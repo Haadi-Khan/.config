@@ -155,14 +155,6 @@ directives. By default, this only recognizes C directives.")
     :after-until #'evil-global-marker-p
     (and (>= char ?2) (<= char ?9)))
 
-  ;; REVIEW Fix #2493: dir-locals cannot target fundamental-mode when evil-mode
-  ;;        is active. See hlissner/doom-emacs#2493. Revert this if
-  ;;        emacs-evil/evil#1268 is resolved upstream.
-  (defadvice! +evil--fix-local-vars-a (&rest _)
-    :before #'turn-on-evil-mode
-    (when (eq major-mode 'fundamental-mode)
-      (hack-local-variables)))
-
   ;; HACK Invoking helpful from evil-ex throws a "No recursive edit is in
   ;;      progress" error because, between evil-ex and helpful,
   ;;      `abort-recursive-edit' gets called one time too many.
@@ -584,15 +576,25 @@ directives. By default, this only recognizes C directives.")
       :v "gl" #'evil-lion-left
       :v "gL" #'evil-lion-right
 
-      ;; Omni-completion
-      (:when (modulep! :completion company)
-       (:prefix "C-x"
-        :i "C-l"    #'+company/whole-lines
-        :i "C-k"    #'+company/dict-or-keywords
-        :i "C-f"    #'company-files
-        :i "C-]"    #'company-etags
-        :i "s"      #'company-ispell
-        :i "C-s"    #'company-yasnippet
-        :i "C-o"    #'company-capf
-        :i "C-n"    #'+company/dabbrev
-        :i "C-p"    #'+company/dabbrev-code-previous)))
+      ;; Emulation of Vim's omni-completion keybinds
+      (:prefix "C-x"
+        (:when (modulep! :completion company)
+         :i "C-l"  #'+company/whole-lines
+         :i "C-k"  #'+company/dict-or-keywords
+         :i "C-f"  #'company-files
+         :i "C-]"  #'company-etags
+         :i "s"    #'company-ispell
+         :i "C-s"  #'company-yasnippet
+         :i "C-o"  #'company-capf
+         :i "C-n"  #'+company/dabbrev
+         :i "C-p"  #'+company/dabbrev-code-previous)
+        (:when (modulep! :completion corfu)
+         :i "C-l"  #'cape-line
+         :i "C-k"  #'cape-keyword
+         :i "C-f"  #'cape-file
+         :i "C-]"  #'complete-tag
+         :i "s"    #'cape-dict
+         :i "C-s"  #'yasnippet-capf
+         :i "C-o"  #'completion-at-point
+         :i "C-n"  #'cape-dabbrev
+         :i "C-p"  #'+corfu/dabbrev-this-buffer)))

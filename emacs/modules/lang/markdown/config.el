@@ -23,6 +23,7 @@ capture, the end position, and the output buffer.")
         markdown-gfm-additional-languages '("sh")
         markdown-make-gfm-checkboxes-buttons t
         markdown-fontify-whole-heading-line t
+        markdown-fontify-code-blocks-natively t
 
         ;; `+markdown-compile' offers support for many transpilers (see
         ;; `+markdown-compile-functions'), which it tries until one succeeds.
@@ -46,10 +47,6 @@ capture, the end position, and the output buffer.")
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
                 "<script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>"))
 
-  ;; A shorter alias for org src blocks than "markdown"
-  (after! org-src
-    (add-to-list 'org-src-lang-modes '("md" . markdown)))
-
   :config
   (set-flyspell-predicate! '(markdown-mode gfm-mode)
     #'+markdown-flyspell-word-p)
@@ -70,12 +67,19 @@ capture, the end position, and the output buffer.")
     fill-nobreak-predicate (cons #'markdown-code-block-at-point-p
                                  fill-nobreak-predicate))
 
-  ;; HACK Prevent mis-fontification of YAML metadata blocks in `markdown-mode'
-  ;;      which occurs when the first line contains a colon in it. See
-  ;;      jrblevin/markdown-mode#328.
+  ;; HACK: Prevent mis-fontification of YAML metadata blocks in `markdown-mode'
+  ;;   which occurs when the first line contains a colon in it. See
+  ;;   jrblevin/markdown-mode#328.
   (defadvice! +markdown-disable-front-matter-fontification-a (&rest _)
     :override #'markdown-match-generic-metadata
     (ignore (goto-char (point-max))))
+
+  ;; HACK: markdown-mode calls a major mode without inhibiting its hooks, which
+  ;;   could contain expensive functionality. I suppress it to speed up their
+  ;;   fontification.
+  (defadvice! +markdown-optimize-src-buffer-modes-a (fn &rest args)
+    :around #'markdown-fontify-code-block-natively
+    (delay-mode-hooks (apply fn args)))
 
   (map! :map markdown-mode-map
         :localleader

@@ -16,6 +16,18 @@ Possible values are:
 Setting this to `aggressive' will enable Corfu in more commands which
 use the minibuffer such as `query-replace'.")
 
+(defvar +corfu-want-tab-prefer-expand-snippets nil
+  "If non-nil, prefer expanding snippets over cycling candidates with
+TAB.")
+
+(defvar +corfu-want-tab-prefer-navigating-snippets nil
+  "If non-nil, prefer navigating snippets over cycling candidates with
+TAB/S-TAB.")
+
+(defvar +corfu-want-tab-prefer-navigating-org-tables nil
+  "If non-nil, prefer navigating org tables over cycling candidates with
+TAB/S-TAB.")
+
 ;;
 ;;; Packages
 (use-package! corfu
@@ -62,8 +74,8 @@ use the minibuffer such as `query-replace'.")
         tab-always-indent 'complete)
   (add-to-list 'completion-category-overrides `(lsp-capf (styles ,@completion-styles)))
   (add-to-list 'corfu-auto-commands #'lispy-colon)
-  (add-to-list 'corfu-continue-commands #'+corfu-move-to-minibuffer)
-  (add-to-list 'corfu-continue-commands #'+corfu-smart-sep-toggle-escape)
+  (add-to-list 'corfu-continue-commands #'+corfu/move-to-minibuffer)
+  (add-to-list 'corfu-continue-commands #'+corfu/smart-sep-toggle-escape)
   (add-hook 'evil-insert-state-exit-hook #'corfu-quit)
 
   ;; HACK: If you want to update the visual hints after completing minibuffer

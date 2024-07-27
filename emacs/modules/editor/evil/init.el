@@ -111,6 +111,7 @@ variable for an explanation of the defaults (in comments). See
       consult
       corfu
       crdt
+      (csv "csv-mode")
       (custom cus-edit)
       cus-theme
       dashboard
@@ -128,6 +129,7 @@ variable for an explanation of the defaults (in comments). See
       distel
       doc-view
       docker
+      eat
       ebib
       ebuku
       edbi
@@ -182,6 +184,7 @@ variable for an explanation of the defaults (in comments). See
       info
       ivy
       js2-mode
+      ,@(if (>= emacs-major-version 30) '(kmacro))
       leetcode
       lispy
       lms
@@ -193,6 +196,7 @@ variable for an explanation of the defaults (in comments). See
       macrostep
       man
       (magit magit-repos magit-submodule)
+      magit-repos
       magit-section
       magit-todos
       markdown-mode
@@ -355,4 +359,13 @@ and complains if a module is loaded too early (during startup)."
     (dolist (mode evil-collection-mode-list)
       (dolist (req (or (cdr-safe mode) (list mode)))
         (with-eval-after-load req
-          (+evil-collection-init mode +evil-collection-disabled-list))))))
+          (+evil-collection-init mode +evil-collection-disabled-list)))))
+
+  ;; HACK: The Diff options in `save-some-buffers's prompt should persist after
+  ;;   you quit view-mode, but evil-collection-view's bindings on q/Q break
+  ;;   this, so these are here to restore them.
+  ;; REVIEW: PR this upstream!
+  (map! :after (view evil-collection-view)
+        :map view-mode-map
+        :n "q" #'View-quit
+        :n "Q" #'View-quit-all))

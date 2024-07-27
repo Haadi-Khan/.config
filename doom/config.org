@@ -193,24 +193,23 @@ Make sure that your font support U+2502! If not, try patching it from JetBrains 
 #+begin_src emacs-lisp :tangle config.el
 (let ((bg (face-attribute 'default :background)))
     (custom-set-faces
-     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
-     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
-     `(popup-tip-face ((t (:background ,(color-darken-name bg 20)))))
-     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
-     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
-     `(company-tooltip-common ((t (:background ,(color-lighten-name bg 10)) )))
-     `(company-tooltip-annotation ((t (:background ,(color-lighten-name bg 0)) )))
-     `(company-tooltip-quick-access ((t (:background ,(color-lighten-name bg 0)) )))
+     '(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     '(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     '(popup-tip-face ((t (:background ,(color-darken-name bg 20)))))
+     '(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     '(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+     '(company-tooltip-common ((t (:background ,(color-lighten-name bg 10)) )))
+     '(company-tooltip-annotation ((t (:background ,(color-lighten-name bg 0)) )))
+     '(company-tooltip-quick-access ((t (:background ,(color-lighten-name bg 0)) )))
 ))
 #+end_src
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
 (let ((bg (face-attribute 'default :background)))
-    (custom-set-faces
-     `(corfu-default ((t (:inherit default :background ,(color-darken-name bg 10)))))
-     `(corfu-current ((t (:inherit font-lock-function-name-face :background ,(color-darken-name bg 20)))))
-     `(corfu-popupinfo ((t (:background ,(color-lighten-name bg 0)) )))
-))
+  (custom-set-faces
+   `(corfu-default ((t (:inherit default :background ,(color-darken-name bg 10)))))
+   `(corfu-current ((t (:inherit font-lock-function-name-face :background ,(color-darken-name bg 20)))))
+   `(corfu-popupinfo ((t (:background ,(color-lighten-name bg 0)))))))
 #+end_src
 ** Theming
 #+begin_src emacs-lisp :tangle config.el
@@ -394,8 +393,6 @@ Minor mode for my dactyl keyboard which uses colemak dh
 (define-globalized-minor-mode global-dactyl-mode dactyl-mode
   (lambda ()
     (dactyl-mode 1)))
-
-(global-dactyl-mode 1)
 
 (defun dactyl-elfeed-bindings ()
   "Set Colemak bindings for elfeed-search-mode."

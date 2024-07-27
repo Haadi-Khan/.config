@@ -604,8 +604,6 @@ current buffer."
   :hook (doom-first-buffer . smartparens-global-mode)
   :commands sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string
   :config
-  (add-to-list 'doom-point-in-string-functions 'sp-point-in-string)
-  (add-to-list 'doom-point-in-comment-functions 'sp-point-in-comment)
   ;; smartparens recognizes `slime-mrepl-mode', but not `sly-mrepl-mode', so...
   (add-to-list 'sp-lisp-modes 'sly-mrepl-mode)
   ;; Load default smartparens rules for various languages
@@ -730,11 +728,12 @@ on."
   ;; a less intrusive `delete-trailing-whitespaces' on save
   :hook (doom-first-buffer . ws-butler-global-mode)
   :config
-  ;; ws-butler normally preserves whitespace in the buffer (but strips it from
-  ;; the written file). While sometimes convenient, this behavior is not
-  ;; intuitive. To the average user it looks like whitespace cleanup is failing,
-  ;; which causes folks to redundantly install their own.
-  (setq ws-butler-keep-whitespace-before-point nil))
+  (pushnew! ws-butler-global-exempt-modes
+            'special-mode
+            'comint-mode
+            'term-mode
+            'eshell-mode
+            'diff-mode))
 
 (provide 'doom-editor)
 ;;; doom-editor.el ends here

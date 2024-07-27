@@ -104,6 +104,12 @@
                   (bound-and-true-p lsp--buffer-deferred)
                   (not (executable-find python-shell-interpreter t)))
         (anaconda-mode +1))))
+
+  (add-hook! 'eglot-server-initialized-hook
+    (defun +python-disable-anaconda-mode-h (&rest _)
+      "Ensure `anaconda-mode' doesn't interfere with `eglot'."
+      (when (bound-and-true-p anaconda-mode)
+        (anaconda-mode -1))))
   :config
   (set-company-backend! 'anaconda-mode '(company-anaconda))
   (set-lookup-handlers! 'anaconda-mode
@@ -128,7 +134,7 @@
     (add-hook 'anaconda-mode-hook #'evil-normalize-keymaps))
   (map! :localleader
         :map anaconda-mode-map
-        :prefix "g"
+        :prefix ("g" . "conda")
         "d" #'anaconda-mode-find-definitions
         "h" #'anaconda-mode-show-doc
         "a" #'anaconda-mode-find-assignments
@@ -142,10 +148,10 @@
   (map! :after python
         :map python-mode-map
         :localleader
-        (:prefix ("i" . "imports")
-          :desc "Insert missing imports" "i" #'pyimport-insert-missing
-          :desc "Remove unused imports"  "R" #'pyimport-remove-unused
-          :desc "Optimize imports"       "o" #'+python/optimize-imports)))
+        :prefix ("i" . "imports")
+        :desc "Insert missing imports" "i" #'pyimport-insert-missing
+        :desc "Remove unused imports"  "R" #'pyimport-remove-unused
+        :desc "Optimize imports"       "o" #'+python/optimize-imports))
 
 
 (use-package! py-isort
@@ -155,8 +161,8 @@
         :map python-mode-map
         :localleader
         (:prefix ("i" . "imports")
-          :desc "Sort imports"      "s" #'py-isort-buffer
-          :desc "Sort region"       "r" #'py-isort-region)))
+         :desc "Sort imports"      "s" #'py-isort-buffer
+         :desc "Sort region"       "r" #'py-isort-region)))
 
 (use-package! nose
   :commands nose-mode
@@ -170,7 +176,7 @@
 
   (map! :localleader
         :map nose-mode-map
-        :prefix "t"
+        :prefix ("t" . "test")
         "r" #'nosetests-again
         "a" #'nosetests-all
         "s" #'nosetests-one
@@ -214,7 +220,7 @@
       (:description . "Run Python script")))
   (map! :map python-mode-map
         :localleader
-        :prefix "e"
+        :prefix ("e" . "pipenv")
         :desc "activate"    "a" #'pipenv-activate
         :desc "deactivate"  "d" #'pipenv-deactivate
         :desc "install"     "i" #'pipenv-install
@@ -336,16 +342,8 @@
 ;;
 ;;; LSP
 
-(eval-when! (and (modulep! +lsp)
-                 (not (modulep! :tools lsp +eglot)))
-
-  (use-package! lsp-python-ms
-    :unless (modulep! +pyright)
-    :after lsp-mode
-    :preface
-    (after! python
-      (setq lsp-python-ms-python-executable-cmd python-shell-interpreter)))
-
-  (use-package! lsp-pyright
-    :when (modulep! +pyright)
-    :after lsp-mode))
+(use-package! lsp-pyright
+  :when (modulep! +lsp)
+  :when (modulep! +pyright)
+  :when (not (modulep! :tools lsp +eglot))
+  :after lsp-mode)
