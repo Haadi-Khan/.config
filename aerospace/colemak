@@ -25,15 +25,15 @@ cmd-ctrl-alt-enter = 'exec-and-forget open -na kitty'
 cmd-ctrl-alt-h = 'exec-and-forget open -na Firefox'
 cmd-ctrl-alt-period = 'exec-and-forget emacsclient -c -a \"Emacs\"'
 
-ctrl-alt-cmd-n = 'focus left'
-ctrl-alt-cmd-e = 'focus down'
-ctrl-alt-cmd-i = 'focus up'
-ctrl-alt-cmd-o = 'focus right'
+ctrl-alt-cmd-m = 'focus left'
+ctrl-alt-cmd-n = 'focus down'
+ctrl-alt-cmd-e = 'focus up'
+ctrl-alt-cmd-i = 'focus right'
 
-ctrl-alt-cmd-shift-n = 'move left'
-ctrl-alt-cmd-shift-e = 'move down'
-ctrl-alt-cmd-shift-i = 'move up'
-ctrl-alt-cmd-shift-o = 'move right'
+ctrl-alt-cmd-shift-m = 'move left'
+ctrl-alt-cmd-shift-n = 'move down'
+ctrl-alt-cmd-shift-e = 'move up'
+ctrl-alt-cmd-shift-i = 'move right'
 
 # Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
 ctrl-alt-cmd-z = 'split horizontal'
