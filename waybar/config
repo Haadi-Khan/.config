@@ -1,0 +1,117 @@
+// -*- mode: json -*-
+
+{
+	"layer": "top",
+	"position": "top",
+
+	"modules-left": [
+		"hyprland/workspaces",
+	],
+	"modules-center": [
+		"clock#1",
+		"clock#2",
+		"clock#3",
+	],
+	"modules-right": [
+		"pulseaudio",
+		"memory",
+		"cpu",
+		"battery",
+		"network",
+		"tray"
+	],
+
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"persistent-workspaces": {
+				"1": [],
+				"2": [],
+				"3": [],
+				"4": [],
+				"5": [],
+				"6": [],
+				"7": [],
+				"8": [],
+				"9": [],
+				"10": []
+		},
+		"format-icons": {
+			"urgent": "  ",
+			"focused": "  ",
+			"default": "  ",
+		},
+		"format": "{icon}",
+	},
+
+	"clock#1": {
+		"format": "{:%a}",
+		"tooltip": false
+	},
+	"clock#2": {
+		"format": "{:%I:%M %p}",
+		"tooltip": false
+	},
+	"clock#3": {
+		"format": "{:%b %d}",
+		"tooltip": false
+	},
+
+	"pulseaudio": {
+		"format": "{icon}{volume:2}%",
+		"format-bluetooth": "{icon}{volume}%",
+		"format-muted": "MUTE",
+		"format-icons": {
+			"headphones": "",
+			"default": [
+				"",
+				""
+			]
+		},
+		"scroll-step": 5,
+		"on-click": "pamixer -t",
+		"on-click-right": "pavucontrol"
+	},
+	"memory": {
+		"interval": 5,
+		"format": " {}%"
+	},
+	"cpu": {
+		"interval": 5,
+		"format": " {usage:2}%"
+	},
+	"battery": {
+		"states": {
+			"good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}%",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"disk": {
+		"interval": 5,
+		"format": "Disk {percentage_used:2}%",
+		"path": "/"
+	},
+	"network": {
+		"interface": "wlp2s0",
+		"format": "{ifname}",
+		"format-wifi": "{essid} ({signalStrength}%) ",
+		"format-ethernet": "{ipaddr}/{cidr} 󰊗",
+		"format-disconnected": "", //An empty format will hide the module.
+		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
+		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+		"tooltip-format-ethernet": "{ifname} ",
+		"tooltip-format-disconnected": "Disconnected",
+		"max-length": 50
+	},
+	"tray": {
+		"icon-size": 20
+	}
+}

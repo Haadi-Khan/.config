@@ -1,0 +1,66 @@
+# name: Access component's props
+# key: props
+# uuid: props
+# --
+this.props.$0
+\cdot prpcp
+# name: Creates a React component class with ESNext class fields
+# key: prpcp
+# uuid: prpcp
+# --
+import React, { PureComponent } from 'react'`(js-react-redux-yasnippets-semicolon)`
+import PropTypes from 'prop-types'`(js-react-redux-yasnippets-semicolon)`
+
+export default class ${`(js-react-redux-yasnippets-filename-base)`} extends PureComponent {
+ static propTypes = {
+
+ }`(js-react-redux-yasnippets-semicolon)`
+
+ render() {
+  return (
+   <div>
+    $0
+   </div>
+  )`(js-react-redux-yasnippets-semicolon)`
+ }
+}
+\cdot prrdpc
+# name: Creates a React component class with connected redux, PropTypes and ESNext class fields
+# key: prrdpc
+# uuid: prrdpc
+# --
+import React, { Component } from 'react'`(js-react-redux-yasnippets-semicolon)`
+import PropTypes from 'prop-types'`(js-react-redux-yasnippets-semicolon)`
+import { connect } from 'react-redux'`(js-react-redux-yasnippets-semicolon)`
+
+export class ${1:`(js-react-redux-yasnippets-filename-base)`} extends Component {
+ static propTypes = {
+  ${2:prop}: ${3:PropTypes},
+ }`(js-react-redux-yasnippets-semicolon)`
+
+ render() {
+  return (
+   <div>
+    $0
+   </div>
+  )`(js-react-redux-yasnippets-semicolon)`
+ }
+}
+
+const mapStateToProps = (state) => ({
+
+})`(js-react-redux-yasnippets-semicolon)`
+
+const mapDispatchToProps = {
+
+}`(js-react-redux-yasnippets-semicolon)`
+
+export default connect(mapStateToProps, mapDispatchToProps)($1)`(js-react-redux-yasnippets-semicolon)`
+\cdot pse
+# name: Creates a setter property inside a class in ES7 syntax
+# key: pse
+# uuid: pse
+# --
+set ${propertyName}(${value}) {
+ $0
+}

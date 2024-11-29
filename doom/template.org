@@ -1,0 +1,5 @@
+#+LATEX_HEADER:\usepackage{tcolorbox}
+#+LATEX_HEADER:\usepackage{physics}
+#+LATEX_HEADER:\usepackage{graphicx}
+#+LATEX_HEADER:\usepackage[margin=0.5in]{geometry}
+#+LATEX_HEADER:\usepackage[normalem]{ulem}
