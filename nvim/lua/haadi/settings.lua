@@ -7,13 +7,13 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
-vim.opt.smartindent =true
+vim.opt.smartindent = true
 
 vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv( "HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
@@ -26,11 +26,13 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.colorcolumn = "80"
 
-vim.opt.foldmethod= "indent"
+vim.opt.foldmethod = "indent"
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard:append { 'unnamedplus' }
 
 vim.g.mapleader = " "
 
 vim.g.onedark_dark_sidebar = false
 vim.api.nvim_command [[colorscheme onedark]]
+
+vim.o.pumheight = 15

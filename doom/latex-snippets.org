@@ -50,6 +50,7 @@ All other sections are numbered from 0-999
   - [[#basict][basict]]
   - [[#beamer][beamer]]
   - [[#letter][letter]]
+  - [[#homework][homework]]
 - [[#environments][Environments]]
   - [[#align][align]]
   - [[#alignstar][alignstar]]
@@ -800,7 +801,7 @@ ${7:$1} & ${8:$1} & ${9:$1}
 # group: math
 # condition: (and (texmathp) 'auto)
 # --
-`(delete-backward-char 1)`^{\\dagger}$0
+^{\\dagger} `(delete-backward-char 1)`$0
 #+end_src
 *** matrix
 #+begin_src yasnippet :tangle snippets/latex-mode/4006.yasnippet
@@ -1480,7 +1481,7 @@ disabling this for now
 #+begin_src yasnippet :tangle snippets/latex-mode/8017.yasnippet
 # -*- mode: snippet -*-
 # name: lr(
-# key: lr(
+# key: lr()
 # group: math
 # condition: 'auto
 # --
@@ -1812,8 +1813,44 @@ $0
 \end{letter}
 
 \end{document}
+#+end_src
+** homework
+#+begin_src  yasnippet :tangle snippets/latex-mode/5.yasnippet
+# -*- mode: snippet -*-
+# key: homework
+# group: skeleton
+# name: \documentclass{letter} ...
+# --
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{braket}
+\usepackage{multicol}
+\usepackage[most]{tcolorbox}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{mathpazo}
+\usepackage{euler}
+\usepackage{enumitem}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\setcounter{secnumdepth}{0}
+\author{Haadi Khan}
+\date{\today}
+\title{$1}
+\begin{document}
 
+\maketitle
 
+\end{document}
 #+end_src
 * Environments
 ** align
@@ -2103,7 +2140,7 @@ $0
 # group: environments
 # name: \begin{tcolorbox} ... \end{tcolorbox}
 # --
-\begin{tcolorbox}[colframe=blue!25,colback=blue!10,coltitle=blue!20!black,title=Solution]
+\begin{tcolorbox}[colframe=blue!25,colback=blue!10,coltitle=blue!20!black,title=Solution, breakable, enhanced,skin first=enhanced,skin middle=enhanced,skin last=enhanced]
 $0
 \end{tcolorbox}
 #+end_src

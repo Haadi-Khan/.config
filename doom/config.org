@@ -8,8 +8,6 @@
   - [[#doom-specific][Doom Specific]]
   - [[#quality-of-life][Quality of Life]]
   - [[#ivy][Ivy]]
-  - [[#indent-guides][Indent Guides]]
-  - [[#company][Company]]
   - [[#corfu][Corfu]]
   - [[#theming][Theming]]
 - [[#keyboard][Keyboard]]
@@ -22,23 +20,25 @@
   - [[#dired][Dired]]
   - [[#colemak][Colemak]]
   - [[#magit][Magit]]
+  - [[#latex][LaTeX]]
 - [[#org-1][Org]]
   - [[#modern-org-mode][Modern Org Mode]]
   - [[#fonts][Fonts]]
   - [[#toc][TOC]]
-  - [[#writing][Writing]]
+  - [[#capture][Capture]]
   - [[#todo][Todo]]
-  - [[#latex][LaTeX]]
+  - [[#latex-1][LaTeX]]
   - [[#deft][Deft]]
   - [[#excalidraw][Excalidraw]]
   - [[#org-download][Org Download]]
-- [[#latex-1][LaTeX]]
+- [[#latex-2][LaTeX]]
   - [[#base-latex][Base LaTeX]]
   - [[#preview][Preview]]
   - [[#cd-latex][CD LaTeX]]
   - [[#org-tables][Org Tables]]
   - [[#snippets][Snippets]]
 - [[#random][Random]]
+  - [[#epub][EPub]]
   - [[#typit][Typit]]
   - [[#elfeed-1][Elfeed]]
 - [[#argumentative][Argumentative]]
@@ -64,6 +64,9 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! dirvish)
 (package! ox-reveal)
 
+(package! git-commit
+  :recipe (:host github :repo "magit/magit" :files ("lisp/git-commit.el")))
+
 (package! org-autolist)
 (package! real-auto-save)
 (package! cdlatex)
@@ -74,10 +77,13 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! treesit-auto)
 (package! eldoc-box)
 (package! flycheck-projectile)
+(package! harpoon)
 
 (package! eglot)
 (package! lsp-booster :recipe (:host github :repo "blahgeek/emacs-lsp-booster"))
 (package! eglot-booster :recipe (:host github :repo "jdtsmith/eglot-booster"))
+
+;; (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 
 (package! conda)
 (package! code-cells)
@@ -91,6 +97,7 @@ Doom splits packages into their own file. Here's all the additional packages I l
 
 (package! synosaurus)
 (package! wordnut)
+(package! nov)
 #+end_src
 
 * UI
@@ -162,7 +169,7 @@ Prevent Compilation window from resizing
 ** Ivy
 This moves the ivy completion to the top of the screen like VSCode. The custom function makes it a fixed size
 #+begin_src emacs-lisp :tangle config.el
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 
 (defun my-ivy-posframe-get-size ()
@@ -174,45 +181,20 @@ This moves the ivy completion to the top of the screen like VSCode. The custom f
 (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
 (ivy-posframe-mode 1)
 #+end_src
-** Indent Guides
-Make sure that your font support U+2502! If not, try patching it from JetBrains Mono or another font which supports the Unicode glyph
-#+begin_src emacs-lisp :tangle config.el
-;; (use-package! highlight-indent-guides
-;;   ;; :hook (prog-mode . highlight-indent-guides-mode)
-;;   :config
-;;   (setq highlight-indent-guides-method 'character
-;;         highlight-indent-guides-auto-odd-face-perc '120
-;;         highlight-indent-guides-auto-even-face-perc '120
-;;         highlight-indent-guides-auto-character-face-perc '180
-;;         highlight-indent-guides-character ?│
-;;         highlight-indent-guides-responsive 'top
-;;         )
-;; )
-#+end_src
-** Company
-#+begin_src emacs-lisp :tangle config.el
-(let ((bg (face-attribute 'default :background)))
-    (custom-set-faces
-     '(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
-     '(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
-     '(popup-tip-face ((t (:background ,(color-darken-name bg 20)))))
-     '(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
-     '(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
-     '(company-tooltip-common ((t (:background ,(color-lighten-name bg 10)) )))
-     '(company-tooltip-annotation ((t (:background ,(color-lighten-name bg 0)) )))
-     '(company-tooltip-quick-access ((t (:background ,(color-lighten-name bg 0)) )))
-))
-#+end_src
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
+(defun corfu-color ()
 (let ((bg (face-attribute 'default :background)))
   (custom-set-faces
    `(corfu-default ((t (:inherit default :background ,(color-darken-name bg 10)))))
    `(corfu-current ((t (:inherit font-lock-function-name-face :background ,(color-darken-name bg 20)))))
-   `(corfu-popupinfo ((t (:background ,(color-lighten-name bg 0)))))))
+`(popup-tip-face ((t (:background ,(color-darken-name bg 20)))))
+   `(corfu-popupinfo ((t (:background ,(color-lighten-name bg 0))))))
+))
 #+end_src
 ** Theming
 #+begin_src emacs-lisp :tangle config.el
+(corfu-color)
 (progn
   ;; Set the face for numbers to Dark Yellow
   (set-face-foreground 'font-lock-number-face "#d19a66")
@@ -225,6 +207,13 @@ Make sure that your font support U+2502! If not, try patching it from JetBrains 
 
   ;; Set the face for doc to Comment Gray
   (set-face-foreground 'font-lock-doc-face "#5c6370"))
+
+(set-face-attribute 'org-verbatim nil :background
+                    (color-darken-name
+                     (face-attribute 'default :background) 10))
+(set-face-attribute 'org-block nil :background
+                    (color-darken-name
+                     (face-attribute 'default :background) 10))
 #+end_src
 * Keyboard
 Adding some basic keybinds
@@ -283,6 +272,7 @@ Better markup commands
 ** Buffers
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader :desc "List Buffers" :n "b l" #'list-buffers)
+(map! :leader :desc "Buffer Word Count" :n "b w" #'count-words)
 #+end_src
 ** Programming
 #+begin_src emacs-lisp :tangle config.el
@@ -297,23 +287,49 @@ Projectile Errors
 (map! :map flycheck-projectile-error-list-mode-map :n "k" #'evil-previous-line)
 #+end_src
 
+*** Harpoon
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader "j c" 'harpoon-clear)
+(map! :leader "j m" 'harpoon-toggle-quick-menu)
+(map! :leader "j A" 'harpoon-add-file)
+(map! :leader "j t" 'harpoon-toggle-file)
+
+(map! :leader "j a" 'harpoon-go-to-1)
+(map! :leader "j s" 'harpoon-go-to-2)
+(map! :leader "j d" 'harpoon-go-to-3)
+(map! :leader "j f" 'harpoon-go-to-4)
+(map! :leader "j q" 'harpoon-go-to-5)
+(map! :leader "j w" 'harpoon-go-to-6)
+(map! :leader "j e" 'harpoon-go-to-7)
+(map! :leader "j r" 'harpoon-go-to-8)
+
+(map! :leader "j D a" 'harpoon-delete-1)
+(map! :leader "j D s" 'harpoon-delete-2)
+(map! :leader "j D d" 'harpoon-delete-3)
+(map! :leader "j D f" 'harpoon-delete-4)
+(map! :leader "j D q" 'harpoon-delete-5)
+(map! :leader "j D w" 'harpoon-delete-6)
+(map! :leader "j D e" 'harpoon-delete-7)
+(map! :leader "j D r" 'harpoon-delete-8)
+(map! :leader "j D ." 'harpoon-delete-item)
+#+end_src
 *** Jupyter Notebook
 #+begin_src emacs-lisp :tangle config.el
-(map! :leader :desc "Begin Jupyter Notebok" :n "j B" #'ein:run)
-(map! :leader :desc "Execute Cell" :n "j r" #'ein:worksheet-execute-cell)
-(map! :leader :desc "Execute All Cells" :n "j R" #'ein:worksheet-execute-all-cells)
-(map! :leader :desc "New Cell Above" :n "j a" #'ein:worksheet-insert-cell-above)
-(map! :leader :desc "New Cell Below" :n "j b" #'ein:worksheet-insert-cell-below)
-(map! :leader :desc "Delete Cell" :n "j d" #'ein:worksheet-delete-cell )
-(map! :leader :desc "Next Cell" :n "j j" #'ein:worksheet-goto-next-input-km)
-(map! :leader :desc "Previous Cell" :n "j k" #'ein:worksheet-goto-prev-input-km)
-(map! :leader :desc "Move Cell Down" :n "j J" #'ein:worksheet-move-cell-down)
-(map! :leader :desc "Move Cell Down" :n "j J" #'ein:worksheet-move-cell-down)
-(map! :leader :desc "Move Cell Up" :n "j K" #'ein:worksheet-move-cell-up)
-(map! :leader :desc "Toggle Cell Type" :n "j t" #'ein:worksheet-toggle-cell-type)
-(map! :leader :desc "Split Cell" :n "j s" #'ein:worksheet-split-cell-at-point-km)
-(map! :leader :desc "Switch Kernel" :n "j S" #'ein:notebook-switch-kernel)
-(map! :leader :desc "Save Notebook" :n "j x" #'ein:notebook-save-notebook-command)
+;; (map! :leader :desc "Begin Jupyter Notebok" :n "j B" #'ein:run)
+;; (map! :leader :desc "Execute Cell" :n "j r" #'ein:worksheet-execute-cell)
+;; (map! :leader :desc "Execute All Cells" :n "j R" #'ein:worksheet-execute-all-cells)
+;; (map! :leader :desc "New Cell Above" :n "j a" #'ein:worksheet-insert-cell-above)
+;; (map! :leader :desc "New Cell Below" :n "j b" #'ein:worksheet-insert-cell-below)
+;; (map! :leader :desc "Delete Cell" :n "j d" #'ein:worksheet-delete-cell )
+;; (map! :leader :desc "Next Cell" :n "j j" #'ein:worksheet-goto-next-input-km)
+;; (map! :leader :desc "Previous Cell" :n "j k" #'ein:worksheet-goto-prev-input-km)
+;; (map! :leader :desc "Move Cell Down" :n "j J" #'ein:worksheet-move-cell-down)
+;; (map! :leader :desc "Move Cell Down" :n "j J" #'ein:worksheet-move-cell-down)
+;; (map! :leader :desc "Move Cell Up" :n "j K" #'ein:worksheet-move-cell-up)
+;; (map! :leader :desc "Toggle Cell Type" :n "j t" #'ein:worksheet-toggle-cell-type)
+;; (map! :leader :desc "Split Cell" :n "j s" #'ein:worksheet-split-cell-at-point-km)
+;; (map! :leader :desc "Switch Kernel" :n "j S" #'ein:notebook-switch-kernel)
+;; (map! :leader :desc "Save Notebook" :n "j x" #'ein:notebook-save-notebook-command)
 ;; (map! poly-ein-mode-map :leader :map :desc "Save Notebook" :n "f s" #'ein:notebook-save-notebook-command)
 
 #+end_src
@@ -421,6 +437,10 @@ Minor mode for my dactyl keyboard which uses colemak dh
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader :desc "Magit pull" :n "g p" #'magit-pull)
 #+end_src
+** LaTeX
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader :map latex-mode-map :desc "Compile" :n "m c" #'+latex/compile)
+#+end_src
 
 * Org
 ** Modern Org Mode
@@ -486,9 +506,11 @@ Add automatic table of contents
 
 #+end_src
 
-** Writing
+** Capture
 #+begin_src emacs-lisp :tangle config.el
 ;; (add-hook 'org-mode-hook (lambda () (corfu-mode -1)))
+(setq +org-capture-journal-file "/Users/haadi/org/journal.org.gpg")
+(setq +org-capture-todo-file "/Users/haadi/org/todos.org.gpg")
 #+end_src
 ** Todo
 Settings for Todo
@@ -497,12 +519,10 @@ Settings for Todo
       '((sequence
          "TODO(t)"
          "TEST(T)"
-         "PHYS 2218(a)"
-         "PHYS 3316(s)"
-         "PHYS 3318(d)"
-         "CS 3410(f)"
-         "CS 4780(g)"
-         "SCIOLY(h)"
+         "PSET(p)"
+         "ESSAY(e)"
+         "SCIOLY(s)"
+         "QCA(q)"
          "|"
          "DONE(D)"
          "PROGRESS(p)"
@@ -513,16 +533,14 @@ Settings for Todo
 (setq org-todo-keyword-faces'(
                               ("TODO" . org-warning)
                               ("TEST" .  (:foreground "#e06c75" :weight bold))
-                              ("PHYS 3316" . "#d19a66")
-                              ("PHYS 3318" . "#61afef")
-                              ("PHYS 2218" . "#be5046")
-                              ("CS 4780" . "#56b6c2")
-                              ("CS 3410" . "#98c379")
-                              ("SCIOLY" . "#98c379")
+                              ("PSET" . "#d19a66")
+                              ("ESSAY" . "#be5046")
+                              ("SCIOLY" . "#56b6c2")
+                              ("QCA" . "#98c379")
                               ("DONE" . "#5c6370")
                               ("PROGRESS" . "#5c6370")
                               ("CANCELLED" . (:foreground "#4b5263" :weight bold))
-                              ("PROG" . "#e5c07b")
+                              ("PROG" . "#61afef")
                               ))
 #+end_src
 
@@ -590,6 +608,7 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
 
 ** Base LaTeX
 #+begin_src emacs-lisp :tangle config.el
+;; (add-hook! tex-mode-hook #'outline-minor-mode)
 ;; AucTeX settings - almost no changes
 (use-package latex
   :ensure auctex
@@ -615,6 +634,16 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
                                     calc-language latex
                                     calc-prefer-frac t
                                     calc-angle-mode rad))))))))
+#+end_src
+
+#+begin_src  emacs-lisp :tangle config.el
+(defun haadi/tex ()
+  (corfu-mode -1)
+  (tex-fold-mode 1)
+  (outline-minor-mode 1)
+)
+
+(add-hook! 'LaTeX-mode-hook #'haadi/tex)
 #+end_src
 ** Preview
 #+begin_src emacs-lisp :tangle config.el
@@ -793,6 +822,13 @@ Makes LaTeX blazing fast in Emacs (albeit not as great as vim due to the lack of
   (add-hook 'org-babel-post-tangle-hook #'ndk/zap-newline-at-eob)
 #+end_src
 * Random
+** EPub
+#+begin_src emacs-lisp :tangle config.el
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
+#+end_src
 ** Typit
 Sometimes when I'm bored I open monkeytype to do a typing test. You can do it in emacs!
 #+begin_src emacs-lisp :tangle config.el
@@ -966,18 +1002,19 @@ Sometimes when I'm bored I open monkeytype to do a typing test. You can do it in
 ** Base Config
 Some basic config stuff. I added way too much ram for garbage collection, but I have the RAM so I may as well use it to make sure that my editing isn't slow lol
 #+begin_src emacs-lisp :tangle config.el
+;; (global-dactyl-mode)
 (setq gc-cons-threshold 500000000) ;; 500mb
 (setq read-process-output-max (* 8192 1024)) ;; 8mb
 
 (global-corfu-mode)
+(setq corfu-sort-function nil)
 (corfu-history-mode)
 (setq corfu-auto-prefix 1)
 (setq corfu-auto-delay 0.01)
-(advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
-;; (global-company-mode)
-;; (setq company-minimum-prefix-length 1)
-;; (setq company-idle-delay 0.01)
+;; (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1))) ;; no inlay hints by default
 #+end_src
+
 
 Makes EGlot stupid fast
 #+begin_src emacs-lisp :tangle config.el
@@ -1179,35 +1216,107 @@ Tab width of 2 for C++
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 #+end_src
 *** Typescript
+Ok so basically typescript (and web dev in general) really needs multiple language servers at once (for things like tailwind completion alongside tsx) so I'm gonna use LSP mode *just* for typescript. Whenever eglot supports multiple servers at once I'll ditch it but it's the best option atm
+
 #+begin_src emacs-lisp :tangle config.el
-(define-derived-mode typescriptreact-mode web-mode "TypescriptReact"
-  "A major mode for tsx.")
+(use-package lsp-mode
+      :diminish "LSP"
+      :ensure t
+      :hook ((lsp-mode . lsp-diagnostics-mode)
+             (lsp-mode . lsp-enable-which-key-integration)
+             ((tsx-ts-mode
+               typescript-ts-mode
+               js-ts-mode) . lsp-deferred)))
+(use-package lsp-eslint
+:demand t
+:after lsp-mode)
+#+end_src
 
-(use-package typescript-ts-mode
-  :mode (("\\.ts\\'" . typescript-ts-mode)
-         ("\\.tsx\\'" . typescriptreact-mode)))
+Tailwind
+#+begin_src emacs-lisp :tangle config.el
+ (use-package lsp-tailwindcss
+      :init (setq lsp-tailwindcss-add-on-mode t)
+      :config
+      (dolist (tw-major-mode
+               '(css-mode
+                 css-ts-mode
+                 typescript-mode
+                 typescript-ts-mode
+                 tsx-ts-mode
+                 js2-mode
+                 js-ts-mode
+                 clojure-mode))
+        (add-to-list 'lsp-tailwindcss-major-modes tw-major-mode)))
+#+end_src
 
-(use-package eglot
-  :ensure t
-  :defer 3
-  :hook
-  ((js-mode
-    typescript-mode
-    typescript-tsx-mode
-    typescriptreact-mode) . eglot-ensure)
-  :config
-  (cl-pushnew '((js-ts-mode typescript-ts-mode typescript-tsx-mode typescriptreact-mode) . ("typescript-language-server" "--stdio"))
-              eglot-server-programs
-              :test #'equal))
+LSP booster
+#+begin_src emacs-lisp :tangle config.el
+(use-package lsp-mode
+      ;; ... previous configuration
+      :preface
+      (defun lsp-booster--advice-json-parse (old-fn &rest args)
+        "Try to parse bytecode instead of json."
+        (or
+         (when (equal (following-char) ?#)
+
+           (let ((bytecode (read (current-buffer))))
+             (when (byte-code-function-p bytecode)
+               (funcall bytecode))))
+         (apply old-fn args)))
+      (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+        "Prepend emacs-lsp-booster command to lsp CMD."
+        (let ((orig-result (funcall old-fn cmd test?)))
+          (if (and (not test?)                             ;; for check lsp-server-present?
+                   (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+                   lsp-use-plists
+                   (not (functionp 'json-rpc-connection))  ;; native json-rpc
+                   (executable-find "emacs-lsp-booster"))
+              (progn
+                (message "Using emacs-lsp-booster for %s!" orig-result)
+                (cons "emacs-lsp-booster" orig-result))
+            orig-result)))
+      :init
+      (setq lsp-use-plists t)
+      ;; Initiate https://github.com/blahgeek/emacs-lsp-booster for performance
+      (advice-add (if (progn (require 'json)
+                             (fboundp 'json-parse-buffer))
+                      'json-parse-buffer
+                    'json-read)
+                  :around
+                  #'lsp-booster--advice-json-parse)
+      (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+;; (define-derived-mode typescriptreact-mode web-mode "TypescriptReact"
+;;   "A major mode for tsx.")
+
+;; (use-package typescript-ts-mode
+;;   :mode (("\\.ts\\'" . typescript-ts-mode)
+;;          ("\\.tsx\\'" . typescriptreact-mode)))
+
+;; (use-package eglot
+;;   :ensure t
+;;   :defer 3
+;;   :hook
+;;   ((js-mode
+;;     typescript-mode
+;;     typescript-tsx-mode
+;;     typescriptreact-mode) . eglot-ensure)
+;;   :config
+;;   (cl-pushnew '((js-ts-mode typescript-ts-mode typescript-tsx-mode typescriptreact-mode) . ("typescript-language-server" "--stdio"))
+;;               eglot-server-programs
+;;               :test #'equal))
 #+end_src
 *** CSS
 #+begin_src emacs-lisp :tangle config.el
-(set-eglot-client! 'css-ts-mode '("vscode-css-language-server" "--stdio"))
-(set-eglot-client! 'css-ts-mode '("tailwindcss-language-server" "--stdio"))
-(add-hook! '(css-ts-mode-hook) #'eglot-ensure)
+;; (set-eglot-client! 'css-ts-mode '("vscode-css-language-server" "--stdio"))
+;; (set-eglot-client! 'css-ts-mode '("tailwindcss-language-server" "--stdio"))
+;; (add-hook! '(css-ts-mode-hook) #'eglot-ensure)
 #+end_src
 *** Swift
 #+begin_src emacs-lisp :tangle config.el
 (set-eglot-client! 'swift-mode '("xcrun" "sourcekit-lsp"))
 (add-hook! '(swift-mode-hook) #'eglot-ensure)
 #+end_src
+
