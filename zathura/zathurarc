@@ -57,3 +57,9 @@ set recolor-darkcolor           "#abb2bf" # Foreground
 set adjust-open "best-fit"
 set recolor true
 
+# unmap <C-d> 
+unmap d
+
+map u scroll full-up
+map d scroll full-down
+map <C-d> toggle-page-mode

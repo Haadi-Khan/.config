@@ -5,11 +5,11 @@ lsp.preset('recommended')
 require('mason').setup()
 require('mason-lspconfig').setup()
 require('lsp-zero').extend_lspconfig()
-require("mason-lspconfig").setup { ensure_installed = { "lua_ls", "clangd", "rust_analyzer", "pyright" }, }
+require("mason-lspconfig").setup { ensure_installed = { "lua_ls", "clangd", "rust_analyzer", "pyright", "tinymist"}, }
 require("lspconfig").lua_ls.setup {}
 require("lspconfig").clangd.setup {}
 require("lspconfig").pyright.setup {}
-
+require("lspconfig").tinymist.setup {}
 
 require 'lspconfig'.rust_analyzer.setup {
     settings = {
@@ -18,6 +18,14 @@ require 'lspconfig'.rust_analyzer.setup {
                 enable = false,
             }
         }
+    }
+}
+
+require("lspconfig")["tinymist"].setup {
+    settings = {
+        formatterMode = "typstyle",
+        exportPdf = "onType",
+        semanticTokens = "disable"
     }
 }
 

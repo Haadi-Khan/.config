@@ -44,7 +44,6 @@
 - [[#argumentative][Argumentative]]
 - [[#code][Code]]
   - [[#base-config][Base Config]]
-  - [[#debugger][Debugger]]
   - [[#treesitter][Treesitter]]
   - [[#jupyter-notebooks][Jupyter Notebooks]]
   - [[#copilot][Copilot]]
@@ -71,7 +70,6 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! real-auto-save)
 (package! cdlatex)
 
-(package! dape)
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 (package! treesit-auto)
@@ -85,6 +83,7 @@ Doom splits packages into their own file. Here's all the additional packages I l
 
 ;; (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 
+(package! flymake-ruff)
 (package! conda)
 (package! code-cells)
 
@@ -98,6 +97,10 @@ Doom splits packages into their own file. Here's all the additional packages I l
 (package! synosaurus)
 (package! wordnut)
 (package! nov)
+
+;; Trying out typst
+(package! typst-mode
+  :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
 #+end_src
 
 * UI
@@ -334,19 +337,19 @@ Projectile Errors
 
 #+end_src
 *** Debugger
-#+begin_src emacs-lisp :tangle config.el
-(map! :leader :desc "Debug" :n "d")
-(map! :leader :desc "Start" :n "d d" #'dape)
-(map! :leader :desc "Toggle Breakpoint" :n "d b" #'dape-breakpoint-toggle)
-(map! :leader :desc "Step Out" :n "d o" #'dape-step-out)
-(map! :leader :desc "Step In" :n "d i" #'dape-step-in)
-(map! :leader :desc "Next" :n "d n" #'dape-next)
-(map! :leader :desc "Restart" :n "d r" #'dape-restart)
-(map! :leader :desc "Quit" :n "d q" #'dape-quit)
-(map! :leader :desc "Pause" :n "d p" #'dape-pause)
-(map! :leader :desc "Continue" :n "d c" #'dape-continue)
-(map! :leader :desc "Info" :n "d I" #'dape-info)
-#+end_src
+# #+begin_src emacs-lisp :tangle config.el
+# (map! :leader :desc "Debug" :n "d")
+# (map! :leader :desc "Start" :n "d d" #'dape)
+# (map! :leader :desc "Toggle Breakpoint" :n "d b" #'dape-breakpoint-toggle)
+# (map! :leader :desc "Step Out" :n "d o" #'dape-step-out)
+# (map! :leader :desc "Step In" :n "d i" #'dape-step-in)
+# (map! :leader :desc "Next" :n "d n" #'dape-next)
+# (map! :leader :desc "Restart" :n "d r" #'dape-restart)
+# (map! :leader :desc "Quit" :n "d q" #'dape-quit)
+# (map! :leader :desc "Pause" :n "d p" #'dape-pause)
+# (map! :leader :desc "Continue" :n "d c" #'dape-continue)
+# (map! :leader :desc "Info" :n "d I" #'dape-info)
+# #+end_src
 
 ** Elfeed
 #+begin_src emacs-lisp :tangle config.el
@@ -1022,47 +1025,6 @@ Makes EGlot stupid fast
         :after eglot
         :config (eglot-booster-mode))
 #+end_src
-** Debugger
-*** Base Config
-Have not experimented with debugger too much, so this is still a WIP while I figure out how to use it effectively
-#+begin_src  emacs-lisp :tangle config.el
-(use-package dape
-  ;; Projectile users
-  ;; (setq dape-cwd-fn 'projectile-project-root)
-  )
-#+end_src
-*** C/C++
-#+begin_src emacs-lisp :tangle config.el
-;; (add-to-list 'dape-configs
-;;              '(codelldb
-;;                modes (c-mode c-ts-mode
-;;                       c++-mode c++-ts-mode
-;;                       rust-mode rust-ts-mode
-;;                       )
-;;                command "/Users/haadi/.config/emacs/debug-adapters/codelldb/extension/adapter"
-;;                host "localhost"
-;;                port 5818
-;;                command-args ("--port" "5818")
-;;                :type "lldb"
-;;                :request "launch"
-;;                :cwd dape-cwd-fn
-;;                :program "riscv_interpreter.c"))
-#+end_src
-*** Rust
-#+begin_src emacs-lisp :tangle config.el
-(add-to-list 'dape-configs
-             '(codelldb modes (rust-mode rust-ts-mode)
-               command "/Users/haadi/.config/emacs/debug-adapters/codelldb/extension/adapter"
-               host "localhost"
-               port 5818
-               command-args ("--port" "5818")
-               :type "lldb"
-               :request "launch"
-               :cwd dape-cwd-fn
-               :program "test", "--no-run", "--lib"
-             ))
-#+end_src
-
 ** Treesitter
 Seamlessly install treesitter for languages with no fuss
 #+begin_src emacs-lisp :tangle config.el
@@ -1076,7 +1038,7 @@ Seamlessly install treesitter for languages with no fuss
 #+end_src
 ** Jupyter Notebooks
 #+begin_src emacs-lisp :tangle config.el
-(setq ein:output-area-inlined-images t)
+;; (setq ein:output-area-inlined-images t)
 #+end_src
 ** Copilot
 #+begin_src emacs-lisp :tangle config.el
@@ -1184,16 +1146,17 @@ Great tool called lookup which enables searching for code issues straight from e
  (setq rustic-format-on-save nil))
 
 (add-hook! '(rustic-mode-hook rust-ts-mode-hook) #'eglot-ensure)
-(add-to-list 'eglot-server-programs
-                       `((rust-mode rust-ts-mode rustic-mode) . ("rust-analyzer" :initializationOptions
-                                     ( :procMacro (:enable t)
-                                       :cargo ( :buildScripts (:enable t)
-                                                :features "all")))))
+;; (add-to-list 'eglot-server-programs
+;;                        `((rust-mode rust-ts-mode rustic-mode) . ("rust-analyzer" :initializationOptions
+;;                                      ( :procMacro (:enable t)
+;;                                        :cargo ( :buildScripts (:enable t)
+;;                                                 :features "all")))))
 #+end_src
 *** Python
 #+begin_src emacs-lisp :tangle config.el
-(set-eglot-client! 'python-ts-mode '("pyright-langserver" "--stdio"))
+(set-eglot-client! 'python-ts-mode '("basedpyright-langserver" "--stdio"))
 (add-hook! '(python-mode-hook python-ts-mode-hook) #'eglot-ensure)
+(add-hook! '(python-mode-hook python-ts-mode-hook) 'flymake-ruff-load)
 #+end_src
 *** C/C++
 LSP Config
@@ -1214,6 +1177,16 @@ Tab width of 2 for C++
   (setq c-basic-offset 2)
   (setq tab-width 2))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+#+end_src
+*** Typst
+#+begin_src emacs-lisp :tangle config.el
+(with-eval-after-load 'eglot
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
 #+end_src
 *** Typescript
 Ok so basically typescript (and web dev in general) really needs multiple language servers at once (for things like tailwind completion alongside tsx) so I'm gonna use LSP mode *just* for typescript. Whenever eglot supports multiple servers at once I'll ditch it but it's the best option atm

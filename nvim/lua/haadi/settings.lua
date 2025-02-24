@@ -24,7 +24,7 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 12
 vim.opt.signcolumn = "yes"
 
-vim.opt.colorcolumn = "80"
+-- vim.opt.colorcolumn = "80"
 
 vim.opt.foldmethod = "indent"
 

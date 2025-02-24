@@ -18,7 +18,7 @@ wk.add({
 
     -- Buffers
     { "<leader>b",  group = "buffers" },
-    { "<leader>bd", vim.cmd.bd,                                                                 desc = "Delete Buffer",     mode = "n" },
+    { "<leader>bd", function() vim.cmd.bn() vim.cmd.bd("#") end,                                                                 desc = "Delete Buffer",     mode = "n" },
     { "<leader>bp", vim.cmd.bp,                                                                 desc = "Previous Buffer",   mode = "n" },
     { "<leader>bn", vim.cmd.bn,                                                                 desc = "Next Buffer",       mode = "n" },
     { "<leader>bk", vim.cmd.bwipeout,                                                           desc = "Kill All Buffers",  mode = "n" },

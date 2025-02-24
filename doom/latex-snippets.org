@@ -1150,6 +1150,17 @@ ${7:$1} & ${8:$1} & ${9:$1}
 \langle $1 \rangle
 #+end_src
 
+*** Feynman Slash
+#+begin_src yasnippet :tangle snippets/latex-mode/6016.yasnippet
+# -*- mode: snippet -*-
+# name: Feynman Slash
+# key: fpar
+# condition: (and (texmathp) 'auto)
+# group: math
+# --
+\slashed{\partial}
+#+end_src
+
 *** x hat
 #+begin_src yasnippet :tangle snippets/latex-mode/6007.yasnippet
 # -*- mode: snippet -*-
@@ -1831,6 +1842,7 @@ $0
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{slashed}
 \usepackage{capt-of}
 \usepackage{braket}
 \usepackage{multicol}

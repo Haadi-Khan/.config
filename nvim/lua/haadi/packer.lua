@@ -92,4 +92,9 @@ return require('packer').startup(function(use) -- Packer can manage itself
             require("which-key").setup {}
         end
     }
+
+    use({
+        "L3MON4D3/LuaSnip",
+        run = "make install_jsregexp"
+    })
 end)
