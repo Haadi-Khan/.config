@@ -1,0 +1,130 @@
+/**
+ * @name midnight
+ * @description a dark, customizable discord theme.
+ * @author refact0r
+ * @version 2.1.1
+ * @invite nz87hXyvcy
+ * @website https://github.com/refact0r/midnight-discord
+ * @source https://github.com/refact0r/midnight-discord/blob/master/themes/midnight.theme.css
+ * @authorId 508863359777505290
+ * @authorLink https://www.refact0r.dev
+*/
+
+/* import theme modules */
+@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+
+body {
+    /* font options */
+    --font: 'figtree'; /* change to '' for default discord font */
+    --code-font: ''; /* change to '' for default discord font */
+    font-weight: 400; /* normal text font weight. DOES NOT AFFECT BOLD TEXT */
+
+    /* sizes */
+    --gap: 12px; /* spacing between panels */
+    --divider-thickness: 4px; /* thickness of unread messages divider and highlighted message borders */
+    --border-thickness: 1px; /* thickness of borders around main panels. DOES NOT AFFECT OTHER BORDERS */
+
+    /* animation/transition options */
+    --animations: on; /* off: disable animations/transitions, on: enable animations/transitions */
+    --list-item-transition: 0.2s ease; /* transition for list items */
+    --dms-icon-svg-transition: 0.4s ease; /* transition for the dms icon */
+    --border-hover-transition: 0.2s ease; /* transition for borders when hovered */
+
+    /* top bar options */
+    --top-bar-height: var(--gap); /* height of the top bar (discord default is 36px, old discord style is 24px, var(--gap) recommended if button position is set to titlebar) */
+    --top-bar-button-position: titlebar; /* off: default position, hide: hide buttons completely, serverlist: move inbox button to server list, titlebar: move inbox button to channel titlebar (will hide title) */
+    --top-bar-title-position: off; /* off: default centered position, hide: hide title completely, left: left align title (like old discord) */
+    --subtle-top-bar-title: off; /* off: default, on: hide the icon and use subtle text color (like old discord) */
+
+    /* window controls */
+    --custom-window-controls: on; /* off: default window controls, on: custom window controls */
+    --window-control-size: 14px; /* size of custom window controls */
+
+    /* dms button options */
+    --custom-dms-icon: custom; /* off: use default discord icon, hide: remove icon entirely, custom: use custom icon */
+    --dms-icon-svg-url: url('https://refact0r.github.io/midnight-discord/assets/Font_Awesome_5_solid_moon.svg'); /* icon svg url. MUST BE A SVG. */
+    --dms-icon-svg-size: 90%; /* size of the svg (css mask-size property) */
+    --dms-icon-color-before: var(--icon-secondary); /* normal icon color */
+    --dms-icon-color-after: var(--white); /* icon color when button is hovered/selected */
+    --custom-dms-background: off; /* off to disable, image to use a background image (must set url variable below), color to use a custom color/gradient */
+    --dms-background-image-url: url(''); /* url of the background image */
+    --dms-background-image-size: cover; /* size of the background image (css background-size property) */
+    --dms-background-color: linear-gradient(70deg, var(--blue-2), var(--purple-2), var(--red-2)); /* fixed color/gradient (css background property) */
+
+    /* background image options */
+    --background-image: off; /* off: no background image, on: enable background image (must set url variable below) */
+    --background-image-url: url(''); /* url of the background image */
+
+    /* transparency/blur options */
+    /* NOTE: TO USE TRANSPARENCY/BLUR, YOU MUST HAVE TRANSPARENT BG COLORS. FOR EXAMPLE: --bg-4: hsla(220, 15%, 10%, 0.7); */
+    --transparency-tweaks: off; /* off: no changes, on: remove some elements for better transparency */
+    --remove-bg-layer: off; /* off: no changes, on: remove the base --bg-3 layer for use with window transparency (WILL OVERRIDE BACKGROUND IMAGE) */
+    --panel-blur: off; /* off: no changes, on: blur the background of panels */
+    --blur-amount: 12px; /* amount of blur */
+    --bg-floating: var(--bg-3); /* set this to a more opaque color if floating panels look too transparent. only applies if panel blur is on  */
+
+    /* chatbar options */
+    --custom-chatbar: aligned; /* off: default chatbar, aligned: chatbar aligned with the user panel, separated: chatbar separated from chat */
+    --chatbar-height: 47px; /* height of the chatbar (52px by default, 47px recommended for aligned, 56px recommended for separated) */
+    --chatbar-padding: 8px; /* padding of the chatbar. only applies in aligned mode. */
+
+    /* other options */
+    --small-user-panel: on; /* off: default user panel, on: smaller user panel like in old discord */
+}
+
+/* color options */
+:root {
+  /* enable custom colors */
+  --colors: on;
+
+  /* Background shades */
+  --bg-4: #282c34; /* main background (One Dark base) */
+  --bg-3: #282c34; /* slightly lighter */
+  --bg-2: #282c34;
+  --bg-1: #282c34;
+
+  /* Text on colored surfaces */
+  --text-0: var(--bg-4);
+  /* Primary UI text */
+  --text-1: #abb2bf; /* One Dark default */
+  /* Headings and emphasis */
+  --text-2: #abb2bf; /* mid-level gray */
+  /* Normal text */
+  --text-3: #abb2bf; /* comment gray */
+  /* Secondary text/icons */
+  --text-4: #abb2bf; /* gutter and line number gray */
+  /* Muted timestamps */
+  --text-5: #5c6370; /* darker neutral */
+
+  /* Button hover/active overlays */
+  --hover: rgba(171,178,191,0.05);
+  --active: rgba(171,178,191,0.10);
+  --active-2: rgba(171,178,191,0.15);
+  --message-hover: rgba(0,0,0,0.10);
+
+  /* Accent colors (One Dark hues) */
+  --accent-1: #61afef; /* blue */
+  --accent-2: #56b6c2; /* cyan */
+  --accent-3: #98c379; /* green */
+  --accent-4: #c678dd; /* magenta */
+  --accent-5: #e06c75; /* red-ish */
+
+  /* Mention and reply highlights using gradients */
+  --mention: linear-gradient(to right, rgba(86,182,194,0.2) 40%, transparent);
+  --mention-hover: linear-gradient(to right, rgba(86,182,194,0.3) 40%, transparent);
+  --reply: linear-gradient(to right, rgba(92,99,112,0.2) 40%, transparent);
+  --reply-hover: linear-gradient(to right, rgba(92,99,112,0.3) 40%, transparent);
+
+  /* Status indicator colors (using One Dark variants) */
+  --online: #98c379;
+  --dnd: #e06c75;
+  --idle: #d19a66;
+  --streaming: #c678dd;
+  --offline: #4b5263;
+
+  /* Borders */
+  --border-light: rgba(171,178,191,0.05);
+  --border: rgba(171,178,191,0.10);
+  --border-hover: rgba(171,178,191,0.15);
+  --button-border: rgba(171,178,191,0.1);
+}
