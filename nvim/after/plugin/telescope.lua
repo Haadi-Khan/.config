@@ -1,6 +1,18 @@
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>gs', builtin.git_files, {})
-vim.keymap.set('n', '<leader>ps', function()
-    builtin.grep_string({ search = vim.fn.input("Grep > ") })
-end)
+local telescope = require('telescope.builtin')
+vim.keymap.set('n', '<D-f>', telescope.current_buffer_fuzzy_find, {})
+
+local actions = require("telescope.actions")
+require('telescope').setup {
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-n>"] = actions.cycle_history_next,
+                ["<C-p>"] = actions.cycle_history_prev,
+
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+            },
+
+        }
+    },
+}

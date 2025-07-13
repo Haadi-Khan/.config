@@ -1,67 +1,102 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- Only required if you have packer configured as `opt` vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
-    -- Packer can manage itself
+return require('packer').startup(function(use) -- Packer can manage itself
     use('wbthomason/packer.nvim')
 
     -- UI
     use('navarasu/onedark.nvim')
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-    use('romgrk/barbar.nvim')
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     use('feline-nvim/feline.nvim')
 
     -- Git
-    use('tpope/vim-fugitive')
+    use('sindrets/diffview.nvim')
+    use {
+        "NeogitOrg/neogit",
+        integrations = {
+            diffview = true,
+        },
+        config = function()
+            require('neogit').setup()
+        end
+    }
 
     -- Navigation + Undo
     use('mbbill/undotree')
+
     use {
-      'nvim-telescope/telescope.nvim', tag = '0.1.5',
-      -- or                            , branch = '0.1.x',
-      requires = { {'nvim-lua/plenary.nvim'} }
+        'nvim-telescope/telescope.nvim', tag = '0.1.5', -- or , branch = '0.1.x',
+        requires = { { 'nvim-lua/plenary.nvim' } }
     }
+
     use('nvim-tree/nvim-tree.lua')
     use('nvim-tree/nvim-web-devicons')
 
-    -- DAP Support
-    use('mfussenegger/nvim-dap')
+    use {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup {}
+        end
+    }
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+
+
+    use {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        requires = {
+            { "nvim-lua/plenary.nvim" }
+        }
+    }
 
     -- LSP
     use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v3.x',
-    requires = {
-        {'williamboman/mason.nvim'},
-        {'williamboman/mason-lspconfig.nvim'},
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
 
-        -- LSP Support
-        {'neovim/nvim-lspconfig'},
+        requires = {
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
 
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' },
 
-        -- Autocompletion
-        {'hrsh7th/nvim-cmp'},
-        {'hrsh7th/cmp-nvim-lsp'},
-        {'L3MON4D3/LuaSnip'},
-    }}
-
-    -- LaTeX setup
-    use('sirver/ultisnips')
-    use('lervag/vimtex')
-
-    use {
-      "folke/which-key.nvim",
-      config = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-        require("which-key").setup {
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
         }
-      end
     }
 
-    use('sirver/ultisnips')
-    use('lervag/vimtex')
-    use('KeitaNakamura/tex-conceal.vim')
+    use {
+        'L3MON4D3/LuaSnip',
+        after = 'nvim-cmp',
+        opts = {
+            enable_autosnippets = true,
+        },
+        run = "make install_jsregexp",
+    }
+
+    use {
+        "folke/trouble.nvim",
+        config = function()
+            require('trouble').setup()
+        end
+    }
+
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup {}
+        end
+    }
 end)

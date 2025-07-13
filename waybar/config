@@ -1,117 +1,93 @@
-// -*- mode: json -*-
-
 {
-	"layer": "top",
-	"position": "top",
+    "layer": "top",
+    "position": "top",
+    "height": 24,
+    "spacing": 5,
 
-	"modules-left": [
-		"hyprland/workspaces",
-	],
-	"modules-center": [
-		"clock#1",
-		"clock#2",
-		"clock#3",
-	],
-	"modules-right": [
-		"pulseaudio",
-		"memory",
-		"cpu",
-		"battery",
-		"network",
-		"tray"
-	],
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["group/system-info"],
 
-	"hyprland/workspaces": {
-		"disable-scroll": true,
-		"persistent-workspaces": {
-				"1": [],
-				"2": [],
-				"3": [],
-				"4": [],
-				"5": [],
-				"6": [],
-				"7": [],
-				"8": [],
-				"9": [],
-				"10": []
-		},
-		"format-icons": {
-			"urgent": "  ",
-			"focused": "  ",
-			"default": "  ",
-		},
-		"format": "{icon}",
-	},
+    "group/system-info": {
+        "orientation": "horizontal",
+        "modules": ["wireplumber", "memory", "backlight", "battery", "network", "tray"]
+    },
 
-	"clock#1": {
-		"format": "{:%a}",
-		"tooltip": false
-	},
-	"clock#2": {
-		"format": "{:%I:%M %p}",
-		"tooltip": false
-	},
-	"clock#3": {
-		"format": "{:%b %d}",
-		"tooltip": false
-	},
+    "hyprland/workspaces": {
+        "format": "<span size='larger'> {icon} </span>",
+        "on-click": "activate",
+        "format-icons": {
+            "active": "\uf444",
+            "default": "\uf4c3"
+        },
+        "icon-size": 24,
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": [],
+        }
+    },
 
-	"pulseaudio": {
-		"format": "{icon}{volume:2}%",
-		"format-bluetooth": "{icon}{volume}%",
-		"format-muted": "MUTE",
-		"format-icons": {
-			"headphones": "",
-			"default": [
-				"",
-				""
-			]
-		},
-		"scroll-step": 5,
-		"on-click": "pamixer -t",
-		"on-click-right": "pavucontrol"
-	},
-	"memory": {
-		"interval": 5,
-		"format": " {}%"
-	},
-	"cpu": {
-		"interval": 5,
-		"format": " {usage:2}%"
-	},
-	"battery": {
-		"states": {
-			"good": 95,
-			"warning": 30,
-			"critical": 15
-		},
-		"format": "{icon} {capacity}%",
-		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"disk": {
-		"interval": 5,
-		"format": "Disk {percentage_used:2}%",
-		"path": "/"
-	},
-	"network": {
-		"interface": "wlp2s0",
-		"format": "{ifname}",
-		"format-wifi": "{essid} ({signalStrength}%) ",
-		"format-ethernet": "{ipaddr}/{cidr} 󰊗",
-		"format-disconnected": "", //An empty format will hide the module.
-		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
-		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-		"tooltip-format-ethernet": "{ifname} ",
-		"tooltip-format-disconnected": "Disconnected",
-		"max-length": 50
-	},
-	"tray": {
-		"icon-size": 20
-	}
+    "clock": {
+        "format": "{:%a    %I:%M %p    %b %d}"
+    },
+
+    "wireplumber": {
+        "format": "\udb81\udd7e  {volume}%",
+        "max-volume": 100,
+        "scroll-step": 5
+    },
+
+    "battery": {
+        "bat": "macsmc-battery",
+        "interval": 60,
+        "format": "{icon}  {capacity}%",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+    },
+
+    "backlight": {
+        "format": "\udb80\udcdf  {percent}%"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": "\uf4bc  {used:0.1f}G"
+    },
+
+    "temperature": {
+        "format": "  {temperatureC}°C"
+    },
+
+    "network": {
+        "format": "",
+        "format-ethernet": "\udb83\udc9d",
+        "format-wifi": "{icon}",
+        "format-disconnected": "\udb83\udc9c",
+        "format-icons": ["\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}",
+        "tooltip-format-disconnected": "Disconnected",
+    },
+
+    "bluetooth": {
+        "format": "\udb80\udcaf",
+        "format-disabled": "\udb80\udcb2",
+        "format-connected": "\udb80\udcb1",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 16
+    }
 }

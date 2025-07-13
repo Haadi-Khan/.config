@@ -1,66 +1,82 @@
+@define-color white #abb2bf;
+@define-color black #282c34;
+@define-color red #e06c75;
+@define-color blue #61afef;
+@define-color green #98c379;
+@define-color magenta #c678dd;
+
 * {
-	font-size: 16px;
-	font-family: "Recursive", sans-serif;
-	padding: 1px 3px;
+	font-family: "Recursive Sans Linear Static", sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
 }
 
-window#waybar {
-	background: #282c34;
-	color: #abb2bf;
+#waybar {
+    color: @blue;
+    background-color: rgba(0,0,0,0);
+    /* background-color: @black; */
 }
 
-#workspaces,
-#clock.1,
-#clock.2,
-#clock.3,
-#pulseaudio,
-#memory,
-#cpu,
-#battery,
-#disk,
-#network,
-#tray {
-	background: #282c34;
+#workspaces {
+    background-color: @black;
+    padding: 0 0.5em;
+    border-radius: 1em;
 }
 
 #workspaces button {
-	padding: 0 2px;
-	color: #abb2bf;
-}
-#workspaces button.focused {
-	color: #61afef;
-}
-#workspaces button:hover {
-	box-shadow: inherit;
-	text-shadow: inherit;
-}
-#workspaces button:hover {
-	background: #4b5263;
-	border: #4b5263;
-	padding: 0 3px;
+    color: @blue;
+    font-size: 24px;
 }
 
-#pulseaudio {
-	color: #61afef;
+#workspaces button.empty {
+    color: @white;
+}
+
+#clock {
+    color: @white;
+    background-color: @black;
+    padding: 0 1em;
+    border-radius: 1em;
+}
+
+#system-info {
+    background-color: @black;
+    padding: 0 1em;
+    border-radius: 1em;
+}
+
+#wireplumber {
+    color: @blue;
+    padding-right: 1em;
 }
 #memory {
-	color: #e06c75;
+    color: @magenta;
+    padding-right: 1em;
 }
-#cpu {
-	color: #c678dd;
+#temperature {
+    color: @red;
+    padding-right: 1em;
 }
 #battery {
-	color: #98c379;
+    color: @green;
+    padding-right: 1em;
+}
+#backlight {
+    color: @red;
+    padding-right: 1em;
+}
+#language {
+    color: @white;
+    padding-right: 1em;
 }
 #network {
-	color: #e5c07b;
+    color: @white;
+    padding-right: 1em;
 }
-
-#clock,
-#pulseaudio,
-#memory,
-#cpu,
-#battery,
-#network {
-	padding: 0 10px;
+#bluetooth {
+    color: @white;
+    padding-right: 1em;
+}
+#tray {
 }

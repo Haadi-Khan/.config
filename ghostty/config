@@ -1,0 +1,22 @@
+font-family = Recursive Monospace
+font-size = 13
+macos-titlebar-style = hidden
+window-decoration = false
+theme = OneDark
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+confirm-close-surface=false
+
+# Creating splits
+keybind = alt+shift+h=new_split:left
+keybind = alt+shift+j=new_split:down
+keybind = alt+shift+k=new_split:up
+keybind = alt+shift+l=new_split:right
+
+# Navigating splits
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:bottom
+keybind = alt+k=goto_split:top
+keybind = alt+l=goto_split:right

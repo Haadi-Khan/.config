@@ -39,3 +39,5 @@ doom/packages.el
 /enchant/
 /mimeapps.list
 /mimeapps.list
+legcord/
+!legcord/themes/midnight.theme.css
