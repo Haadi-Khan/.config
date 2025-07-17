@@ -72,9 +72,16 @@ return require('packer').startup(function(use) -- Packer can manage itself
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-
         }
+    }
+
+    use {
+        'L3MON4D3/LuaSnip',
+        after = 'nvim-cmp',
+        opts = {
+            enable_autosnippets = true,
+        },
+        run = "make install_jsregexp",
     }
 
     use {
@@ -92,9 +99,4 @@ return require('packer').startup(function(use) -- Packer can manage itself
             require("which-key").setup {}
         end
     }
-
-    use({
-        "L3MON4D3/LuaSnip",
-        run = "make install_jsregexp"
-    })
 end)

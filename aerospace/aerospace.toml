@@ -21,9 +21,10 @@ outer.top =        5
 outer.right =      5
 
 [mode.main.binding]
-cmd-ctrl-alt-enter = 'exec-and-forget open -na kitty'
-cmd-ctrl-alt-m = 'exec-and-forget open -na Firefox'
+cmd-ctrl-alt-enter = 'exec-and-forget open -na ghostty'
+cmd-ctrl-alt-m = 'exec-and-forget open -a Zen'
 cmd-ctrl-alt-period = 'exec-and-forget emacsclient -c -a \"Emacs\"'
+ctrl-alt-cmd-q = 'close --quit-if-last-window'
 
 ctrl-alt-cmd-h = 'focus left'
 ctrl-alt-cmd-j = 'focus down'
@@ -41,19 +42,11 @@ ctrl-alt-cmd-v = 'split vertical'
 
 ctrl-alt-cmd-p = 'fullscreen'
 
-ctrl-alt-cmd-q = 'layout v_accordion' # 'layout stacking' in i3
+# ctrl-alt-cmd-q = 'layout v_accordion' # 'layout stacking' in i3
 ctrl-alt-cmd-a = 'layout h_accordion' # 'layout tabbed' in i3
 ctrl-alt-cmd-z = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
 
 ctrl-alt-cmd-shift-space = 'layout floating tiling' # 'floating toggle' in i3
-
-# Not supported, because this command is redundant in AeroSpace mental model.
-# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
-#ctrl-alt-cmd-space = 'focus toggle_tiling_floating'
-
-# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
-# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
-# ctrl-alt-cmd-a = 'focus parent'
 
 ctrl-alt-cmd-s = 'workspace 1'
 ctrl-alt-cmd-d = 'workspace 2'
@@ -88,3 +81,9 @@ k = 'resize height -50'
 l = 'resize width +50'
 enter = 'mode main'
 esc = 'mode main'
+
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = 'layout floating'

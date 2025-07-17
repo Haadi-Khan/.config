@@ -1,15 +1,28 @@
 local lsp = require('lsp-zero')
+local luasnip = require('luasnip')
 
 lsp.preset('recommended')
 
 require('mason').setup()
 require('mason-lspconfig').setup()
 require('lsp-zero').extend_lspconfig()
-require("mason-lspconfig").setup { ensure_installed = { "lua_ls", "clangd", "rust_analyzer", "pyright", "tinymist"}, }
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        "lua_ls",
+        "clangd",
+        "rust_analyzer",
+        "pyright",
+        "tinymist",
+        "ts_ls",
+        "tailwindcss"
+    },
+}
 require("lspconfig").lua_ls.setup {}
 require("lspconfig").clangd.setup {}
 require("lspconfig").pyright.setup {}
 require("lspconfig").tinymist.setup {}
+require("lspconfig").ts_ls.setup {}
+require("lspconfig").tailwindcss.setup {}
 
 require 'lspconfig'.rust_analyzer.setup {
     settings = {
@@ -52,8 +65,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
-
-
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_kinds = {
@@ -85,11 +96,32 @@ local cmp_kinds = {
 }
 
 cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+
     mapping = cmp.mapping.preset.insert({
         ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
         ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<TAB>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.confirm({ select = true })
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ['<S-TAB>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
     }),
 
     formatting = {
@@ -98,8 +130,14 @@ cmp.setup({
             vim_item.kind = cmp_kinds[vim_item.kind] or ""
             return vim_item
         end,
-    }
+    },
 
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'path' }
+    }),
 })
 
 lsp.setup()

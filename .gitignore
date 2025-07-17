@@ -12,3 +12,6 @@ mgba/
 github-copilot/
 doom/config.el
 doom/packages.el
+emacs/
+raycast/
+tmux/plugins/

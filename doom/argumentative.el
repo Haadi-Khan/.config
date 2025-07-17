@@ -1,4 +1,5 @@
 ;;; argumentative.el -*- lexical-binding: t; -*-
+;;; Richer grammar for evil mode
 
 (require 'evil)
 
@@ -148,8 +149,8 @@
 (define-key evil-normal-state-map (kbd "],") 'argumentative-next)
 (define-key evil-visual-state-map (kbd "[,") 'argumentative-prev)
 (define-key evil-visual-state-map (kbd "],") 'argumentative-next)
-(define-key evil-normal-state-map (kbd "<,") 'argumentative-move-left)
-(define-key evil-normal-state-map (kbd ">,") 'argumentative-move-right)
+(define-key evil-normal-state-map (kbd "{,") 'argumentative-move-left)
+(define-key evil-normal-state-map (kbd "},") 'argumentative-move-right)
 
 (define-key evil-visual-state-map (kbd "i,") 'argumentative-inner-text-object)
 (define-key evil-visual-state-map (kbd "a,") 'argumentative-outer-text-object)
