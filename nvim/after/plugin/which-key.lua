@@ -1,12 +1,24 @@
 local wk = require("which-key")
 local telescope = require('telescope.builtin')
 
+-- local copilot_on = true
+--
+-- 	if copilot_on then
+-- 		vim.cmd("Copilot disable")
+-- 		print("Copilot OFF")
+-- 	else
+-- 		vim.cmd("Copilot enable")
+-- 		print("Copilot ON")
+-- 	end
+-- 	copilot_on = not copilot_on
+
 wk.add({
     -- General
     { '<leader>.',  telescope.find_files,                                                       desc = "Find File",         mode = "n" },
     { '<leader>/',  function() telescope.grep_string({ search = vim.fn.input("Grep > ") }) end, desc = "Search Project",    mode = "n" },
     { '<leader> ',  telescope.git_files,                                                        desc = "Find Project File", mode = "n" },
     { '<leader>,',  telescope.buffers,                                                          desc = "List Buffers",      mode = "n" },
+    { "<leader>x",  function() vim.cmd.enew() end,                                              desc = "Scratch Buffer",    mode = "n" },
 
 
     -- File Group
@@ -47,6 +59,9 @@ wk.add({
     { '<leader>pf', telescope.git_files,                                                        desc = "Find Project File", mode = "n" },
     { '<leader>ps', function() telescope.grep_string({ search = vim.fn.input("Grep > ") }) end, desc = "Search Project",    mode = "n" },
 
+    -- Code
+    { "<leader>c",  group = "code" },
+    -- { '<leader>cg', function(),                                                        desc = "Find Project File", mode = "n" },
 
     -- Git
     { "<leader>g",  group = "git" },

@@ -72,6 +72,10 @@ return require('packer').startup(function(use) -- Packer can manage itself
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
+
+            -- AI Autocomplete
+            -- { 'github/copilot.vim' },
+            { 'zbirenbaum/copilot-cmp' }
         }
     }
 
