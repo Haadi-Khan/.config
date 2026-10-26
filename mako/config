@@ -1,0 +1,46 @@
+# mako — One Dark
+# Reload: makoctl reload
+
+font=RecMonoLinear Nerd Font 11
+width=360
+height=160
+margin=10
+padding=14,16
+outer-margin=12
+border-size=2
+border-radius=10
+max-icon-size=40
+icon-location=left
+text-alignment=left
+layer=overlay
+anchor=top-right
+sort=-time
+max-visible=5
+default-timeout=6000
+ignore-timeout=0
+
+background-color=#282c34f2
+text-color=#abb2bf
+border-color=#3e4452
+progress-color=over #61afef55
+
+format=<b><span foreground="#61afef">%s</span></b>\n%b
+
+[urgency=low]
+border-color=#3e4452
+text-color=#828997
+default-timeout=4000
+
+[urgency=normal]
+border-color=#4b5263
+
+[urgency=critical]
+border-color=#e06c75
+format=<b><span foreground="#e06c75">%s</span></b>\n%b
+default-timeout=0
+
+[grouped]
+format=<b><span foreground="#61afef">%s</span></b> <span foreground="#5c6370">(%g)</span>\n%b
+
+[mode=do-not-disturb]
+invisible=1

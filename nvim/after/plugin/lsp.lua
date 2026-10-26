@@ -1,11 +1,6 @@
-local lsp = require('lsp-zero')
 local luasnip = require('luasnip')
 
-lsp.preset('recommended')
-
 require('mason').setup()
-require('mason-lspconfig').setup()
-require('lsp-zero').extend_lspconfig()
 require("mason-lspconfig").setup {
     ensure_installed = {
         "lua_ls",
@@ -16,13 +11,13 @@ require("mason-lspconfig").setup {
         "tailwindcss"
     },
 }
-require("lspconfig").lua_ls.setup {}
-require("lspconfig").pyright.setup {}
-require("lspconfig").tinymist.setup {}
-require("lspconfig").ts_ls.setup {}
-require("lspconfig").tailwindcss.setup {}
 
-require 'lspconfig'.rust_analyzer.setup {
+-- Advertise nvim-cmp completion capabilities to every server
+vim.lsp.config('*', {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+
+vim.lsp.config('rust_analyzer', {
     settings = {
         ['rust-analyzer'] = {
             diagnostics = {
@@ -30,15 +25,17 @@ require 'lspconfig'.rust_analyzer.setup {
             }
         }
     }
-}
+})
 
-require("lspconfig")["tinymist"].setup {
+vim.lsp.config('tinymist', {
     settings = {
         formatterMode = "typstyle",
         exportPdf = "onType",
         semanticTokens = "disable"
     }
-}
+})
+
+vim.lsp.enable({ "lua_ls", "pyright", "tinymist", "ts_ls", "tailwindcss", "rust_analyzer" })
 
 local wk = require("which-key")
 -- This is where you enable features that only work
@@ -138,4 +135,3 @@ cmp.setup({
     }),
 })
 
-lsp.setup()

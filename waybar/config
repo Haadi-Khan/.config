@@ -10,15 +10,34 @@
 
     "group/system-info": {
         "orientation": "horizontal",
-        "modules": ["wireplumber", "memory", "backlight", "battery", "network", "tray"]
+        "modules": ["custom/music", "wireplumber", "memory", "custom/backlight", "battery", "network", "tray"]
     },
 
     "hyprland/workspaces": {
-        "format": "<span size='larger'> {icon} </span>",
+        "format": "<span size='larger'> {icon}{windows} </span>",
         "on-click": "activate",
         "format-icons": {
-            "active": "\uf444",
-            "default": "\uf4c3"
+            "empty": "\uf4c3",
+            "default": ""
+        },
+        "format-window-separator": " ",
+        "window-rewrite-default": "\uf2d0",
+        "window-rewrite": {
+            "class<com.mitchellh.ghostty>": "\uf489",
+            "class<zen.*>": "\uf269",
+            "class<firefox>": "\uf269",
+            "class<emacs>": "\ue632",
+            "title<.*nvim.*>": "\ue62b",
+            "class<btop>": "\uf2db",
+            "class<org.gnome.Nautilus>": "\uf07b",
+            "class<.*[Cc]ider.*>": "\uf001",
+            "class<[Bb]eeper>": "\uf086",
+            "class<[Mm]ailspring>": "\uf0e0",
+            "class<org.gnome.Calculator>": "\uf1ec",
+            "class<.*[Dd]iscord.*>": "\uf392",
+            "class<[Ss]potify>": "\uf1bc",
+            "class<[Cc]ode|code-oss|[Cc]ursor>": "\udb82\ude1e",
+            "class<.*[Ss]team.*>": "\uf1b6"
         },
         "icon-size": 24,
         "sort-by-number": true,
@@ -36,30 +55,42 @@
         }
     },
 
+    "custom/music": {
+        "exec": "~/.config/waybar/scripts/music.py",
+        "return-type": "json",
+        "escape": false,
+        "on-click": "playerctl -p cider play-pause",
+        "on-click-right": "playerctl -p cider next",
+        "on-click-middle": "playerctl -p cider previous"
+    },
+
     "clock": {
         "format": "{:%a    %I:%M %p    %b %d}"
     },
 
     "wireplumber": {
-        "format": "\udb81\udd7e  {volume}%",
+        "format": "\udb81\udd7e {volume}%",
         "max-volume": 100,
         "scroll-step": 5
     },
 
     "battery": {
-        "bat": "macsmc-battery",
+        "bat": "BAT1",
         "interval": 60,
-        "format": "{icon}  {capacity}%",
+        "format": "{icon} {capacity}%",
         "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
     },
 
-    "backlight": {
-        "format": "\udb80\udcdf  {percent}%"
+    "custom/backlight": {
+        "exec": "brightnessctl -d intel_backlight -e4 -m 2>/dev/null | cut -d, -f4",
+        "format": "\udb80\udcdf {}",
+        "interval": 30,
+        "signal": 8
     },
 
     "memory": {
         "interval": 30,
-        "format": "\uf4bc  {used:0.1f}G"
+        "format": "\uf4bc {used:0.1f}G"
     },
 
     "temperature": {

@@ -7,7 +7,7 @@ return require('packer').startup(function(use) -- Packer can manage itself
 
     -- UI
     use('navarasu/onedark.nvim')
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+    use('nvim-treesitter/nvim-treesitter', { branch = 'master', run = ':TSUpdate' })
     use('feline-nvim/feline.nvim')
 
     -- Git
