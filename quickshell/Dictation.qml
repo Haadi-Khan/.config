@@ -69,11 +69,15 @@ PanelWindow {
 
     function onFrame(rms) {
         const s = Math.sqrt(Math.max(0, rms));
-        // Floor drops quickly to quiet moments, creeps up slowly (so speech doesn't drag it up)
-        noiseFloor += (s < noiseFloor ? 0.05 : 0.002) * (s - noiseFloor);
-        const gate = Math.max(0.10, noiseFloor * 1.35 + 0.03);
-        const target = Math.min(1, Math.max(0, s - gate) * 3.0);
-        envelope += (target > envelope ? 0.35 : 0.06) * (target - envelope);
+        // Noise floor, O(1) per frame: falls fast to quiet moments (gaps between
+        // syllables), rises slowly (~7s) so sustained speech can't drag it up
+        // and gate out your own voice.
+        noiseFloor += (s < noiseFloor ? 0.1 : 0.0015) * (s - noiseFloor);
+        const gate = Math.max(0.08, noiseFloor * 1.1 + 0.03);
+        // Strong gain + slight curve so normal speech fills most of the height
+        const target = Math.min(1, Math.pow(Math.max(0, s - gate) * 4.5, 0.8));
+        // Snappy: near-instant attack, ~70ms release at ~94 frames/s
+        envelope += (target > envelope ? 0.6 : 0.15) * (target - envelope);
     }
 
     Process {
@@ -92,10 +96,10 @@ PanelWindow {
     }
     Timer { id: restart; interval: 1000; onTriggered: bridge.running = true }
 
-    // Push the envelope into the ripple history ~30x/s
+    // Push the envelope into the ripple history ~40x/s
     Timer {
         running: win.listening
-        interval: 33
+        interval: 25
         repeat: true
         onTriggered: {
             const e = win.envelope < 0.02 ? 0 : win.envelope;
@@ -184,7 +188,7 @@ PanelWindow {
                 width: 4 + e * (ringSize - 4)
                 height: rowH + e * (ringSize - rowH)
                 radius: width / 2
-                Behavior on height { enabled: dot.e === 0; NumberAnimation { duration: 90; easing.type: Easing.OutQuad } }
+                Behavior on height { enabled: dot.e === 0; NumberAnimation { duration: 55; easing.type: Easing.OutQuad } }
 
                 x: pill.width / 2 + rad * Math.cos(ang) - width / 2
                 y: pill.height / 2 + rad * Math.sin(ang) - height / 2
