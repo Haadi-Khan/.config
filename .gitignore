@@ -41,3 +41,4 @@ doom/packages.el
 /mimeapps.list
 !legcord/themes/midnight.theme.css
 legcord/
+/quickshell/google-client.json

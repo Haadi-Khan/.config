@@ -1,0 +1,2 @@
+# Enable runtime power management for all PCI devices (what powertop --auto-tune does for PCI)
+ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"

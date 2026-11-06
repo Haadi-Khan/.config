@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetooth
+GenericName=Bluetooth Devices
+Comment=Connect headphones, speakers, keyboards and other devices
+Exec=/home/haadi/.local/bin/vicinae-bluetooth
+Icon=bluetooth
+Terminal=false
+Categories=Settings;
+Keywords=bluetooth;bt;headphones;earbuds;airpods;speaker;pair;devices;

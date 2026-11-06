@@ -1,0 +1,74 @@
+# Official repo packages installed on top of EndeavourOS (GNOME edition).
+# One per line; '#' starts a comment.
+
+# Hyprland desktop
+wtype                 # voxtype types dictated text with it
+hyprland
+hyprlauncher
+hyprpaper
+hyprlock
+hypridle
+hyprshot
+hyprpolkitagent
+waybar
+mako
+brightnessctl
+playerctl
+libnotify
+wl-clipboard
+jq
+qt6ct
+adw-gtk-theme
+
+# Terminal / shell
+ghostty
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+eza
+ripgrep
+fd
+yazi
+zoxide
+fastfetch
+btop
+tmux
+
+# Fonts
+ttf-recursive-nerd
+ttf-nerd-fonts-symbols-mono
+
+# Editors
+neovim
+emacs
+nodejs
+npm
+cmake
+shellcheck
+python-pytest
+python-pipenv
+python-nose
+tidy
+discount
+
+# Hardware / system
+keyd
+fprintd
+fwupd
+bluez
+bluez-utils
+power-profiles-daemon
+pacman-contrib
+udisks2
+tailscale
+speech-dispatcher
+
+# Apps
+bitwarden
+calibre
+easyeffects
+github-cli
+lib32-vulkan-intel   # listed so --noconfirm doesn't pick another lib32 vulkan driver for steam
+steam
+cider
+cmark-gfm

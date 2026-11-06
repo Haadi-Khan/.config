@@ -71,6 +71,12 @@ hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_S
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n1 set 5%+ && pkill -RTMIN+8 waybar"),                  { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n1 set 5%- && pkill -RTMIN+8 waybar"),                  { locked = true, repeating = true })
 
+-- Dictation (voxtype): keyd maps Right Ctrl -> F13, which xkb names XF86Tools.
+-- Hold = push-to-talk, double-tap = lock on, tap again = finish. Logic in ptt.sh.
+local ptt = os.getenv("HOME") .. "/.config/voxtype/ptt.sh"
+hl.bind("XF86Tools", hl.dsp.exec_cmd(ptt .. " down"))
+hl.bind("XF86Tools", hl.dsp.exec_cmd(ptt .. " up"), { release = true })
+
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })

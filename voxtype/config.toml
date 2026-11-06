@@ -1,0 +1,57 @@
+# Voxtype config — local dictation triggered by Right Ctrl.
+# Right Ctrl -> F13 (keyd) -> XF86Tools bind in ~/.config/hypr/modules/keybinds.lua -> ptt.sh
+# Full option reference: /etc/voxtype/config.toml
+
+engine = "parakeet"
+state_file = "auto"
+
+[hotkey]
+# Hyprland handles the key; voxtype's own evdev listener stays off (no input group needed)
+enabled = false
+
+[audio]
+device = "default"
+sample_rate = 16000
+# Locked (double-tap) dictation can run long
+max_duration_secs = 300
+
+[audio.feedback]
+enabled = true
+theme = "subtle"
+volume = 0.5
+
+[parakeet]
+model = "parakeet-tdt-0.6b-v3"
+
+[cohere]
+model = "cohere-transcribe-q4f16"
+language = "en"
+
+[whisper]
+model = "large-v3-turbo"
+language = "en"
+on_demand_loading = false
+
+[output]
+# Type the text straight into the focused window via wtype. Paste mode was
+# unreliable here: Shift+Insert / clipboard restore pasted stale clipboard contents.
+mode = "type"
+type_delay_ms = 0
+pre_type_delay_ms = 50
+fallback_to_clipboard = true
+
+[output.notification]
+on_recording_start = false
+on_recording_stop = false
+on_transcription = false
+on_no_speech = true
+
+[osd]
+# Built-in overlay off; the pill lives in ~/.config/quickshell/Dictation.qml
+enabled = false
+
+[output.post_process]
+# Local LLM cleanup (llama-cleanup.service on :8081). Falls back to the raw
+# transcript on its own if the LLM is down, slow, or returns something odd.
+command = "python3 -I /home/haadi/.config/voxtype/cleanup.py"
+timeout_ms = 8000

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Pick power profile from AC state: power-saver on battery, balanced on AC
+if [ "$(cat /sys/class/power_supply/ACAD/online)" = 1 ]; then
+    powerprofilesctl set balanced
+else
+    powerprofilesctl set power-saver
+fi

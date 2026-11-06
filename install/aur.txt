@@ -1,0 +1,13 @@
+# AUR packages (installed with yay).
+zen-browser-bin
+beeper-bin
+mailspring-bin
+claude-desktop
+zsh-theme-powerlevel10k
+ttf-recursive
+ttf-symbola
+vicinae
+
+# Dictation: voxtype (Parakeet STT) + llama.cpp for the cleanup LLM
+voxtype-bin
+llama.cpp-vulkan-git

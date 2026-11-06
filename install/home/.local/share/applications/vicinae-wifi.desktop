@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Wi-Fi
+GenericName=Internet Connection
+Comment=Connect to a wireless network
+Exec=/home/haadi/.local/bin/vicinae-wifi
+Icon=network-wireless
+Terminal=false
+Categories=Settings;
+Keywords=wifi;wi-fi;internet;network;wireless;wlan;ssid;connect;hotspot;

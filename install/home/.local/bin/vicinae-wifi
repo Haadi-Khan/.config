@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+# Wi-Fi menu for vicinae (NetworkManager / nmcli)
+
+msg=""
+
+menu() { # menu TITLE [extra dmenu args...]  -> prints selected index
+    local title=$1; shift
+    local args=(--format index --no-quick-look --navigation-title "$title")
+    if [[ -n $msg ]]; then args+=(--section-title "$msg"); else args+=(--no-section); fi
+    vicinae dmenu "${args[@]}" "$@"
+}
+
+ask() { # ask TITLE PLACEHOLDER [--password] -> prints typed text (fails if empty/cancelled)
+    vicinae dmenu --no-section --navigation-title "$1" --placeholder "$2" "${@:3}" </dev/null
+}
+
+notify() {
+    msg=$1
+    timeout 2 notify-send -a "Wi-Fi" -i network-wireless "$1" 2>/dev/null &
+}
+
+is_known() { nmcli -t -f NAME,TYPE connection show | grep -qxF "$1:802-11-wireless"; }
+
+connect() { # connect SSID SECURITY
+    local ssid=$1 security=$2 out pw
+    if is_known "$ssid"; then
+        notify "Connecting to $ssid…"
+        if out=$(nmcli connection up id "$ssid" 2>&1); then
+            notify "Connected to $ssid"; return
+        fi
+        # Saved profile failed (e.g. password changed) — fall through and ask again
+        [[ -z $security ]] && { notify "Failed: ${out##*Error: }"; return; }
+    fi
+
+    if [[ -n $security ]]; then
+        pw=$(ask "$ssid" "Password" --password) || return
+        is_known "$ssid" && nmcli connection delete id "$ssid" >/dev/null 2>&1
+        notify "Connecting to $ssid…"
+        if out=$(nmcli device wifi connect "$ssid" password "$pw" 2>&1); then
+            notify "Connected to $ssid"
+        else
+            nmcli connection delete id "$ssid" >/dev/null 2>&1
+            notify "Failed to connect to $ssid (wrong password?)"
+        fi
+    else
+        notify "Connecting to $ssid…"
+        if out=$(nmcli device wifi connect "$ssid" 2>&1); then
+            notify "Connected to $ssid"
+        else
+            notify "Failed: ${out##*Error: }"
+        fi
+    fi
+}
+
+network_menu() { # network_menu SSID SECURITY IN_USE
+    local ssid=$1 security=$2 in_use=$3 opts=() choice
+    if [[ $in_use == "*" ]]; then
+        opts+=("Disconnect")
+    else
+        opts+=("Connect")
+    fi
+    is_known "$ssid" && opts+=("Forget network")
+    [[ $in_use == "*" ]] && opts+=("Show details")
+    opts+=("Back")
+
+    choice=$(printf '%s\n' "${opts[@]}" | menu "$ssid") || return 1
+    case ${opts[$choice]} in
+        *Disconnect)
+            nmcli connection down id "$ssid" >/dev/null 2>&1 \
+                || nmcli device disconnect "$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi"{print $1; exit}')" >/dev/null
+            notify "Disconnected from $ssid" ;;
+        *Connect) connect "$ssid" "$security" ;;
+        *Forget*)
+            nmcli connection delete id "$ssid" >/dev/null 2>&1 && notify "Forgot $ssid" ;;
+        *details)
+            local dev info
+            dev=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi"{print $1; exit}')
+            info=$(nmcli -t -f IP4.ADDRESS,IP4.GATEWAY,IP4.DNS,GENERAL.HWADDR device show "$dev" \
+                   | sed 's/^IP4\.ADDRESS\[[0-9]*\]:/IP:       /; s/^IP4\.GATEWAY:/Gateway:  /; s/^IP4\.DNS\[[0-9]*\]:/DNS:      /; s/^GENERAL\.HWADDR:/MAC:      /')
+            printf '%s\n' "$info" | vicinae dmenu --no-section --no-quick-look --navigation-title "$ssid" >/dev/null ;;
+    esac
+}
+
+hidden_network() {
+    local ssid pw="" out opts=("Password protected" "Open network") choice
+    ssid=$(ask "Hidden network" "Network name (SSID)") || return
+    # vicinae can't return an empty answer, so ask about security instead of taking a blank password
+    choice=$(printf '%s\n' "${opts[@]}" | menu "$ssid") || return
+    if [[ $choice == 0 ]]; then
+        pw=$(ask "$ssid" "Password" --password) || return
+    fi
+    notify "Connecting to $ssid…"
+    if [[ -n $pw ]]; then
+        out=$(nmcli device wifi connect "$ssid" password "$pw" hidden yes 2>&1)
+    else
+        out=$(nmcli device wifi connect "$ssid" hidden yes 2>&1)
+    fi && notify "Connected to $ssid" || notify "Failed: ${out##*Error: }"
+}
+
+rescan=no
+while true; do
+    entries=() actions=()
+
+    if [[ $(nmcli radio wifi) != enabled ]]; then
+        entries+=("Turn Wi-Fi on"); actions+=("on")
+    else
+        if [[ $rescan == yes ]]; then
+            list=$(nmcli -t -e no -f IN-USE,SIGNAL,SECURITY,SSID device wifi list --rescan yes 2>/dev/null)
+            rescan=no
+        else
+            # Use cached results; nmcli's default rescans when the cache is >30s old (~6s stall)
+            list=$(nmcli -t -e no -f IN-USE,SIGNAL,SECURITY,SSID device wifi list --rescan no 2>/dev/null)
+        fi
+
+        # Connected first, then by signal; one entry per SSID; skip hidden ones
+        declare -A seen=()
+        while IFS= read -r line; do
+            in_use=${line%%:*};  rest=${line#*:}
+            sig=${rest%%:*};     rest=${rest#*:}
+            sec=${rest%%:*};     ssid=${rest#*:}
+            [[ -z $ssid || -n ${seen[$ssid]} ]] && continue
+            seen[$ssid]=1
+            [[ $sec == "--" ]] && sec=""
+            # vicinae can't render Nerd Font glyphs, so describe the network in plain text
+            label="$ssid  ·  $sig%"
+            [[ -n $sec ]] && label+="  ·  Secured"
+            [[ $in_use == "*" ]] && label+="  ·  Connected"
+            entries+=("$label"); actions+=("net:$in_use:$sec:$ssid")
+        done < <(printf '%s\n' "$list" | sort -t: -k1,1r -k2,2nr)
+        unset seen
+
+        entries+=("Rescan networks");          actions+=("rescan")
+        entries+=("Connect to hidden network"); actions+=("hidden")
+        entries+=("Turn Wi-Fi off");           actions+=("off")
+        entries+=("Advanced settings");        actions+=("editor")
+    fi
+
+    choice=$(printf '%s\n' "${entries[@]}" | menu "Wi-Fi" --placeholder "Search networks…") || exit 0
+    action=${actions[$choice]}
+    msg=""
+
+    case $action in
+        on)     nmcli radio wifi on;  notify "Wi-Fi on — scanning…"; sleep 2; rescan=yes ;;
+        off)    nmcli radio wifi off; notify "Wi-Fi off" ;;
+        rescan) notify "Scanning…"; rescan=yes ;;
+        hidden) hidden_network ;;
+        editor)
+            if command -v nm-connection-editor >/dev/null; then exec nm-connection-editor
+            else exec ghostty -e nmtui; fi ;;
+        net:*)
+            rest=${action#net:}
+            in_use=${rest%%:*}; rest=${rest#*:}
+            sec=${rest%%:*};    ssid=${rest#*:}
+            if [[ $in_use == "*" ]] || is_known "$ssid"; then
+                network_menu "$ssid" "$sec" "$in_use"
+            else
+                connect "$ssid" "$sec"
+            fi ;;
+    esac
+done

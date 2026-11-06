@@ -1,0 +1,2 @@
+# Switch power profile when the charger is plugged in or unplugged
+SUBSYSTEM=="power_supply", KERNEL=="ACAD", ACTION=="change", RUN+="/usr/local/bin/power-profile-auto"

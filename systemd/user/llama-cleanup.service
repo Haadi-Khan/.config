@@ -1,0 +1,15 @@
+[Unit]
+Description=llama.cpp server (Qwen3-4B-Instruct-2507, dictation cleanup for voxtype on 127.0.0.1:8081)
+
+[Service]
+ExecStart=/usr/bin/llama-server \
+    --model %h/.local/share/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf \
+    --alias cleanup \
+    --host 127.0.0.1 --port 8081 \
+    --n-gpu-layers 99 \
+    --ctx-size 4096 \
+    --jinja
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

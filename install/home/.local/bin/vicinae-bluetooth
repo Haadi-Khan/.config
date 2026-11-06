@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+# Bluetooth menu for vicinae (BlueZ / bluetoothctl)
+
+SCAN_SECONDS=10
+msg=""
+
+menu() { # menu TITLE [extra dmenu args...]  -> prints selected index
+    local title=$1; shift
+    local args=(--format index --no-quick-look --navigation-title "$title")
+    if [[ -n $msg ]]; then args+=(--section-title "$msg"); else args+=(--no-section); fi
+    vicinae dmenu "${args[@]}" "$@"
+}
+
+notify() {
+    msg=$1
+    timeout 2 notify-send -a "Bluetooth" -i bluetooth "$1" 2>/dev/null &
+}
+
+# Show a non-interactive "please wait" window while a command runs
+with_status() { # with_status TEXT CMD...
+    local text=$1; shift
+    printf '%s\n' "$text" | vicinae dmenu --no-section --no-quick-look --navigation-title "Bluetooth" \
+        --placeholder "Please wait…" >/dev/null 2>&1 &
+    local fpid=$!
+    "$@"; local rc=$?
+    timeout 2 vicinae close >/dev/null 2>&1  # hangs if the window is already closed
+    kill "$fpid" 2>/dev/null; wait "$fpid" 2>/dev/null
+    return $rc
+}
+
+powered() { bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; }
+
+info_field() { # info_field INFO FIELD
+    sed -n "s/^[[:space:]]*$2: //p" <<<"$1" | head -n1
+}
+
+ensure_service() {
+    systemctl is-active --quiet bluetooth && return 0
+    local opts=("Enable Bluetooth service" "Cancel") choice
+    msg="The Bluetooth service is not running."
+    choice=$(printf '%s\n' "${opts[@]}" | menu "Bluetooth") || exit 0
+    msg=""
+    [[ $choice == 0 ]] || exit 0
+    if ! pkexec systemctl enable --now bluetooth.service; then
+        notify "Could not start bluetooth.service"
+        exit 1
+    fi
+    sleep 1
+}
+
+pair_and_connect() { # MAC NAME
+    local mac=$1 name=$2
+    if with_status "Pairing with $name…" bluetoothctl --timeout 20 pair "$mac" >/dev/null 2>&1 \
+       || bluetoothctl info "$mac" | grep -q "Paired: yes"; then
+        bluetoothctl trust "$mac" >/dev/null 2>&1
+        connect "$mac" "$name"
+    else
+        notify "Pairing with $name failed (is it in pairing mode?)"
+    fi
+}
+
+connect() { # MAC NAME
+    if with_status "Connecting to $2…" bluetoothctl --timeout 15 connect "$1" >/dev/null 2>&1 \
+       && bluetoothctl info "$1" | grep -q "Connected: yes"; then
+        notify "Connected to $2"
+    else
+        notify "Failed to connect to $2"
+    fi
+}
+
+device_menu() { # MAC
+    local mac=$1 info name paired connected trusted opts=() choice
+    info=$(bluetoothctl info "$mac")
+    name=$(info_field "$info" Alias); [[ -z $name ]] && name=$mac
+    paired=$(info_field "$info" Paired)
+    connected=$(info_field "$info" Connected)
+    trusted=$(info_field "$info" Trusted)
+
+    if [[ $paired != yes ]]; then
+        pair_and_connect "$mac" "$name"; return
+    fi
+
+    if [[ $connected == yes ]]; then opts+=("Disconnect")
+    else                             opts+=("Connect"); fi
+    if [[ $trusted == yes ]]; then   opts+=("Untrust (stop auto-connecting)")
+    else                             opts+=("Trust (auto-connect)"); fi
+    opts+=("Remove device" "Back")
+
+    choice=$(printf '%s\n' "${opts[@]}" | menu "$name") || return
+    case ${opts[$choice]} in
+        *Disconnect)
+            with_status "Disconnecting…" bluetoothctl disconnect "$mac" >/dev/null 2>&1
+            notify "Disconnected from $name" ;;
+        *Connect)  connect "$mac" "$name" ;;
+        *Untrust*) bluetoothctl untrust "$mac" >/dev/null 2>&1 && notify "$name untrusted" ;;
+        *Trust*)   bluetoothctl trust "$mac"   >/dev/null 2>&1 && notify "$name trusted" ;;
+        *Remove*)  bluetoothctl remove "$mac"  >/dev/null 2>&1 && notify "Removed $name" ;;
+    esac
+}
+
+ensure_service
+
+while true; do
+    entries=() actions=()
+
+    if ! powered; then
+        entries+=("Turn Bluetooth on"); actions+=("on")
+    else
+        connected=() paired=() other=()
+        while read -r _ mac name; do
+            info=$(bluetoothctl info "$mac")
+            # vicinae can't render Nerd Font glyphs, so labels are plain text
+            label="$name"
+            if [[ $(info_field "$info" Connected) == yes ]]; then
+                batt=$(info_field "$info" "Battery Percentage" | grep -o '([0-9]*)' | tr -d '()')
+                label+="  ·  Connected${batt:+  ·  $batt% battery}"
+                connected+=("$label|dev:$mac")
+            elif [[ $(info_field "$info" Paired) == yes ]]; then
+                paired+=("$label|dev:$mac")
+            else
+                # Skip unnamed devices (alias is just the MAC with dashes)
+                [[ $name =~ ^([0-9A-F]{2}-){5}[0-9A-F]{2}$ ]] && continue
+                other+=("$label  ·  New|dev:$mac")
+            fi
+        done < <(bluetoothctl devices 2>/dev/null | grep '^Device ')
+
+        for e in "${connected[@]}" "${paired[@]}" "${other[@]}"; do
+            entries+=("${e%|dev:*}"); actions+=("dev:${e##*|dev:}")
+        done
+
+        entries+=("Scan for new devices (${SCAN_SECONDS}s)"); actions+=("scan")
+        entries+=("Turn Bluetooth off");                      actions+=("off")
+    fi
+
+    choice=$(printf '%s\n' "${entries[@]}" | menu "Bluetooth" --placeholder "Search devices…") || exit 0
+    action=${actions[$choice]}
+    msg=""
+
+    case $action in
+        on)
+            rfkill unblock bluetooth 2>/dev/null
+            bluetoothctl power on >/dev/null 2>&1 && notify "Bluetooth on" || notify "Could not power on Bluetooth" ;;
+        off)
+            bluetoothctl power off >/dev/null 2>&1 && notify "Bluetooth off" ;;
+        scan)
+            with_status "Scanning for ${SCAN_SECONDS}s — put your device in pairing mode…" \
+                bluetoothctl --timeout "$SCAN_SECONDS" scan on >/dev/null 2>&1
+            msg="Scan finished. New devices are marked New." ;;
+        dev:*) device_menu "${action#dev:}" ;;
+    esac
+done

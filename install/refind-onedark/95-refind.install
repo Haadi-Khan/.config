@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Regenerate rEFInd's EndeavourOS entry from the newest systemd-boot loader entry,
+# so rEFInd always boots the current kernel/initrd/cmdline after updates.
+set -e
+BOOT_ROOT="${KERNEL_INSTALL_BOOT_ROOT:-$(bootctl --print-boot-path)}"
+OUT="$BOOT_ROOT/EFI/refind/entries.conf"
+[ -d "${OUT%/*}" ] || exit 0
+
+newest=""; newest_ver=""
+for f in "$BOOT_ROOT"/loader/entries/*.conf; do
+    [ -f "$f" ] || continue
+    v=$(awk '$1=="version"{print $2}' "$f")
+    if [ -z "$newest_ver" ] || [ "$(printf '%s\n%s\n' "$newest_ver" "$v" | sort -V | tail -1)" = "$v" ]; then
+        newest="$f"; newest_ver="$v"
+    fi
+done
+[ -n "$newest" ] || exit 0
+
+linux=$(awk '$1=="linux"{print $2}' "$newest")
+opts=$(awk '$1=="options"{$1=""; sub(/^ /,""); print}' "$newest")
+initrds=$(awk '$1=="initrd"{gsub("/","\\",$2); printf "initrd=%s ", $2}' "$newest")
+cmdline="${initrds}${opts}"
+
+cat > "$OUT.tmp" <<CONF
+menuentry "EndeavourOS" {
+    icon    /EFI/refind/themes/onedark/icons/os_endeavouros.png
+    ostype  Linux
+    graphics on
+    loader  $linux
+    options "$cmdline"
+    submenuentry "Boot to terminal" {
+        add_options "systemd.unit=multi-user.target"
+    }
+}
+CONF
+mv "$OUT.tmp" "$OUT"
