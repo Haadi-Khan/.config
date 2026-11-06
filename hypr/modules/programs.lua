@@ -7,6 +7,11 @@ return {
     terminal    = "ghostty",
     fileManager = "files",
     browser     = "zen-browser",
-    menu        = 'fuzzel -b 282c34ff -t abb2bfff -s 4b5263ff -S abb2bfff -C 61afefff -m 61afefff -M 61afefff -w 20 --show-actions -f "RecMonoLinear Nerd Font:weight=regular:size=16"',
-    sshot       = "hyprshot -m region --clipboard-only",
+    menu        = "vicinae toggle",
+    -- Region shot opens satty for markup: Enter copies + closes, Ctrl+S saves, Esc cancels
+    sshot       = "hyprshot -m region --raw | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png",
+    sshotFull   = "hyprshot -m output -m active --clipboard-only",
+    scratch     = [[emacsclient -c -F '((name . "emacs-scratch"))' -a "" -e '(doom/switch-to-scratch-buffer)']],
+    clipboard   = "vicinae cmd launch clipboard:history",
+    colorPicker = "hyprpicker -a",  -- copies the hex value to the clipboard
 }

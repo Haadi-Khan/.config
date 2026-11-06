@@ -4,10 +4,11 @@
 @define-color blue #61afef;
 @define-color green #98c379;
 @define-color magenta #c678dd;
+@define-color yellow #e5c07b;
 
 * {
 	font-family: "RecMonoLinear Nerd Font Propo", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     padding: 0;
     margin: 0;
 }
@@ -54,17 +55,32 @@
     color: @blue;
     padding-right: 1em;
 }
+#cpu {
+    color: @green;
+    padding-right: 1em;
+}
 #memory {
     color: @magenta;
     padding-right: 1em;
 }
-#temperature {
-    color: @red;
-    padding-right: 1em;
+#custom-weather {
+    color: @yellow;
+    background-color: @black;
+    padding: 0 1em;
+    border-radius: 1em;
+}
+#custom-weather.stale {
+    color: @white;
 }
 #battery {
     color: @green;
     padding-right: 1em;
+}
+#battery.warning:not(.charging) {
+    color: @yellow;
+}
+#battery.critical:not(.charging) {
+    color: @red;
 }
 #custom-backlight {
     color: @red;
@@ -76,13 +92,10 @@
 }
 #network {
     color: @white;
-    padding-right: 1em;
 }
 #bluetooth {
     color: @white;
     padding-right: 1em;
-}
-#tray {
 }
 
 #custom-music {

@@ -295,6 +295,67 @@ UI improvements
       :ni "<S-iso-lefttab>" #'haadi/org-outdent-list-item-or-cycle)
 #+end_src
 
+*** Capture
+Quick capture from anywhere: =SPC X= inside Emacs, =SUPER+N= from Hyprland (floating popup).
+Todos and links land in =inbox.org= to be refiled later; journal entries go in today's daily note.
+#+begin_src emacs-lisp :tangle config.el
+(defun haadi/org-daily-file ()
+  "Path to today's encrypted daily note (~/org/notes/YYYY/MM-DD.org.gpg), creating it if needed."
+  (let ((file (expand-file-name (format-time-string "notes/%Y/%m-%d.org.gpg") org-directory)))
+    (unless (file-exists-p file)
+      (make-directory (file-name-directory file) t)
+      (with-temp-file file
+        (insert (format-time-string "#+title: %A, %B %-d %Y\n\n"))))
+    file))
+
+(defun haadi/capture-label (icon face label)
+  "Template menu label with a nerd ICON in FACE."
+  (concat (nerd-icons-mdicon icon :face face) "  " label))
+
+(after! org
+  (setq org-capture-templates
+        `(("t" ,(haadi/capture-label "nf-md-checkbox_blank_outline" 'nerd-icons-blue "Todo")
+           entry (file+headline "inbox.org" "Inbox")
+           "* TODO %?\n%U\n%i" :empty-lines-before 1)
+          ("s" ,(haadi/capture-label "nf-md-calendar_clock" 'nerd-icons-orange "Scheduled todo")
+           entry (file+headline "inbox.org" "Inbox")
+           "* TODO %?\nSCHEDULED: %^t\n%U" :empty-lines-before 1)
+          ("l" ,(haadi/capture-label "nf-md-link_variant" 'nerd-icons-cyan "Link (from clipboard)")
+           entry (file+headline "inbox.org" "Reading")
+           "* TODO %(org-cliplink-capture)\n%U\n%?" :empty-lines-before 1)
+          ("j" ,(haadi/capture-label "nf-md-book_open_variant" 'nerd-icons-purple "Journal")
+           entry (file haadi/org-daily-file)
+           "* %<%H:%M> %?" :empty-lines-before 1)
+          ("n" ,(haadi/capture-label "nf-md-note_text_outline" 'nerd-icons-green "Note")
+           entry (file+headline "notes.org" "Notes")
+           "* %^{Title}\n%U\n%?" :empty-lines-before 1))
+
+        ;; Refiling inbox items: pick any heading in one flat completion prompt
+        org-refile-use-outline-path 'file
+        org-outline-path-complete-in-steps nil
+        org-refile-allow-creating-parent-nodes 'confirm
+
+        ;; Popup frame size (Hyprland centers it). Doom always targets the
+        ;; Wayland display, which an X build (running under XWayland) can't open.
+        +org-capture-frame-parameters
+        (append `((width . 90) (height . 22)
+                  ,@(unless (featurep 'pgtk) `((display . ,(or (getenv "DISPLAY") ":0")))))
+                +org-capture-frame-parameters))
+
+  ;; Start typing immediately
+  (add-hook 'org-capture-mode-hook #'evil-insert-state))
+#+end_src
+
+*** Encryption
+Files ending in =.gpg= are encrypted to my notes key. Unlocking asks for my fingerprint
+(=~/.local/bin/pinentry-fprint= unseals the key's passphrase from the TPM), then gpg-agent
+keeps it unlocked for 30 minutes.
+#+begin_src emacs-lisp :tangle config.el
+(after! epa
+  (setq epa-file-encrypt-to '("8F703CFB417B16458079A600D91480676BF704B4")
+        epa-file-select-keys 'silent))
+#+end_src
+
 *** TOC
 #+begin_src emacs-lisp :tangle config.el
 (use-package toc-org
@@ -465,6 +526,10 @@ Projectile Errors
 (map! :map dired-mode-map :desc "Parent directory" :n "h" #'dired-up-directory)
 (map! :map dired-mode-map :desc "Into directory" :n "l" #'dired-find-file)
 #+end_src
+** Treemacs
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader :desc "Treemacs current project" :n "o p" #'treemacs-add-and-display-current-project-exclusively)
+#+end_src
 * Programming
 ** Base Config
 Some basic config stuff. I added way too much ram for garbage collection, but I have the RAM so I may as well use it to make sure that my editing isn't slow lol
@@ -478,15 +543,9 @@ Some basic config stuff. I added way too much ram for garbage collection, but I 
 (setq corfu-auto-prefix 1)
 (setq corfu-auto-delay 0.01)
 
-(defun haadi/markdown-manual-completion ()
-  "Keep automatic completion frames from interrupting Markdown typing.
-Completion remains available on demand with `completion-at-point' (C-SPC)."
-  ;; Corfu's child frames can cause focus jumps between macOS windows.
-  (setq-local corfu-auto nil)
-  ;; Recent Corfu versions install the automatic trigger when enabled.
-  (remove-hook 'post-command-hook #'corfu-auto--post-command t))
-
-(add-hook 'markdown-mode-hook #'haadi/markdown-manual-completion)
+;; No completion popups while writing prose
+(after! corfu
+  (push '(not org-mode markdown-mode) global-corfu-modes))
 
 (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 #+end_src
@@ -496,24 +555,17 @@ Makes EGlot stupid fast
         :after eglot
         :config (eglot-booster-mode))
 #+end_src
-** Copilot
-Built in GitHub Copilot chat
+** Local LLM
+LFM3-1.7B served by llama-server (systemd user unit =llama-server.service=), nothing leaves the laptop
 #+begin_src emacs-lisp :tangle config.el
-(gptel-make-gh-copilot "Copilot")
-(setq gptel-model 'gpt-4.5-preview
-      gptel-backend (gptel-make-gh-copilot "Copilot"))
-#+end_src
-
-Inline autocomplete (I prefer this to gptel-autocomplete)
-#+begin_src emacs-lisp :tangle config.el
-;; (use-package! copilot
-;;   :hook (prog-mode . copilot-mode)
-;;   :bind (:map copilot-completion-map
-;;               ("<tab>" . 'copilot-accept-completion)
-;;               ("TAB" . 'copilot-accept-completion)
-;;               ("C-TAB" . 'copilot-accept-completion-by-word)
-;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
-;; (map! :leader :desc "Toggle copilot" :n "c g" #'copilot-mode)
+(after! gptel
+  (setq gptel-model 'lfm3-1.7b
+        gptel-temperature 0.1
+        gptel-backend (gptel-make-openai "LFM3"
+                        :host "localhost:8080"
+                        :protocol "http"
+                        :stream t
+                        :models '(lfm3-1.7b))))
 #+end_src
 ** Lookup Providers
 Great tool called lookup which enables searching for code issues straight from emacs
@@ -1088,4 +1140,25 @@ Extended markdown files that I use for my blog
 ** Argumentative
 #+begin_src emacs-lisp :tangle config.el
 (load "~/.config/doom/argumentative.el")
+#+end_src
+
+** TRAMP
+Stop timer-driven features (vc, diff-hl, corfu auto-complete) from calling into
+TRAMP while it's already busy, which causes "Forbidden reentrant call of Tramp".
+#+begin_src emacs-lisp :tangle config.el
+(after! tramp
+  (setq remote-file-name-inhibit-locks t
+        remote-file-name-inhibit-auto-save-visited t
+        tramp-use-scp-direct-remote-copying t
+        vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp)))
+
+(after! diff-hl
+  (setq diff-hl-disable-on-remote t))
+
+(add-hook! 'find-file-hook
+  (defun haadi/tame-remote-buffer-h ()
+    "Disable timer-driven features that call TRAMP from remote buffers."
+    (when (file-remote-p default-directory)
+      (setq-local corfu-auto nil)
+      (when (bound-and-true-p diff-hl-mode) (diff-hl-mode -1)))))
 #+end_src

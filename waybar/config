@@ -5,12 +5,12 @@
     "spacing": 5,
 
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
+    "modules-center": ["clock", "custom/weather"],
     "modules-right": ["group/system-info"],
 
     "group/system-info": {
         "orientation": "horizontal",
-        "modules": ["custom/music", "wireplumber", "memory", "custom/backlight", "battery", "network", "tray"]
+        "modules": ["custom/music", "wireplumber", "cpu", "memory", "custom/backlight", "battery", "bluetooth", "network"]
     },
 
     "hyprland/workspaces": {
@@ -65,39 +65,59 @@
     },
 
     "clock": {
-        "format": "{:%a    %I:%M %p    %b %d}"
+        "format": "{:%a    %I:%M %p    %b %d}",
+        "on-click": "qs ipc call drawer toggle",
+        "tooltip": false
     },
 
     "wireplumber": {
+        "on-click": "qs ipc call control toggle",
         "format": "\udb81\udd7e {volume}%",
+        "format-muted": "\udb81\udd81 mute",
         "max-volume": 100,
         "scroll-step": 5
     },
 
     "battery": {
+        "on-click": "qs ipc call control toggle",
         "bat": "BAT1",
         "interval": 60,
+        "states": { "warning": 15, "critical": 5 },
         "format": "{icon} {capacity}%",
+        "format-charging": "\udb80\udc84 {capacity}%",
+        "format-plugged": "\uf1e6 {capacity}%",
         "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
     },
 
     "custom/backlight": {
+        "on-click": "qs ipc call control toggle",
         "exec": "brightnessctl -d intel_backlight -e4 -m 2>/dev/null | cut -d, -f4",
         "format": "\udb80\udcdf {}",
         "interval": 30,
         "signal": 8
     },
 
-    "memory": {
-        "interval": 30,
-        "format": "\uf4bc {used:0.1f}G"
+    "cpu": {
+        "on-click": "qs ipc call control toggle",
+        "interval": 10,
+        "format": "\uf2db {usage}%"
     },
 
-    "temperature": {
-        "format": "  {temperatureC}°C"
+    "memory": {
+        "on-click": "qs ipc call control toggle",
+        "interval": 30,
+        "format": "\uefc5 {used:0.1f}G"
+    },
+
+    "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.py",
+        "return-type": "json",
+        "interval": 900,
+        "on-click": "gnome-weather"
     },
 
     "network": {
+        "on-click": "qs ipc call control toggle",
         "format": "",
         "format-ethernet": "\udb83\udc9d",
         "format-wifi": "{icon}",
@@ -109,16 +129,13 @@
     },
 
     "bluetooth": {
+        "on-click": "qs ipc call control toggle",
         "format": "\udb80\udcaf",
+        "format-off": "\udb80\udcb2",
         "format-disabled": "\udb80\udcb2",
         "format-connected": "\udb80\udcb1",
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
-    },
-
-    "tray": {
-        "icon-size": 16,
-        "spacing": 16
     }
 }

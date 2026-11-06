@@ -7,7 +7,7 @@ import time
 from html import escape
 
 PLAYER = "cider"
-WIDTH = 25        # visible characters
+WIDTH = 20        # visible characters
 TICK = 0.3        # seconds per scroll step
 POLL_EVERY = 3    # ticks between playerctl polls
 HOLD = 17         # ticks to pause at the start of each loop (~5s)

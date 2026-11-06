@@ -16,15 +16,20 @@ hl.bind(mainMod .. " + comma",      hl.dsp.exec_cmd(programs.fileManager), { rep
 hl.bind(mainMod .. " + space",      hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + apostrophe", hl.dsp.exec_cmd(programs.menu))
 hl.bind("ALT + SHIFT + S",          hl.dsp.exec_cmd(programs.sshot))
+hl.bind("Print",                    hl.dsp.exec_cmd(programs.sshotFull))
 hl.bind(mainMod .. " + P",          hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + period",     hl.dsp.exec_cmd('emacsclient -c -a ""'), { repeating = true })
+hl.bind(mainMod .. " + N",          hl.dsp.exec_cmd("emacsclient -e '(+org-capture/open-frame)'"))
+hl.bind(mainMod .. " + semicolon",  hl.dsp.exec_cmd(programs.scratch))
+hl.bind(mainMod .. " + V",          hl.dsp.exec_cmd(programs.clipboard))
+hl.bind("ALT + SHIFT + C",          hl.dsp.exec_cmd(programs.colorPicker))
 hl.bind(mainMod .. " + escape",     hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Move focus with mainMod + hjkl
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 
 -- Move windows with mainMod + SHIFT + hjkl
 hl.bind(shiftMod .. " + H", hl.dsp.window.move({ direction = "left" }))

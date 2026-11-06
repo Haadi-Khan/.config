@@ -17,8 +17,14 @@ hl.on("hyprland.start", function ()
     -- Restore brightness before waybar starts so it shows the right value
     hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/restore-brightness.sh; waybar")
     hl.exec_cmd("hyprpaper")
+    -- Notification daemon, clock drawer and control center (~/.config/quickshell)
+    hl.exec_cmd("qs")
+    -- Night light backend, toggled from the control center (starts neutral)
+    hl.exec_cmd("hyprsunset -i")
     hl.exec_cmd("hypridle")
+    hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/battery-notify.sh")
     hl.exec_cmd("emacs --daemon")
+    hl.exec_cmd("vicinae server")
 
     -- Dark theme: GTK3 via adw-gtk3, GTK4/libadwaita via color-scheme
     hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'")

@@ -26,3 +26,12 @@ hl.env("SSH_AUTH_SOCK", os.getenv("XDG_RUNTIME_DIR") .. "/gcr/ssh")
 -- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
 -- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
 -- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+
+-- Fractional scaling: let XWayland apps render at native res instead of being
+-- upscaled (blurry). Steam's UI is X11-only, so tell it to scale itself.
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
+hl.env("STEAM_FORCE_DESKTOPUI_SCALING", "1.666667")
