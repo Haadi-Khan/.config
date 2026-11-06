@@ -16,7 +16,7 @@ sample_rate = 16000
 max_duration_secs = 300
 
 [audio.feedback]
-enabled = true
+enabled = false
 theme = "subtle"
 volume = 0.5
 

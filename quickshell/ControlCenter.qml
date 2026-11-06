@@ -543,7 +543,8 @@ PanelWindow {
                     Layout.rightMargin: 4
                     icon: "\udb81\udd94"
                     dimmed: !NightLight.on
-                    value: (NightLight.maxTemp - NightLight.temperature) / (NightLight.maxTemp - NightLight.minTemp)
+                    // Clamped: the evening fade starts above maxTemp
+                    value: Math.max(0, (NightLight.maxTemp - NightLight.temperature) / (NightLight.maxTemp - NightLight.minTemp))
                     onMoved: v => NightLight.setTemperature(NightLight.maxTemp - v * (NightLight.maxTemp - NightLight.minTemp))
                     onIconClicked: NightLight.setOn(!NightLight.on)
                 }
