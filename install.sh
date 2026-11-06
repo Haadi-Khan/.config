@@ -114,13 +114,23 @@ systemctl --user enable gcr-ssh-agent.socket hyprpolkitagent.service >/dev/null 
 step "Dictation (voxtype + local LLM cleanup)"
 # Hold Right Ctrl to dictate, double-tap to lock. Pieces: keyd (Right Ctrl -> F13),
 # hypr/modules/keybinds.lua -> voxtype/ptt.sh, voxtype/config.toml (Parakeet,
-# types via wtype), voxtype/cleanup.py -> llama-cleanup.service, quickshell/Dictation.qml
+# types via wtype), voxtype/cleanup.py -> llama-cleanup.service, quickshell/Dictation.qml.
+# voxtype/screen_context.py OCRs the focused window on key press so cleanup can
+# spell on-screen terms (file names, identifiers) correctly.
 if [[ $(readlink -f /usr/bin/voxtype) != *voxtype-onnx* ]]; then
     sudo voxtype setup onnx --enable    # Parakeet needs the ONNX build
 fi
-[[ -d $HOME/.local/share/voxtype/models/parakeet-tdt-0.6b-v3 ]] \
-    || voxtype setup --download --model parakeet-tdt-0.6b-v3 --no-post-install \
-    || warn "Parakeet download failed; rerun: voxtype setup --download --model parakeet-tdt-0.6b-v3"
+# int8 Parakeet (~2x faster on CPU). voxtype's own server 403s on it, so pull from HF.
+parakeet="$HOME/.local/share/voxtype/models/parakeet-tdt-0.6b-v3-int8"
+if [[ ! -f $parakeet/encoder-model.int8.onnx ]]; then
+    mkdir -p "$parakeet"
+    for f in encoder-model.int8.onnx decoder_joint-model.int8.onnx config.json vocab.txt; do
+        curl -fL --retry 3 -o "$parakeet/$f.part" \
+            "https://huggingface.co/istupakov/parakeet-tdt-0.6b-v3-onnx/resolve/main/$f" \
+            && mv "$parakeet/$f.part" "$parakeet/$f" \
+            || warn "Parakeet download failed ($f); rerun install.sh"
+    done
+fi
 cleanup_model="$HOME/.local/share/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
 if [[ ! -f $cleanup_model ]]; then
     mkdir -p "${cleanup_model%/*}"

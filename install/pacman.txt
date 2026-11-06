@@ -3,6 +3,10 @@
 
 # Hyprland desktop
 wtype                 # voxtype types dictated text with it
+grim                  # dictation screen context: screenshot
+imagemagick           # dictation screen context: OCR prep
+tesseract             # dictation screen context: OCR
+tesseract-data-eng
 hyprland
 hyprlauncher
 hyprpaper

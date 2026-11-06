@@ -22,6 +22,10 @@ down)
         exit 0
     fi
     voxtype record start
+    # Screen context for cleanup: OCR the focused window while you talk (cleanup.py waits ≤1s for it)
+    rm -f "$dir/context.json"
+    : > "$dir/context.pending"
+    setsid -f python3 -I "$HOME/.config/voxtype/screen_context.py" >/dev/null 2>&1
     echo "$now" > "$dir/press_t"
     echo holding > "$dir/state"
     ;;

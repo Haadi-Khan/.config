@@ -21,7 +21,7 @@ theme = "subtle"
 volume = 0.5
 
 [parakeet]
-model = "parakeet-tdt-0.6b-v3"
+model = "parakeet-tdt-0.6b-v3-int8"
 
 [cohere]
 model = "cohere-transcribe-q4f16"
@@ -33,8 +33,9 @@ language = "en"
 on_demand_loading = false
 
 [output]
-# Type the text straight into the focused window via wtype. Paste mode was
-# unreliable here: Shift+Insert / clipboard restore pasted stale clipboard contents.
+# Only used when cleanup.py can't paste: it normally pastes the text itself
+# (Ctrl+Shift+V in terminals, Ctrl+V elsewhere), since wtype typing drops shifted
+# characters in apps using the kitty keyboard protocol (Claude Code).
 mode = "type"
 type_delay_ms = 0
 pre_type_delay_ms = 50
@@ -51,6 +52,9 @@ on_no_speech = true
 enabled = false
 
 [output.post_process]
+# cleanup.py pastes the text itself (see deliver() there) and prints nothing;
+# if pasting fails it prints the text and voxtype types it.
+fallback_on_empty = false
 # Local LLM cleanup (llama-cleanup.service on :8081). Falls back to the raw
 # transcript on its own if the LLM is down, slow, or returns something odd.
 command = "python3 -I /home/haadi/.config/voxtype/cleanup.py"
